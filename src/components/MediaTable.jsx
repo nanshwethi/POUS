@@ -13,9 +13,9 @@ function createData(no, name, account, date, time, fileSize) {
 }
 
 const rows = [
-  createData(1, "09038", "nyeint", "12 / 7 / 2023", "10:00 AM", "2MB"),
-  createData(2, "09038", "nyeint", "12 / 7 / 2023", "3:00 PM", "2MB"),
-  createData(3, "09038", "nyeint", "12 / 7 / 2023", "1:00 PM", "2MB"),
+  createData(1, "nyeint","09038", "12 / 7 / 2023", "10:00 AM", "2MB"),
+  createData(2, "nyeint","09038", "12 / 7 / 2023", "3:00 PM", "2MB"),
+  createData(3,  "nyeint","09038", "12 / 7 / 2023", "1:00 PM", "2MB"),
 ];
 
 const MediaTable = () => {
