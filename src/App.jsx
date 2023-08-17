@@ -1,5 +1,4 @@
 
-
 import './App.css'
 import CreateUser from './pages/CreateUser'
 import UpdateUser from './pages/UpdateUser'
@@ -10,9 +9,9 @@ import UserProfile from './components/UserProfile'
 import Path from './routes/Path'
 
 
-function App() {
-
+const App = () => {
   return (
+
     <>
 
       <CreateUser/>

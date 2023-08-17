@@ -1,7 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Genos:wght@700&family=Montserrat:wght@500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --base-color: #202124;
+  --font-color: #8ab4f8;
+  --sidebar-color: #161618;
+  --secondary-color: #e8eaed;
+  --gray-color:#7E7F80;
+  --border-color: #3f4245;
+  --logo-font: "Genos", sans-serif;
+  --base-font: "Montserrat", serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--base-color);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  font-family: var(--base-font);
+}
+
+.text-title-logo {
+  font-family: "Genos", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.mb-50 {
+  @apply mb-[50px];
+}
+
+.btn-border-table-grid {
+  @apply w-[50px] h-[28px] rounded-[5px] border border-[#7E7F80];
+}
+.li-bg {
+  @apply py-2 bg-[--sidebar-color] text-[--secondary-color] flex justify-start items-center px-5 select-none;
+}
+.li-bg:hover,
+.li-text:hover {
+  cursor: pointer;
+}
+
+.li-text {
+  @apply text-sm bg-[--sidebar-color] text-[--secondary-color] font-medium flex justify-start items-center px-5;
+}
+
+.accordion-bg {
+  @apply bg-[--sidebar-color]  text-[--secondary-color] select-none;
+}
+
+.accordion-bg:hover {
+  @apply bg-[--sidebar-color]  text-[--secondary-color];
+}
+
+/* Sidebar Accordion */
+.mantine-15l0h0l,
+.mantine-15l0h0l,
+.mantine-1h0npq1 {
+  background-color: var(--sidebar-color);
+  border-color: var(--border-color);
+}
+
+/* MediaTableCell bg */
+.css-quj9j6-MuiTable-root {
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--base-color);
+}
+
+/* MediaTableCellFont color */
+.css-1ygcj2i-MuiTableCell-root,
+.css-1azl6jz-MuiTableCell-root,
+.css-1ex1afd-MuiTableCell-root,
+.css-177gid-MuiTableCell-root {
+  color: var(--secondary-color) !important;
+}
+
+.mantine-1xk8bhn{
+  border:1px solid var(--border-color)
+}
+
+.media-img{
+  @apply w-[160px] h-[150px] object-cover object-center rounded-[5px] cursor-pointer
+}
+/* .bg-dark-opacity {
+    @apply absolute bg-[--sidebar-color] opacity-5 inset-0;
+  } */
+
 html{
     font-family: 'Montserrat', sans-serif;
 }
