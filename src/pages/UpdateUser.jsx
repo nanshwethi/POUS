@@ -1,12 +1,12 @@
-import React from 'react'
-import { Tabs } from '@mantine/core'
+import React from "react";
+import { Tabs } from "@mantine/core";
 
 const UpdateUser = () => {
   return (
-	<div>
+    <div>
       <div className=" ">
         <div className=" h-screen">
-        {/* bg-[#3F4245] */}
+          {/* bg-[#3F4245] */}
           <div className="flex justify-between item-center">
             <div className=" text-start">
               <h1 className=" text-xl font-semibold">User</h1>
@@ -17,7 +17,7 @@ const UpdateUser = () => {
             </button>
           </div>
           <div className=" w-3/4">
-          {/* bg-[#161618] */}
+            {/* bg-[#161618] */}
             <div className=" flex justify-evenly items-center">
               <div className="">
                 <img
@@ -38,10 +38,14 @@ const UpdateUser = () => {
               </div>
             </div>
 
-            <Tabs defaultValue="chat" className=' mt-10' inverted>
+            <Tabs defaultValue="chat" className=" mt-10" inverted>
               <Tabs.List>
-                <Tabs.Tab value="chat" className=' mr-6'>Chat</Tabs.Tab>
-                <Tabs.Tab value="gallery" className=' mr-6'>Gallery</Tabs.Tab>
+                <Tabs.Tab value="chat" className=" mr-6">
+                  Chat
+                </Tabs.Tab>
+                <Tabs.Tab value="gallery" className=" mr-6">
+                  Gallery
+                </Tabs.Tab>
                 <Tabs.Tab value="account">Account</Tabs.Tab>
               </Tabs.List>
               <Tabs.Panel value="chat" pb="xs">
@@ -74,7 +78,7 @@ const UpdateUser = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UpdateUser
+export default UpdateUser;
