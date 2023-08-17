@@ -4,14 +4,15 @@ import { PiGridFour } from "react-icons/pi";
 import { useState } from "react";
 import MediaTable from "./MediaTable";
 import MediaGrid from "./MediaGrid";
-// import {BsListUl} from "react-icons/bs"
-// import {BsListUl} from "react-icons/bs"
+import { Button } from '@mantine/core';
+import {MdArrowBackIosNew} from "react-icons/md"
+import {MdArrowForwardIos} from "react-icons/md"
 
 const Media = () => {
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
 
   return (
-    <div className=" w-full h-full py-4 px-5 bg-[--base-color]">
+    <div className=" w-full h-full py-4 px-5 bg-[--base-color] pb-20">
       <p className="font-semibold	text-[22px] text-white mb-2 select-none	">Media</p>
       <p className="text-white opacity-70 mb-[30px] select-none	">Media / Uploader</p>
       <div className="py-7 border-2 border-[--border-color] bg-[--sidebar-color] w-full h-[230px] flex flex-col  justify-center items-center mb-50">
@@ -51,6 +52,16 @@ const Media = () => {
         </div>
       </div>
       <div>{btnTableIsActive ? <MediaTable /> : <MediaGrid />}</div>
+
+      {/* pagination */}
+      <Button.Group className=" border-[--border-color] pt-20 flex justify-end">
+      <Button variant="default" className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"><MdArrowBackIosNew /></Button>
+      <Button variant="default" className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent">1</Button>
+      <Button variant="default" className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent">2</Button>
+      <Button variant="default" className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent">3</Button>
+      <Button variant="default" className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"><MdArrowForwardIos /></Button>
+    </Button.Group>
+      
     </div>
   );
 };

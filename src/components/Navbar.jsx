@@ -32,7 +32,7 @@ const Navbar = () => {
   // };
 
   return (
-    <div className=" h-[45px] p-5 flex justify-between items-center bg-[--base-color] text-[--secondary-color] border-2 border-[--border-color]">
+    <div className="container-fluid h-[45px] p-5 flex justify-between items-center bg-[--base-color] text-[--secondary-color] border-2 border-[--border-color]">
       <div className=" flex gap-1 items-center">
         <BiMenu
           size={"2rem"}

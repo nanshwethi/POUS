@@ -9,6 +9,7 @@
   --font-color: #8ab4f8;
   --sidebar-color: #161618;
   --secondary-color: #e8eaed;
+  --gray-color:#7E7F80;
   --border-color: #3f4245;
   --logo-font: "Genos", sans-serif;
   --base-font: "Montserrat", serif;
@@ -82,6 +83,14 @@ body {
 .css-1ex1afd-MuiTableCell-root,
 .css-177gid-MuiTableCell-root {
   color: var(--secondary-color) !important;
+}
+
+.mantine-1xk8bhn{
+  border:1px solid var(--border-color)
+}
+
+.media-img{
+  @apply w-[160px] h-[150px] object-cover object-center rounded-[5px] cursor-pointer
 }
 /* .bg-dark-opacity {
     @apply absolute bg-[--sidebar-color] opacity-5 inset-0;

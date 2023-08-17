@@ -14,6 +14,7 @@ import { PiUserSquareBold } from "react-icons/pi";
 
 import { Accordion } from "@mantine/core";
 import { Link } from "react-router-dom";
+import Dot from "./Dot";
 
 // import {  useContextCustom } from '../context/stateContext'
 //import { Link } from "react-router-dom";
@@ -69,11 +70,13 @@ const Sidebar = () => {
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="" />
                   Cashier
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text ">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Recent
                 </p>
               </Accordion.Panel>
@@ -90,21 +93,25 @@ const Sidebar = () => {
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Products
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Add Product
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Stock Control
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Manage Brand
                 </p>
               </Accordion.Panel>
@@ -121,22 +128,23 @@ const Sidebar = () => {
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Overview
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   Create User
                 </p>
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>
-          <Link to={'/media'}>
-
-          <li className="mt-1 li-bg border-b-[1px] border-b-[--border-color]">
-            <FilterOutlinedIcon className=" mr-3" size={"1.8rem"} />
-            <p>Media</p>
-          </li>
+          <Link to={"/media"}>
+            <li className="mt-1 li-bg border-b-[1px] border-b-[--border-color]">
+              <FilterOutlinedIcon className=" mr-3" size={"1.8rem"} />
+              <p>Media</p>
+            </li>
           </Link>
           <Accordion>
             <Accordion.Item value="camera">
@@ -150,11 +158,15 @@ const Sidebar = () => {
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
                   My Account
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
-                <p className="text-sm font-['Montserrat'] font-medium">Edit</p>
+                <p className="text-sm font-['Montserrat'] font-medium">
+                  <Dot className="z-20" />
+                  Edit
+                </p>
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>

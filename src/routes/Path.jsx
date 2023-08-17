@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import Error from "../pages/Error";
 import Media from "../components/Media";
 import Empty from "../components/Empty";
+import MediaImgDetail from '../components/MediaImgDetail';
 // import Error from "../pages/Error";
 
 const Path = () => {
@@ -11,6 +12,7 @@ const Path = () => {
     <div>
         <BrowserRouter>
       <Routes>
+      <Route path="/media/media-grid" element={<MediaImgDetail />} />
       <Route path="/" element={<Dashboard view={<Empty/>}/>} />
       <Route path="/media" element={<Dashboard view={<Media />}/>} />
 
