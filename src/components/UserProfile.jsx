@@ -9,7 +9,7 @@ import { Link as RLink } from 'react-router-dom'
 
 const UserProfile = () => {
   return (
-    <div className=' ms-[200px] bg-[#202124] p-5 px-6 min-h-screen'>
+    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-screen'>
         <div className=' flex justify-between items-center'>
             <div>
                 <h1 className=' text-2xl font-medium text-white'>Profile</h1>
@@ -27,7 +27,7 @@ const UserProfile = () => {
                         <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden mt-[-50px]'>
                             <img src={user} alt="" className='myImg'  />
                         </div>
-                        <RLink to={'/profileEdit'}>
+                        <RLink to={'/profile-edit'}>
                             <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
                         </RLink>
                     </div>
