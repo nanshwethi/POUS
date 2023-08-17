@@ -5,6 +5,8 @@ import Error from "../pages/Error";
 import Media from "../components/Media";
 import Empty from "../components/Empty";
 import MediaImgDetail from '../components/MediaImgDetail';
+import UserProfile from '../components/UserProfile'
+import ProfileEdit from '../components/ProfileEdit'
 // import Error from "../pages/Error";
 
 const Path = () => {
@@ -23,9 +25,16 @@ const Path = () => {
           element={<Dashboard view={<ContactTable />} />}
         /> */}
         <Route path={"/*"} element={<Error />} />
+          <Route element={<UserProfile/>} path='/'/>
+        <Route element={<ProfileEdit/>} path='/proFileEdit'/>
       </Routes>
     </BrowserRouter>
     </div>
+
+
+
+        
+   
   )
 }
 
