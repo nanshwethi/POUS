@@ -27,7 +27,7 @@ const Media = () => {
           </div>
 
         <p className=" text-white">
-          <span className=" text-[--font-color] select-none	select-none	">Browse </span>or Drag an Image
+          <span className=" text-[--font-color]	select-none	">Browse </span>or Drag an Image
         </p>
       </div>
       <div className=" flex justify-between items-center mb-[30px]">

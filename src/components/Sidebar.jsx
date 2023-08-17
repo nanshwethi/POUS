@@ -157,16 +157,20 @@ const Sidebar = () => {
                 </p>
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
-                <p className="text-sm font-['Montserrat'] font-medium">
-                  <Dot className="z-20" />
-                  My Account
-                </p>
+                <Link to={"/user-profile"}>
+                  <p className="text-sm font-['Montserrat'] font-medium">
+                    <Dot className="z-20" />
+                    My Account
+                  </p>
+                </Link>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
-                <p className="text-sm font-['Montserrat'] font-medium">
-                  <Dot className="z-20" />
-                  Edit
-                </p>
+                <Link to={"/profile-edit"}>
+                  <p className="text-sm font-['Montserrat'] font-medium">
+                    <Dot className="z-20" />
+                    Edit
+                  </p>
+                </Link>
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>
