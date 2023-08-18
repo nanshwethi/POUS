@@ -28,12 +28,23 @@ body {
   line-height: 24px;
   font-family: var(--base-font);
 }
+.sidebar-height{
+height: calc(100vh - 45px);
+}
 
 .text-title-logo {
   font-family: "Genos", sans-serif;
   font-size: 26px;
   font-weight: 700;
   color: var(--secondary-color);
+}
+
+.mantine-1fholi4{
+  margin: 0;
+}
+
+.mantine-1k9itrp{
+  margin: auto;
 }
 .mantine-5xkobz{
   border:none;
@@ -45,11 +56,15 @@ body {
   color: var(--font-color);
 }
 
+
 .mantine-15is8t6, .mantine-19pz3dh, [type='button']:hover{
   background-color: var(--base-color);
   color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-color)
 
 }
+
+
 
 @layer components {
   .mb-50 {

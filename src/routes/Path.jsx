@@ -7,7 +7,15 @@ import Empty from "../components/Empty";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
 import ProfileEdit from "../components/ProfileEdit";
-import UserOverView from "../components/UserOverView"
+import UserOverView from "../components/UserOverView";
+import CreateUser from "../components/CreateUser";
+import AddProduct from "../components/AddProduct";
+// import BannedUser from "../components/BannedUser"
+// import Products from "../components/Products";
+// import StockControl from "../components/StockControl";
+// import ManageBrands from "../components/ManageBrands";
+// import Cashier from "../components/Cashier";
+// import Recent from "../components/Recent";
 
 
 const Path = () => {
@@ -15,7 +23,6 @@ const Path = () => {
     <div>
       <Routes>
         <Route path="/*" element={<Error />} />
-
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Empty />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
@@ -31,16 +38,36 @@ const Path = () => {
           path="/user-overview"
           element={<Dashboard view={<UserOverView />} />}
         />
-        {/* <Route path="/create-user" element={<Dashboard view={<ProfileEdit />}/>} />
-      <Route path="/update-user" element={<Dashboard view={<ProfileEdit />}/>} />
-      <Route path="/user-overview" element={<Dashboard view={<ProfileEdit />}/>} /> */}
-
-        {/* <Route path="/" element={<Dashboard view={""}/>} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route
-          path="/contacts"
-          element={<Dashboard view={<ContactTable />} />}
+        <Route
+          path="/create-user"
+          element={<Dashboard view={<CreateUser />} />}
+        />
+        <Route
+          path="/add-product"
+          element={<Dashboard view={<AddProduct />} />}
+        />
+        {/* <Route path="/products" element={<Dashboard view={<Products />} />} />
+        <Route
+          path="/stock-control"
+          element={<Dashboard view={<StockControl />} />}
+        />
+        <Route
+          path="/manage-brands"
+          element={<Dashboard view={<ManageBrands />} />}
+        />
+        <Route
+          path="/cashier"
+          element={<Dashboard view={<Cashier />} />}
+        />
+        <Route
+          path="/recent"
+          element={<Dashboard view={<Recent />} />}
         /> */}
+        {/* <Route
+          path="/banned-user"
+          element={<Dashboard view={<BannedUser />} />}
+        /> */}
+        {/* <Route path="/login" element={<Login />} /> */}
       </Routes>
     </div>
   );

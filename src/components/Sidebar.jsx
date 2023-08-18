@@ -50,7 +50,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`w-[300px] h-full border-r-2 border-r-[--sidebar-color] z-20 `}
+      className=" w-[300px] sidebar-height border-r-[1px] border-r-[--border-color] z-20 "
     >
         <ul className=" ">
           <Link to={'/'}>
@@ -99,10 +99,13 @@ const Sidebar = () => {
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
+              <Link to={'/add-product'}>
+
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
                   Add Product
                 </p>
+                </Link>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
@@ -137,10 +140,13 @@ const Sidebar = () => {
                 </Link>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
+              <Link to={'/create-user'}>
+
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
                   Create User
                 </p>
+                </Link>
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>
