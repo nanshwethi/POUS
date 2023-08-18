@@ -6,7 +6,9 @@ const Breadcrumb = ({breadcrumbItems}) => {
         'breadcrumbItems':PropTypes.any
     }
     const items = breadcrumbItems.map((item, index) => (
-        <Anchor href={item.href} key={index}>
+        <Anchor 
+        // href={item.href}
+         key={index}>
           {item.title}
         </Anchor>
       ));
