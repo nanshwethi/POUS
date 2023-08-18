@@ -7,6 +7,7 @@ import ProfileEditTab from "./ProfileEditTab";
 
 const ProfileEdit = () => {
   return (
+<<<<<<< HEAD
     <div className=" ms-[200px] bg-[#202124] relative">
       {/* breadcrumb & btn */}
       <div className=" flex justify-between p-5 pb-0 px-6 items-center">
@@ -37,6 +38,14 @@ const ProfileEdit = () => {
               <button className=" edit text-2xl m-0 rounded-full">
                 <FiEdit />
               </button>
+=======
+    <div className=' flex-1 bg-[#202124] relative'>
+        {/* breadcrumb & btn */}
+        <div className=' flex justify-between p-5 pb-0 px-6 items-center'>
+            <div>
+                <h1 className=' text-2xl font-medium text-white'>Profile</h1>
+                <p className=' text-gray-400 mt-1 text-xs font-medium'>Profile/My Account/Information</p>
+>>>>>>> 99f6133d4edb672b4970ade6938183574646f64c
             </div>
             <div>
               <h1 className=" text-gray-200 text-2xl font-semibold">
