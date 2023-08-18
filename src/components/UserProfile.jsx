@@ -1,4 +1,3 @@
-import React from 'react'
 import user from '../img/user.jpg'
 import {PiDotFill} from 'react-icons/pi'
 import {AiOutlineMail} from 'react-icons/ai'

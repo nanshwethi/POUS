@@ -9,7 +9,7 @@
   --font-color: #8ab4f8;
   --sidebar-color: #161618;
   --secondary-color: #e8eaed;
-  --gray-color:#7E7F80;
+  --gray-color: #7e7f80;
   --border-color: #3f4245;
   --logo-font: "Genos", sans-serif;
   --base-font: "Montserrat", serif;
@@ -35,32 +35,57 @@ body {
   font-weight: 700;
   color: var(--secondary-color);
 }
-
-.mb-50 {
-  @apply mb-[50px];
+.mantine-5xkobz{
+  border:none;
+  font-family: var(--base-font);
+  font-size: 18px;
+  font-weight: 500;
+}
+.mantine-1v32taa{
+  color: var(--font-color);
 }
 
-.btn-border-table-grid {
-  @apply w-[50px] h-[28px] rounded-[5px] border border-[#7E7F80];
+.mantine-15is8t6, .mantine-19pz3dh, [type='button']:hover{
+  background-color: var(--base-color);
+  color: var(--secondary-color);
+
 }
-.li-bg {
-  @apply py-2 bg-[--sidebar-color] text-[--secondary-color] flex justify-start items-center px-5 select-none;
+
+@layer components {
+  .mb-50 {
+    @apply mb-[50px];
+  }
+
+  .btn-border-table-grid {
+    @apply w-[50px] h-[28px] rounded-[5px] border border-[#7E7F80];
+  }
+  .li-bg {
+    @apply h-[56px] py-2 bg-[--sidebar-color] text-[--secondary-color] flex justify-start items-center px-5 select-none border-[1px] border-[--border-color];
+  }
+  .li-bg:hover{
+    background-color: var(--base-color)
+  }
+
+  .li-text {
+    @apply text-sm bg-[--sidebar-color] text-[--secondary-color] font-medium flex justify-start items-center px-5;
+  }
+
+  .accordion-bg {
+    @apply bg-[--sidebar-color]  text-[--secondary-color] select-none;
+  }
+
+  .accordion-bg:hover {
+    @apply bg-[--sidebar-color]  text-[--secondary-color];
+  }
+
+  .media-img {
+    @apply w-[160px] h-[150px] object-cover object-center rounded-[5px] cursor-pointer;
+  }
 }
+
 .li-bg:hover,
 .li-text:hover {
   cursor: pointer;
-}
-
-.li-text {
-  @apply text-sm bg-[--sidebar-color] text-[--secondary-color] font-medium flex justify-start items-center px-5;
-}
-
-.accordion-bg {
-  @apply bg-[--sidebar-color]  text-[--secondary-color] select-none;
-}
-
-.accordion-bg:hover {
-  @apply bg-[--sidebar-color]  text-[--secondary-color];
 }
 
 /* Sidebar Accordion */
@@ -85,97 +110,86 @@ body {
   color: var(--secondary-color) !important;
 }
 
-.mantine-1xk8bhn{
-  border:1px solid var(--border-color)
+.mantine-1xk8bhn {
+  border: 1px solid var(--border-color);
 }
 
-.media-img{
-  @apply w-[160px] h-[150px] object-cover object-center rounded-[5px] cursor-pointer
-}
 /* .bg-dark-opacity {
     @apply absolute bg-[--sidebar-color] opacity-5 inset-0;
   } */
 
-html{
-    font-family: 'Montserrat', sans-serif;
+.mantine-Tabs-tabLabel {
+  color: white;
 }
 
-.mantine-Tabs-tabLabel{
-    color: white;
+.mantine-UnstyledButton-root {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.mantine-UnstyledButton-root{
-    display: flex;
-    align-items: center;
-    gap: 5px;
+.mantine-Tabs-tabsList {
+  display: flex;
+  align-items: center;
+  gap: 70px;
+  padding-left: 70px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(139, 139, 139);
 }
 
-.mantine-Tabs-tabsList{
-    display: flex;
-    align-items: center;
-    gap: 70px;
-    padding-left: 70px;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(139, 139, 139);
-
+.mantine-Tabs-panel {
+  padding-left: 70px;
+  background-color: #191919;
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
-.mantine-Tabs-panel{
-    padding-left: 70px;
-    background-color: #191919;
-    padding-top: 18px;
-    padding-bottom: 18px;
+button[data-active="true"] {
+  font-weight: 700;
 }
 
-button[data-active="true"]{
-    font-weight: 700;
+button[data-active="true"] .mlb {
+  color: rgb(212, 212, 212);
 }
 
-button[data-active="true"] .mlb{
-    color: rgb(212, 212, 212);
+.edit {
+  position: absolute;
+  background-color: rgb(233, 234, 234);
+  z-index: 1000;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
 }
 
-.edit{
-
-    position: absolute;
-    background-color: rgb(233, 234, 234);
-    z-index: 1000;
-    bottom: 10px;
-    right: 10px;
-    padding: 10px;
-
+.myImg {
+  object-fit: cover;
 }
 
-.myImg{
-    object-fit: cover;
-    
+.myfooter {
+  position: fixed;
+  bottom: 0px;
 }
 
-.myfooter{
-    position: fixed;
-    bottom: 0px;
+.custom-h {
+  height: calc(100vh + 250px);
 }
 
-.custom-h{
-    height: calc(100vh + 250px);
+.fakeRadio {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid rgb(95, 95, 95);
 }
 
-.fakeRadio{
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    border: 1px solid rgb(95, 95, 95);
+.activeR {
+  background-color: rgb(60, 60, 60);
 }
 
-.activeR{
-    background-color: rgb(60, 60, 60);
+.male:checked ~ span {
+  background-color: rgb(73, 73, 73);
 }
 
-.male:checked~span{
-    background-color: rgb(73, 73, 73);
-}
-
-.female:checked~span{
-    background-color: rgb(73, 73, 73);
+.female:checked ~ span {
+  background-color: rgb(73, 73, 73);
 }

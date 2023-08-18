@@ -50,14 +50,15 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`w-[200px] h-full border-r-2 border-r-[--sidebar-color] z-20 `}
+      className={`w-[300px] h-full border-r-2 border-r-[--sidebar-color] z-20 `}
     >
-      <div>
         <ul className=" ">
+          <Link to={'/'}>
           <li className=" li-bg ">
             <FiHome className=" mr-4" size={"1.5rem"} />
             <p>Overview</p>
           </li>
+          </Link>
           <Accordion variant="contained">
             <Accordion.Item value="photos">
               <Accordion.Control
@@ -127,10 +128,13 @@ const Sidebar = () => {
                 </p>
               </Accordion.Control>
               <Accordion.Panel className="accordion-bg li-text">
+                <Link to={'/user-overview'}>
+
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
                   Overview
                 </p>
+                </Link>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
@@ -141,7 +145,7 @@ const Sidebar = () => {
             </Accordion.Item>
           </Accordion>
           <Link to={"/media"}>
-            <li className="mt-1 li-bg border-b-[1px] border-b-[--border-color]">
+            <li className=" li-bg ">
               <FilterOutlinedIcon className=" mr-3" size={"1.8rem"} />
               <p>Media</p>
             </li>
@@ -179,7 +183,6 @@ const Sidebar = () => {
             <p>Logout</p>
           </li>
         </ul>
-      </div>
     </div>
   );
 };

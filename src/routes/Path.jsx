@@ -7,7 +7,8 @@ import Empty from "../components/Empty";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
 import ProfileEdit from "../components/ProfileEdit";
-// import Error from "../pages/Error";
+import UserOverView from "../components/UserOverView"
+
 
 const Path = () => {
   return (
@@ -25,6 +26,10 @@ const Path = () => {
         <Route
           path="/profile-edit"
           element={<Dashboard view={<ProfileEdit />} />}
+        />
+        <Route
+          path="/user-overview"
+          element={<Dashboard view={<UserOverView />} />}
         />
         {/* <Route path="/create-user" element={<Dashboard view={<ProfileEdit />}/>} />
       <Route path="/update-user" element={<Dashboard view={<ProfileEdit />}/>} />
