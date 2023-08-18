@@ -8,15 +8,21 @@ import { Button } from '@mantine/core';
 import {MdArrowBackIosNew} from "react-icons/md"
 import {MdArrowForwardIos} from "react-icons/md"
 import { FileInput } from '@mantine/core';
+import Breadcrumb from "./Breadcrumb";
 
 
 const Media = () => {
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
+  const [breadcrumbItems]=useState([
+    { title: 'Media', href: '#' },
+    { title: 'Uploader', href: '#' }
+    ]);
 
   return (
     <div className=" w-full h-full py-4 px-5 bg-[--base-color] pb-20">
-      <p className="font-semibold	text-[22px] text-white mb-2 select-none	">Media</p>
-      <p className="text-[14px] text-white opacity-70 mb-[30px] select-none	">Media / Uploader</p>
+      <p className="breadcrumb-title	">Media</p>
+      <Breadcrumb breadcrumbItems={breadcrumbItems}/>
+      {/* <p className="text-[14px] text-white opacity-70 mb-[30px] select-none	">Media / Uploader</p> */}
       <div className="py-7 border-2 border-[--border-color] bg-[--sidebar-color] w-full h-[230px] flex flex-col  justify-center items-center mb-50">
         <div className=" relative  mb-[30px]">
         <div className="">
