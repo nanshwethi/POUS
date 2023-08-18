@@ -2,30 +2,18 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
-import { MdClose } from "react-icons/md";
-import { Link } from "react-router-dom";
 
 const MediaImgDetail = () => {
   return (
-    <div className=" bg-[--base-color] pb-20 h-screen">
-      <div className="h-[50px] mb-10 flex justify-between items-center">
-        <span></span>
-        <span className=" text-[--secondary-color]">Strawberries.avif</span>
-        <Link to={"/media"}>
-          <MdClose
-            className=" text-[--secondary-color] cursor-pointer mx-2"
-            size={"1.5rem"}
-          />
-        </Link>
-      </div>
+    <div className=" bg-[--base-color] py-10 ">
       <div className=" flex justify-between items-center mb-10">
         <MdArrowBackIosNew
           className=" text-[--secondary-color] cursor-pointer mx-2"
           size={"1.5rem"}
         />
         <img
-          src="/public/strawberries.avif"
-          className="w-[540px] h-[490px]"
+          src="/strawberries.avif"
+          className="w-[320px] h-[300px]"
           alt=""
         />
         <MdArrowForwardIos
