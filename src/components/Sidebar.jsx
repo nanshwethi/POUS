@@ -95,7 +95,9 @@ const Sidebar = () => {
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
+                  <Link to={'/product'}>
                   Products
+                  </Link>
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
@@ -110,13 +112,17 @@ const Sidebar = () => {
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
+                  <Link to={'/stock'}>
                   Stock Control
+                  </Link>
                 </p>
               </Accordion.Panel>
               <Accordion.Panel className="accordion-bg li-text">
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
+                  <Link to={'/brand'}>
                   Manage Brand
+                  </Link>
                 </p>
               </Accordion.Panel>
             </Accordion.Item>

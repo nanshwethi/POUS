@@ -7,7 +7,7 @@ import ProfileEditTab from "./ProfileEditTab";
 
 const ProfileEdit = () => {
   return (
-    <div className=' ms-[200px] bg-[#202124] relative'>
+    <div className=' flex-1 bg-[#202124] h-edit-profile relative'>
         {/* breadcrumb & btn */}
         <div className=' flex justify-between p-5 pb-0 px-6 items-center'>
             <div>
