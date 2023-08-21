@@ -74,52 +74,6 @@ const Sidebar = () => {
               Overview
             </p>
           </li>
-          </Link>
-          <Accordion variant="contained">
-            <Accordion.Item value="photos">
-              <Accordion.Control
-                className="accordion-bg "
-                icon={<PiStorefrontDuotone size={"1.8rem"} />}
-              >
-                <p className="text-base font-['Montserrat'] font-medium">
-                  Sale
-                </p>
-              </Accordion.Control>
-              <Accordion.Panel className="accordion-bg li-text">
-                <p className="text-sm font-['Montserrat'] font-medium">
-                  <Dot className="" />
-                  Cashier
-                </p>
-              </Accordion.Panel>
-              <Accordion.Panel className="accordion-bg li-text ">
-                <p className="text-sm font-['Montserrat'] font-medium">
-                  <Dot className="z-20" />
-                  Recent
-                </p>
-              </Accordion.Panel>
-            </Accordion.Item>
-
-            <Accordion.Item value="print">
-              <Accordion.Control
-                className="accordion-bg "
-                icon={<TbClipboardList size={"1.8rem"} />}
-              >
-                <p className="text-base font-['Montserrat'] font-medium">
-                  Inventory
-                </p>
-              </Accordion.Control>
-              <Accordion.Panel className="accordion-bg li-text">
-                <p className="text-sm font-['Montserrat'] font-medium">
-                  <Dot className="z-20" />
-                  <Link to={'/product'}>
-                  Products
-                  </Link>
-                </p>
-              </Accordion.Panel>
-              <Accordion.Panel className="accordion-bg li-text">
-              <Link to={'/add-product'}>
-
-                <p className="text-sm font-['Montserrat'] font-medium">
         </Link>
         <Accordion variant="contained">
           <Accordion.Item value="photos">
@@ -165,7 +119,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <p className="text-sm font-['Montserrat'] font-medium">
                 <Dot className="z-20" />
-                Products
+                <Link to={'/product'}>
+                 Products
+                </Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
@@ -182,13 +138,17 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <p className="text-sm font-['Montserrat'] font-medium">
                 <Dot className="z-20" />
+                <Link to={'/stock'}>
                 Stock Control
+                </Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
               <p className="text-sm font-['Montserrat'] font-medium">
                 <Dot className="z-20" />
-                Manage Brand
+                <Link to={'/brand'}>
+                  Manage Brand
+                </Link>
               </p>
             </Accordion.Panel>
           </Accordion.Item>
@@ -209,9 +169,6 @@ const Sidebar = () => {
               <Link to={"/user-overview"}>
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
-                  <Link to={'/stock'}>
-                  Stock Control
-                  </Link>
                   Overview
                 </p>
               </Link>
@@ -220,20 +177,6 @@ const Sidebar = () => {
               <Link to={"/create-user"}>
                 <p className="text-sm font-['Montserrat'] font-medium">
                   <Dot className="z-20" />
-                  <Link to={'/brand'}>
-                  Manage Brand
-                  </Link>
-                </p>
-              </Accordion.Panel>
-            </Accordion.Item>
-
-            <Accordion.Item value="camera">
-              <Accordion.Control
-                className="accordion-bg "
-                icon={<PiUserCirclePlusBold size={"1.8rem"} />}
-              >
-                <p className="text-base font-['Montserrat'] font-medium">
-                  User
                   Create User
                 </p>
               </Link>
