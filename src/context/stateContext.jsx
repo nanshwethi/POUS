@@ -1,13 +1,28 @@
-// import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 
-// const StateContext = createContext();
+const StateContext = createContext();
 
-// export const StateContextProvider = ({ children }) => {
-//   const [showSidebar, setShowSidebar] = useState(true);
+export const StateContextProvider = ({ children }) => {
+    StateContextProvider.propTypes = {
+        children:PropTypes.any
+      };
 
-//   const data = { showSidebar, setShowSidebar };
+  const [showModal, setShowModal] = useState(false);
+  const [current, setCurrent] = useState(1);
 
-//   return <StateContext.Provider value={data}>{children}</StateContext.Provider>;
-// };
+  const nextStepperHandler = () => {
+    if (current < 4) {
+      setCurrent(current + 1);
+    } 
+    //else if (current === 4) {
+    //   setCurrent(1);
+    // }
+  };
 
-// export const useContextCustom = () => useContext(StateContext);
+  const data = { showModal, setShowModal,nextStepperHandler,current, setCurrent };
+
+  return <StateContext.Provider value={data}>{children}</StateContext.Provider>;
+};
+
+export const useContextCustom = () => useContext(StateContext);

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
-//import Login from "../pages/Login";
+import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Media from "../components/Media";
 import Empty from "../components/Empty";
@@ -66,6 +66,14 @@ const Path = () => {
           path="/brand"
           element={<Dashboard view={<Brand/>} />}
         />
+          path="/recent"
+          element={<Dashboard view={<Recent />} />}
+        /> */}
+        {/* <Route
+          path="/banned-user"
+          element={<Dashboard view={<BannedUser />} />}
+        /> */}
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
