@@ -66,6 +66,7 @@ const Path = () => {
           path="/brand"
           element={<Dashboard view={<Brand/>} />}
         />
+        {/* <Route
           path="/recent"
           element={<Dashboard view={<Recent />} />}
         /> */}
