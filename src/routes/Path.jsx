@@ -10,6 +10,10 @@ import ProfileEdit from "../components/ProfileEdit";
 import UserOverView from "../components/UserOverView";
 import CreateUser from "../components/CreateUser";
 import AddProduct from "../components/AddProduct";
+import Product from "../components/Product";
+import ProductDetail from "../components/ProductDetail";
+import Stock from "../components/Stock";
+import Brand from "../components/Brand";
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -46,20 +50,22 @@ const Path = () => {
           path="/add-product"
           element={<Dashboard view={<AddProduct />} />}
         />
-        {/* <Route path="/products" element={<Dashboard view={<Products />} />} />
         <Route
-          path="/stock-control"
-          element={<Dashboard view={<StockControl />} />}
+          path="/product"
+          element={<Dashboard view={<Product/>} />}
         />
         <Route
-          path="/manage-brands"
-          element={<Dashboard view={<ManageBrands />} />}
+          path="/product-detail"
+          element={<Dashboard view={<ProductDetail/>} />}
         />
         <Route
-          path="/cashier"
-          element={<Dashboard view={<Cashier />} />}
+          path="/stock"
+          element={<Dashboard view={<Stock/>} />}
         />
         <Route
+          path="/brand"
+          element={<Dashboard view={<Brand/>} />}
+        />
           path="/recent"
           element={<Dashboard view={<Recent />} />}
         /> */}

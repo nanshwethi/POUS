@@ -298,3 +298,83 @@ button[data-active="true"] .mlb {
 .female:checked ~ span {
   background-color: rgb(73, 73, 73);
 }
+
+.custom-offcanvas{
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: -300px;
+  transition: all .4s ease-out;
+}
+
+.openAni{
+  transform: translateX(-300px);
+}
+
+.tab-list [type="button"]:hover{
+  background-color: transparent;
+  border-bottom: none;
+
+}
+
+
+
+.custom-select .mantine-Select-wrapper{
+  display: flex;
+  width: 70px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(106, 106, 106);
+
+}
+
+.custom-select{
+  position: relative;
+} 
+
+.custom-select .mantine-Select-wrapper .mantine-Select-input{
+    color :rgb(222, 222, 222);
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    width: 45px;
+    text-align: center;
+    padding-left: 4px;
+    outline: none;
+}
+
+.custom-select .mantine-Select-dropdown{
+  position: absolute;
+  top: 0px;
+  background-color: rgb(49, 49, 49);
+  color :rgb(222, 222, 222);
+  font-size: 14px;
+  padding: 0;
+  font-weight: 500;
+  border-top: none;
+  border : 1px solid rgb(106, 106, 106);
+  border-bottom: none;
+  
+}
+
+.custom-select .mantine-Select-dropdown .mantine-Select-item{
+    border-bottom: 1px solid rgb(106, 106, 106);
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+}
+
+.custom-select .mantine-Select-dropdown .mantine-Select-itemsWrapper{
+  padding: 0px;
+
+}
+
+.h-brand{
+  min-height: calc(100vh + 180px);
+}
+
+.h-edit-profile{
+  min-height: calc(100vh + 230px);
+}

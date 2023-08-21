@@ -4,22 +4,9 @@ import {HiOutlineHome} from 'react-icons/hi'
 
 const ProfileEditTab = () => {
 
-  // <input type="radio" id='male' name='gender' className=' relative' />
-  // {/* <span className=' fakeRadio '></span> */}
-  // <label htmlFor="male" className=' me-2 text-gray-500'>male</label>
-  // const [initial,selected] =useState(true)
-
-  // <button className={`fakeRadio me-2 ${initial ? 'activeR' : null}`} onClick={()=>selectedHandler()}></button>
-  //     <p className=' text-gray-500'>male</p>
-
-  // const selectedHandler =()=>{
-  //   const data = document.querySelector('.activeR')
-  //   console.dir(data.classList.contains('.'))
-  // }
-
     return (
-        <Tabs color="teal" unstyled='true' defaultValue="first">
-          <Tabs.List>
+        <Tabs color="teal" unstyled defaultValue="first">
+          <Tabs.List className=' tab-list  '>
             <Tabs.Tab value="first" icon={<HiOutlineHome className=' text-blue-400'/>} >
               <p className=' text-sm mlb text-gray-400'>Personal</p>
             </Tabs.Tab>
