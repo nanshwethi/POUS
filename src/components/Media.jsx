@@ -8,21 +8,23 @@ import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import { FileInput } from "@mantine/core";
-import Breadcrumb from "./Breadcrumb";
+// import Breadcrumb from "./Breadcrumb";
 
 const Media = () => {
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
-  const [breadcrumbItems] = useState([
-    { title: "Media", href: "#" },
-    { title: "Uploader", href: "#" },
-  ]);
+  // const [breadcrumbItems] = useState([
+  //   { title: "Media", href: "#" },
+  //   { title: "Uploader", href: "#" },
+  // ]);
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
       <p className="breadcrumb-title	">Media</p>
-      <Breadcrumb breadcrumbItems={breadcrumbItems} />
-      {/* <p className="text-[14px] text-white opacity-70 mb-[30px] select-none	">Media / Uploader</p> */}
-      <div className="py-7 border-2 border-[--border-color] bg-[--sidebar-color] w-full h-[230px] flex flex-col  justify-center items-center mb-50">
+      <p className=" text-[14px] text-white opacity-70 mb-5 select-none">
+        Media / Uploader
+      </p>
+      {/* <Breadcrumb breadcrumbItems={breadcrumbItems} /> */}
+      <div className="py-7 border-2 border-[--border-color] bg-[--sidebar-color] w-full h-[230px] flex flex-col  justify-center items-center mb-50 mt-7 ">
         <div className=" relative  mb-[30px]">
           <div className="">
             <div className=" w-[100px] h-[100px] rounded-full bg-[#7E7F80] opacity-5 absolute -top-[25%] -left-[25%]"></div>
@@ -71,40 +73,39 @@ const Media = () => {
 
       {/* pagination */}
       <div>
-      <Button.Group className=" border-[--border-color] pt-20 flex justify-end">
-        <Button
-          variant="default"
-          className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-        >
-          <MdArrowBackIosNew />
-        </Button>
-        <Button
-          variant="default"
-          className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-        >
-          1
-        </Button>
-        <Button
-          variant="default"
-          className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-        >
-          2
-        </Button>
-        <Button
-          variant="default"
-          className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-        >
-          3
-        </Button>
-        <Button
-          variant="default"
-          className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-        >
-          <MdArrowForwardIos />
-        </Button>
-      </Button.Group>
+        <Button.Group className=" border-[--border-color] pt-20 flex justify-end">
+          <Button
+            variant="default"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+          >
+            <MdArrowBackIosNew />
+          </Button>
+          <Button
+            variant="default"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+          >
+            1
+          </Button>
+          <Button
+            variant="default"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+          >
+            2
+          </Button>
+          <Button
+            variant="default"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+          >
+            3
+          </Button>
+          <Button
+            variant="default"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+          >
+            <MdArrowForwardIos />
+          </Button>
+        </Button.Group>
       </div>
-
     </div>
   );
 };
