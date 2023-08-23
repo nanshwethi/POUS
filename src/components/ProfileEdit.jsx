@@ -2,7 +2,6 @@ import user from "../img/user.jpg";
 import { PiDotFill } from "react-icons/pi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
-import { FiEdit } from "react-icons/fi";
 import ProfileEditTab from "./ProfileEditTab";
 import { Link } from "react-router-dom";
 
@@ -13,7 +12,7 @@ const ProfileEdit = () => {
         <div className=' flex justify-between p-5 pb-0 px-6 items-center'>
             <div>
                 <h1 className=' text-2xl font-medium text-white'>Profile</h1>
-                <p className=' text-gray-400 mt-1 text-xs font-medium'>Profile/My Account/Information</p>
+                <p className=' text-gray-400 mt-1 text-xs font-medium'>Profile/My Account /Information</p>
             </div>
             <div>
                 <Link to={'/user-profile'}>
