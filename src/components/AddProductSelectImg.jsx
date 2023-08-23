@@ -16,7 +16,6 @@ const AddProductSelectImg = () => {
           </p>
         </div>
                 {/* Upload img end */}
-
         <div className="w-[150px] h-[140px] border rounded-[5px] border-[var(--border-color)] myborder">
             <img src="/lemon.avif" className="w-full h-full object-cover object-center" alt="" />
         </div>

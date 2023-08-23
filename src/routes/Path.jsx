@@ -14,6 +14,7 @@ import Product from "../components/Product";
 import ProductDetail from "../components/ProductDetail";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
+import ProductEdit from "../components/ProductEdit";
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -57,6 +58,10 @@ const Path = () => {
         <Route
           path="/product-detail"
           element={<Dashboard view={<ProductDetail/>} />}
+        />
+        <Route
+          path="/product-edit"
+          element={<Dashboard view={<ProductEdit/>} />}
         />
         <Route
           path="/stock"
