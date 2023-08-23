@@ -10,15 +10,15 @@ const ProfileEditTab = () => {
             <Tabs.Tab value="first" icon={<HiOutlineHome className=' text-blue-400'/>} >
               <p className=' text-sm mlb text-gray-400'>Personal</p>
             </Tabs.Tab>
-            <Tabs.Tab value="second" icon={<HiOutlineHome className=' text-blue-400'/>} >
+            {/* <Tabs.Tab value="second" icon={<HiOutlineHome className=' text-blue-400'/>} >
              <p className=' text-sm mlb text-gray-400'>Login Information</p>
-            </Tabs.Tab>
+            </Tabs.Tab> */}
             <Tabs.Tab value="third" icon={<HiOutlineHome className=' text-blue-400'/>} >
             <p className=' text-sm mlb text-gray-400'>Password</p>
             </Tabs.Tab>
           </Tabs.List>
     
-          <Tabs.Panel value="first" className=' h-[400px]'>
+          <Tabs.Panel value="first" className=' h-[550px]'>
             <div>
               <div className=' flex py-4 text-gray-200 items-center font-medium'>
                 <div className=' w-48 font-semibold text-gray-400'>Name</div>
@@ -50,7 +50,12 @@ const ProfileEditTab = () => {
                     
                 </div>
               </div>
-              
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Email</div> 
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' />
+                </div>
+              </div>
               <div className=' flex py-4 text-gray-200 items-start font-medium'>
                 <div className=' w-48 font-semibold text-gray-400'>Address</div> 
                 <div className=' flex-1'>
@@ -60,7 +65,7 @@ const ProfileEditTab = () => {
             </div>
           </Tabs.Panel>
     
-          <Tabs.Panel value="second" pt="xs" className=' h-[400px]'>
+          {/* <Tabs.Panel value="second" pt="xs" className=' h-[400px]'>
           <div>
               <div className=' flex py-4 text-gray-200 items-center font-medium'>
                 <div className=' w-48 font-semibold text-gray-400'>Phone Number</div>
@@ -75,7 +80,7 @@ const ProfileEditTab = () => {
                 </div>
               </div>
             </div>
-          </Tabs.Panel>
+          </Tabs.Panel> */}
 
           <Tabs.Panel value="third" pt="xs" className=' h-[400px]' >
           <div>

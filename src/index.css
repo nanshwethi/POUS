@@ -378,3 +378,34 @@ button[data-active="true"] .mlb {
 .h-edit-profile{
   min-height: calc(100vh + 230px);
 }
+
+.h-pEdit{
+  min-height: calc(100vh + 300px);
+}
+
+.myModal .mantine-UnstyledButton-root{
+  padding-left: 0;
+  padding-right: 0;
+  display: block;
+}
+
+.myModal .mantine-UnstyledButton-root .mantine-Button-inner{
+  display: block;
+}
+
+.myModal .mantine-UnstyledButton-root .mantine-Button-inner .mantine-Button-label{
+  height: auto;
+}
+
+.myModal .mantine-Modal-inner .mantine-Modal-header {
+  justify-content: space-between;
+}
+
+.mantine-Modal-inner .mantine-Modal-content .mantine-Modal-header .mantine-Modal-title{
+  margin-left: 20px;
+  font-size: larger;
+}
+
+.mantine-Modal-inner .mantine-Modal-content .mantine-Modal-body{
+  padding: 0;
+}

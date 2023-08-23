@@ -24,9 +24,9 @@ const ProductDetail = () => {
                         <div  className=' mt-[-120px]'>
                             <img src={pro1} alt="" className=' rounded-full ' style={{width : '180px',height:'180px'}}/>
                         </div>
-                        {/* <Link to={'/profile-edit'}>
+                        <Link to={'/product-edit'}>
                             <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
-                        </Link> */}
+                        </Link>
                     </div>
                     <div className=' pt-12 px-10'>
                         <p className=' text-3xl font-extrabold text-gray-200 mb-6'>Watermelon</p>

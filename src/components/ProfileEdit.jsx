@@ -4,6 +4,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import ProfileEditTab from "./ProfileEditTab";
+import { Link } from "react-router-dom";
 
 const ProfileEdit = () => {
   return (
@@ -15,7 +16,9 @@ const ProfileEdit = () => {
                 <p className=' text-gray-400 mt-1 text-xs font-medium'>Profile/My Account/Information</p>
             </div>
             <div>
+                <Link to={'/user-profile'}>
                 <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>My Profile</button>
+                </Link>
             </div>
         </div>
         {/* img & tabs */}
@@ -27,7 +30,6 @@ const ProfileEdit = () => {
                         <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden mt-[-50px]'>
                             <img src={user} alt="" className='myImg'  />
                         </div>
-                        <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
                     </div>
                     <div>
                         <h1 className=' text-gray-200 text-2xl font-semibold'>Ethan James</h1>

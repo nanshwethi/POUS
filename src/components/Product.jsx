@@ -92,7 +92,9 @@ const Product = () => {
                             <td className=' pe-5 py-4'>
                                 <div className=' flex items-center justify-end gap-2'>
                                     <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> setOffcanvas(!offcanvas)}><AiOutlinePlus className=' text-gray-200'/></button>
+                                    <Link to={'/product-edit'}>
                                     <button className=' px-2 py-2 bg-slate-600 rounded-full'><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                    </Link>
                                     <Link to={'/product-detail'}>
                                         <button className=' px-2 py-2 bg-slate-600 rounded-full'><AiOutlineArrowRight className=' text-gray-200'/></button>
                                     </Link>
