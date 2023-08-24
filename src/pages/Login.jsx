@@ -49,15 +49,11 @@ const Login = () => {
             console.log(values);
             console.log(data);
 
-            dispatch(addUser({ token: data }));
+            dispatch(addUser({ token: data?.token }));
 
-            if (data) {
+            if (data?.token) {
               nav("/");
             }
-
-            // if (data?.success) {
-            // nav("/");
-            // }
           } catch (error) {
             console.log(error);
           }
