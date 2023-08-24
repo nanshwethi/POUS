@@ -43,21 +43,14 @@ const Login = () => {
         onSubmit={form.onSubmit(async (values) => {
           try {
             const data = await login(values);
-            // const dd= await login(values);
-            // console.log('dd',dd);
-
             console.log(values);
             console.log(data);
 
-            dispatch(addUser({ token: data }));
+            dispatch(addUser({ token: data?.token }));
 
-            if (data) {
+            if (data?.token) {
               nav("/");
             }
-
-            // if (data?.success) {
-            // nav("/");
-            // }
           } catch (error) {
             console.log(error);
           }
