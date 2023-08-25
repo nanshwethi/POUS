@@ -20,9 +20,14 @@ const AddProductSelectImg = () => {
           </p>
         </div>
                 {/* Upload img end */}
+<<<<<<< HEAD
 
         <div onClick={()=>setShowInsertBtn(true)} className={`${showInsertBtn? 'border-4 rounded-[5px] border-[var(--font-color)]':'border rounded-[5px] border-[var(--border-color)]'} w-[150px] h-[140px] overflow-hidden flex justify-center items-center cursor-pointer`}>
             <img src="/lemon.avif" className="w-full h-full object-cover object-center" loading="lazy" alt="" />
+=======
+        <div className="w-[150px] h-[140px] border rounded-[5px] border-[var(--border-color)] myborder">
+            <img src="/lemon.avif" className="w-full h-full object-cover object-center" alt="" />
+>>>>>>> 17b8e8d245a2d5f592c6304245e836b309934ac7
         </div>
         <div className="w-[150px] h-[140px] border rounded-[5px] border-[var(--border-color)]">
             <img src="/lime.avif" className="w-full h-full object-cover object-center" alt="" />

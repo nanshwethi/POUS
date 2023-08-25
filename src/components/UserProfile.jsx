@@ -15,6 +15,7 @@ const UserProfile = () => {
                 <p className=' text-gray-400 mt-1 font-medium text-xs'>Profile/My Account/Information</p>
             </div>
             <div>
+                
                 <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>My Profile</button>
 
             </div>

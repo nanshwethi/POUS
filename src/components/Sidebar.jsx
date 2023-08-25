@@ -158,7 +158,9 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
-                Products
+                <Link to={'/product'}>
+                 Products
+                </Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
@@ -186,7 +188,9 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
+                <Link to={'/stock'}>
                 Stock Control
+                </Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
@@ -199,7 +203,13 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
+<<<<<<< HEAD
                 Manage Brands
+=======
+                <Link to={'/brand'}>
+                  Manage Brand
+                </Link>
+>>>>>>> 17b8e8d245a2d5f592c6304245e836b309934ac7
               </p>
             </Accordion.Panel>
           </Accordion.Item>
