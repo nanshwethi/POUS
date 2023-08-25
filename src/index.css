@@ -49,10 +49,6 @@ body {
   color: var(--secondary-color);
 }
 
-.myborder:active {
-  border: 3px solid var(--font-color);
-}
-
 .mantine-1fholi4 {
   margin: 0;
 }

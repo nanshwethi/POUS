@@ -1,6 +1,10 @@
 import { FiUploadCloud } from "react-icons/fi";
+import { useState } from "react";
 
 const AddProductSelectImg = () => {
+  const [showInsertBtn,setShowInsertBtn]=useState(false);
+
+
   return (
     <div className="w-[700px] h-full flex flex-col justify-center items-center gap-10 px-5">
       <div className=" flex flex-wrap gap-5 justify-start items-center ">
@@ -17,8 +21,8 @@ const AddProductSelectImg = () => {
         </div>
                 {/* Upload img end */}
 
-        <div className="w-[150px] h-[140px] border rounded-[5px] border-[var(--border-color)] myborder">
-            <img src="/lemon.avif" className="w-full h-full object-cover object-center" alt="" />
+        <div onClick={()=>setShowInsertBtn(true)} className={`${showInsertBtn? 'border-4 rounded-[5px] border-[var(--font-color)]':'border rounded-[5px] border-[var(--border-color)]'} w-[150px] h-[140px] overflow-hidden flex justify-center items-center cursor-pointer`}>
+            <img src="/lemon.avif" className="w-full h-full object-cover object-center" loading="lazy" alt="" />
         </div>
         <div className="w-[150px] h-[140px] border rounded-[5px] border-[var(--border-color)]">
             <img src="/lime.avif" className="w-full h-full object-cover object-center" alt="" />
@@ -30,7 +34,7 @@ const AddProductSelectImg = () => {
             <img src="/pineapple.avif" className="w-full h-full object-cover object-center" alt="" />
         </div>
       </div>
-      <button className="w-[100px] h-[40px] font-semibold text-[16px] myBlueBtn ml-auto">
+      <button className={`${showInsertBtn? 'block':'hidden'} w-[100px] h-[40px] font-semibold text-[16px] myBlueBtn ml-auto`}>
           insert
         </button>
     </div>

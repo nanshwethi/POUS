@@ -3,10 +3,35 @@ import { PiStorefrontDuotone } from "react-icons/pi";
 import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
+import { useAddProductMutation } from "../redux/api/productApi";
+import Cookies from "js-cookie";
 
 const AddProductInfoPreview = () => {
-  const { setShowModal } = useContextCustom();
-  const createProductHandler = () => {
+  const {
+    productName,
+    brand,
+    unit,
+    productInfo,
+    stock,
+    actualPrice,
+    salePrice,
+    setShowModal,
+  } = useContextCustom();
+  const [addProduct]=useAddProductMutation();
+  
+  const createProductHandler = async() => {
+    const token=Cookies.get('token');
+    const product={name:productName,
+      brand_id:brand,
+      unit,
+      more_information:productInfo,
+      // stock,
+      actual_price:actualPrice,
+      sale_price:salePrice};
+      const data = await addProduct({product,token});
+      console.log('dddd',data);
+      console.log('pppp',product)
+
     setShowModal(true);
   };
   return (
@@ -85,7 +110,6 @@ const AddProductInfoPreview = () => {
       </div>
 
       {/* Stepper end */}
-      
     </div>
   );
 };
