@@ -41,10 +41,14 @@ const Login = () => {
       <form
         onSubmit={form.onSubmit(async (values) => {
           try {
+<<<<<<< HEAD
             const {data} = await login(values);
             // const dd= await login(values);
             // console.log('dd',dd);
 
+=======
+            const data = await login(values);
+>>>>>>> 83ebb7fa0082ef06b9b46f8dd7ce8aa3231bae61
             console.log(values);
             console.log(data);
 
