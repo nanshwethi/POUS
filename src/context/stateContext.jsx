@@ -20,7 +20,9 @@ export const StateContextProvider = ({ children }) => {
   const [stock, setStock] = useState(3);
   const [actualPrice, setActualPrice] = useState(400);
   const [salePrice, setSalePrice] = useState(600);
-const [photo,setPhoto]=useState('https://h.mmsdev.site/storage/photos/YUy16QtugI8tPG92QkySTXaOb4Gx3tkIAHv7sHBQ.png');
+  const [photo,setPhoto]=useState(null);
+
+// const [photo,setPhoto]=useState('https://h.mmsdev.site/storage/photos/YUy16QtugI8tPG92QkySTXaOb4Gx3tkIAHv7sHBQ.png');
 
   const nextStepperHandler = () => {
     if (current < 4) {
@@ -33,42 +35,9 @@ const [photo,setPhoto]=useState('https://h.mmsdev.site/storage/photos/YUy16QtugI
   };
   // for sidebar
 
-  const [isActivedOverview, setIsActivedOverview] = useState(false);
-  const [isActivedMedia, setIsActivedMedia] = useState(false);
-  const [isActivedLogout, setIsActivedLogout] = useState(false);
-
-  const [isActivedCashier, setIsActivedCashier] = useState(false);
-  const [isActivedRecent, setIsActivedRecent] = useState(false);
-  const [isActivedProducts, setIsActivedProducts] = useState(false);
-  const [isActivedAddProduct, setIsActivedAddProduct] = useState(false);
-  const [isActivedStock, setIsActivedStock] = useState(false);
-  const [isActivedBrands, setIsActivedBrands] = useState(false);
-  const [isActivedUserOverview, setIsActivedUserOverview] = useState(false);
-  const [isActivedUserCreate, setIsActivedUserCreate] = useState(false);
-  const [isActivedUserBanned, setIsActivedUserBanned] = useState(false);
-  const [isActivedMyAccount, setIsActivedMyAccount] = useState(false);
-  const [isActivedEdit, setIsActivedEdit] = useState(false);
-
-  const defaultHandler=()=>{
-    setIsActivedOverview(false);
-    setIsActivedMedia(false);
-    setIsActivedLogout(false);
-    setIsActivedCashier(false);
-    setIsActivedRecent(false);
-    setIsActivedProducts(false);
-    setIsActivedAddProduct(false);
-    setIsActivedStock(false);
-    setIsActivedBrands(false);
-    setIsActivedUserOverview(false);
-    setIsActivedUserCreate(false);
-    setIsActivedUserBanned(false);
-    setIsActivedMyAccount(false);
-    setIsActivedEdit(false);
-  }
-
+  const [sidebarActived,setSidebarActived]=useState();
   const liHandler = (liname) => {
-    defaultHandler();
-    liname(true);
+    setSidebarActived(liname);
   };
 
   const data = {
@@ -86,9 +55,7 @@ const [photo,setPhoto]=useState('https://h.mmsdev.site/storage/photos/YUy16QtugI
 
     showModal,setShowModal,nextStepperHandler,current,setCurrent,
 
-    liHandler,defaultHandler,
-    isActivedOverview, setIsActivedOverview,isActivedMedia, setIsActivedMedia,isActivedLogout, setIsActivedLogout,isActivedCashier, setIsActivedCashier,isActivedRecent, setIsActivedRecent,isActivedProducts, setIsActivedProducts,
-    isActivedAddProduct, setIsActivedAddProduct,isActivedStock, setIsActivedStock,isActivedBrands, setIsActivedBrands,isActivedUserOverview, setIsActivedUserOverview,isActivedUserCreate, setIsActivedUserCreate,isActivedUserBanned, setIsActivedUserBanned,isActivedMyAccount, setIsActivedMyAccount,isActivedEdit, setIsActivedEdit
+    liHandler,sidebarActived,setSidebarActived
   };
 
   return <StateContext.Provider value={data}>{children}</StateContext.Provider>;

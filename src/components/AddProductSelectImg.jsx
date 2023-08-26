@@ -5,48 +5,53 @@ import { useSelector } from "react-redux";
 import { useContextCustom } from "../context/stateContext";
 
 const AddProductSelectImg = () => {
-  const { defaultHandler, setIsActivedMedia } = useContextCustom();
+  const { liHandler, setShowModal, setPhoto } = useContextCustom();
   const [showInsertBtn, setShowInsertBtn] = useState(false);
-  const [active,setActive]=useState();
+  const [picture, setPicture] = useState();
+  const [active, setActive] = useState();
   const imgs = useSelector((state) => state.mediaSlice.photos);
 
-  const liHandler = () => {
-    defaultHandler();
-    setIsActivedMedia(true);
+  const showBtn = (imgId, imgUrl) => {
+    setActive(imgId);
+    setShowInsertBtn(true);
+    setPicture(imgUrl);
   };
-  const showBtn=(imgId)=>{
-    setActive(imgId)
-    setShowInsertBtn(true)
-  }
+
+  const insertHandler = () => {
+    setPhoto(picture);
+    setShowModal(false);
+  };
 
   return (
     <div className="w-[900px] h-[500px] flex flex-col justify-center items-center gap-10 px-5 ">
       <div className="h-[400px] flex flex-wrap gap-5 justify-start items-center overflow-y-scroll">
         {/* Upload img start */}
-        <div onClick={liHandler} className=" cursor-pointer">    
-        <Link to={'/media'}>
-          <div className="w-[150px] h-[140px] bg-black flex flex-col justify-center items-center gap-3 border border-[var(--border-color)]">
-            <div className=" w-[100px] h-[100px] rounded-full bg-[var(--gray-color)] opacity-5 absolute -top-[25%] -left-[25%]"></div>
-            <div className=" w-[67px] h-[67px] border-dashed border-2 border-[var(--secondary-color)] rounded-full bg-[--base-color] flex justify-center items-center">
-              <FiUploadCloud className=" text-[--font-color]" size={"1.5rem"} />
+        <div onClick={() => liHandler("media")} className=" cursor-pointer">
+          <Link to={"/media"}>
+            <div className="w-[150px] h-[140px] bg-black flex flex-col justify-center items-center gap-3 border border-[var(--border-color)]">
+              <div className=" w-[100px] h-[100px] rounded-full bg-[var(--gray-color)] opacity-5 absolute -top-[25%] -left-[25%]"></div>
+              <div className=" w-[67px] h-[67px] border-dashed border-2 border-[var(--secondary-color)] rounded-full bg-[--base-color] flex justify-center items-center">
+                <FiUploadCloud
+                  className=" text-[--font-color]"
+                  size={"1.5rem"}
+                />
+              </div>
+              <p className=" text-white text-[14px]">
+                <span className=" text-[--font-color]	select-none">Upload </span>{" "}
+                Image
+              </p>
             </div>
-            <p className=" text-white text-[14px]">
-              <span className=" text-[--font-color]	select-none">Upload </span>{" "}
-              Image
-            </p>
-          </div>
-          </Link>    
-
-           </div>
+          </Link>
+        </div>
 
         {/* Upload img end */}
         {imgs.map((photo) => {
           return (
             <div
               key={photo.id}
-              onClick={()=>showBtn(photo.id)}
+              onClick={() => showBtn(photo.id, photo.url)}
               className={`${
-                active===photo.id
+                active === photo.id
                   ? "border-4 rounded-[5px] border-[var(--font-color)]"
                   : "border rounded-[5px] border-[var(--border-color)]"
               } w-[150px] h-[140px] overflow-hidden flex justify-center items-center cursor-pointer`}
@@ -62,6 +67,7 @@ const AddProductSelectImg = () => {
         })}
       </div>
       <button
+        onClick={insertHandler}
         className={`${
           showInsertBtn ? "opacity-100" : "opacity-0"
         } w-[100px] h-[40px] font-semibold text-[16px] myBlueBtn ml-auto`}

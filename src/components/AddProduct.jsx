@@ -11,16 +11,11 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
 const AddProduct = () => {
-  const { showModal, current,defaultHandler, setIsActivedProducts } = useContextCustom();
+  const { showModal, current, liHandler } = useContextCustom();
   const token = Cookies.get("token");
   const {data} = useGetProductsQuery(token);
   console.log('ddd',data?.data);
   console.log("cu", current);
-
-  const liHandler = () => {
-    defaultHandler();
-    setIsActivedProducts(true);
-  };
 
   return (
     <div className=" container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -33,7 +28,7 @@ const AddProduct = () => {
           </p>{" "}
         </div>
         <Link to={'/product'}>
-        <button onClick={liHandler} className="w-[140px] h-[40px] font-semibold text-[16px] myBlueBtn">
+        <button onClick={()=>liHandler("products")} className="w-[140px] h-[40px] font-semibold text-[16px] myBlueBtn">
           Product List
         </button>
         </Link>

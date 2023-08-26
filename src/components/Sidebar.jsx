@@ -14,16 +14,15 @@ import { useDispatch } from "react-redux";
 import { removeUser } from "../redux/services/authSlice";
 import Cookies from "js-cookie";
 import { useContextCustom } from "../context/stateContext";
+// import { BrandingWatermarkOutlined } from "@mui/icons-material";
 
 const Sidebar = () => {
   // const theme = useMantineTheme();
   // const getColor = (color) =>
   //   theme.colors[color][theme.colorScheme === "dark" ? 5 : 7];
 
-  const { setCurrent } = useContextCustom();
-  const {liHandler,
-    isActivedOverview, setIsActivedOverview,isActivedMedia, setIsActivedMedia,isActivedLogout, setIsActivedLogout,isActivedCashier, setIsActivedCashier,isActivedRecent, setIsActivedRecent,isActivedProducts, setIsActivedProducts,
-    isActivedAddProduct, setIsActivedAddProduct,isActivedStock, setIsActivedStock,isActivedBrands, setIsActivedBrands,isActivedUserOverview, setIsActivedUserOverview,isActivedUserCreate, setIsActivedUserCreate,isActivedUserBanned, setIsActivedUserBanned,isActivedMyAccount, setIsActivedMyAccount,isActivedEdit, setIsActivedEdit}=useContextCustom();
+  const { setCurrent,liHandler,
+    sidebarActived } = useContextCustom();
 
   const token = Cookies.get("token");
   console.log(token);
@@ -34,7 +33,7 @@ const Sidebar = () => {
 
   const addProductHandler = () => {
     setCurrent(1);
-    liHandler(setIsActivedAddProduct);
+    liHandler("add product");
   };
 
   const logoutHandler = async () => {
@@ -56,9 +55,9 @@ const Sidebar = () => {
               size={"1.5rem"}
             />
             <p
-              onClick={() => liHandler(setIsActivedOverview)}
+              onClick={() => liHandler("overview")}
               className={`${
-                isActivedOverview
+                sidebarActived==="overview"
                   ? "text-[var(--font-color)]"
                   : "text-[var(--secondary-color)]"
               }`}
@@ -82,9 +81,9 @@ const Sidebar = () => {
             </Accordion.Control>
             <Accordion.Panel className="accordion-bg li-text">
               <p
-                onClick={() => liHandler(setIsActivedCashier)}
+                onClick={() => liHandler("cashier")}
                 className={`${
-                  isActivedCashier
+                  sidebarActived==="cashier"
                     ? "text-[var(--font-color)]"
                     : "text-[var(--secondary-color)]"
                 } text-sm font-['Montserrat'] font-medium `}
@@ -94,17 +93,18 @@ const Sidebar = () => {
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text ">
+              <Link to={'/recent'}>
               <p
-                onClick={() => liHandler(setIsActivedRecent)}
+                onClick={() => liHandler("recent")}
                 className={`${
-                  isActivedRecent
+                  sidebarActived==="recent"
                     ? "text-[var(--font-color)]"
                     : "text-[var(--secondary-color)]"
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
                 Recent
-              </p>
+              </p></Link>
             </Accordion.Panel>
           </Accordion.Item>
 
@@ -124,9 +124,9 @@ const Sidebar = () => {
             </Accordion.Control>
             <Accordion.Panel className="accordion-bg li-text">
               <p
-                onClick={() => liHandler(setIsActivedProducts)}
+                onClick={() => liHandler("products")}
                 className={`${
-                  isActivedProducts
+                  sidebarActived==="products"
                     ? "text-[var(--font-color)]"
                     : "text-[var(--secondary-color)]"
                 } text-sm font-['Montserrat'] font-medium `}
@@ -140,7 +140,7 @@ const Sidebar = () => {
                 <p
                   onClick={addProductHandler}
                   className={`${
-                    isActivedAddProduct
+                    sidebarActived==="add product"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -152,9 +152,9 @@ const Sidebar = () => {
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
               <p
-                onClick={() => liHandler(setIsActivedStock)}
+                onClick={() => liHandler("stock")}
                 className={`${
-                  isActivedStock
+                  sidebarActived==="stock"
                     ? "text-[var(--font-color)]"
                     : "text-[var(--secondary-color)]"
                 } text-sm font-['Montserrat'] font-medium `}
@@ -165,9 +165,9 @@ const Sidebar = () => {
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
               <p
-                onClick={() => liHandler(setIsActivedBrands)}
+                onClick={() => liHandler("brand")}
                 className={`${
-                  isActivedBrands
+                  sidebarActived==="brand"
                     ? "text-[var(--font-color)]"
                     : "text-[var(--secondary-color)]"
                 } text-sm font-['Montserrat'] font-medium `}
@@ -193,9 +193,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <Link to={"/user-overview"}>
                 <p
-                  onClick={() => liHandler(setIsActivedUserOverview)}
+                  onClick={() => liHandler("user overview")}
                   className={`${
-                    isActivedUserOverview
+                    sidebarActived==="user overview"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -208,9 +208,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <Link to={"/create-user"}>
                 <p
-                  onClick={() => liHandler(setIsActivedUserCreate)}
+                  onClick={() => liHandler("user create")}
                   className={`${
-                    isActivedUserCreate
+                    sidebarActived==="user create"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -223,9 +223,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <Link to={"/banned-user"}>
                 <p
-                  onClick={() => liHandler(setIsActivedUserBanned)}
+                  onClick={() => liHandler("user banned")}
                   className={`${
-                    isActivedUserBanned
+                    sidebarActived==="user banned"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -244,9 +244,9 @@ const Sidebar = () => {
               size={"1.8rem"}
             />
             <p
-              onClick={() => liHandler(setIsActivedMedia)}
+              onClick={() => liHandler("media")}
               className={`${
-                isActivedMedia
+                sidebarActived==="media"
                   ? "text-[var(--font-color)]"
                   : "text-[var(--secondary-color)]"
               }`}
@@ -273,9 +273,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <Link to={"/user-profile"}>
                 <p
-                  onClick={() => liHandler(setIsActivedMyAccount)}
+                  onClick={() => liHandler("my account")}
                   className={`${
-                    isActivedMyAccount
+                    sidebarActived==="my account"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -288,9 +288,9 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <Link to={"/profile-edit"}>
                 <p
-                  onClick={() => liHandler(setIsActivedEdit)}
+                  onClick={() => liHandler("edit")}
                   className={`${
-                    isActivedEdit
+                    sidebarActived==="edit"
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -308,9 +308,9 @@ const Sidebar = () => {
             size={"1.8rem"}
           />
           <p
-            onClick={() => liHandler(setIsActivedLogout)}
+            onClick={() => liHandler("logout")}
             className={`${
-              isActivedLogout
+              sidebarActived==="logout"
                 ? "text-[var(--font-color)]"
                 : "text-[var(--secondary-color)]"
             }`}

@@ -3,12 +3,7 @@ import { useContextCustom } from "../context/stateContext";
 import { Link } from "react-router-dom";
 
 const ModalCreateProduct = () => {
-  const { defaultHandler, setIsActivedProducts } = useContextCustom();
-
-  const liHandler = () => {
-    defaultHandler();
-    setIsActivedProducts(true);
-  };
+  const { liHandler} = useContextCustom();
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-10">
@@ -21,7 +16,7 @@ const ModalCreateProduct = () => {
             Successfully created the product
           </p>
           <Link to={'/product'}>
-          <button onClick={liHandler} className="w-[250px] h-[40px] font-medium text-[14px] myBlueBtn">
+          <button onClick={()=>liHandler("products")} className="w-[250px] h-[40px] font-medium text-[14px] myBlueBtn">
             SEE ALL PRODUCTS{" "}
           </button>
           </Link>

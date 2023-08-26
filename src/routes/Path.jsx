@@ -15,12 +15,12 @@ import ProductDetail from "../components/ProductDetail";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
 import ProductEdit from "../components/ProductEdit";
+import Recent from "../components/Recent";
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
 // import ManageBrands from "../components/ManageBrands";
 // import Cashier from "../components/Cashier";
-// import Recent from "../components/Recent";
 
 
 const Path = () => {
@@ -71,10 +71,10 @@ const Path = () => {
           path="/brand"
           element={<Dashboard view={<Brand/>} />}
         />
-        {/* <Route
+        <Route
           path="/recent"
           element={<Dashboard view={<Recent />} />}
-        /> */}
+        />
         {/* <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
