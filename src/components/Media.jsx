@@ -14,8 +14,11 @@ import {
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { addPhotos } from "../redux/services/mediaSlice";
+import { useContextCustom } from "../context/stateContext";
 
 const Media = () => {
+  const { isActivedMedia } = useContextCustom();
+console.log(isActivedMedia);
   const token = Cookies.get("token");
   const {data} = useGetPhotoQuery(token);
   console.log('ddd',data?.data);
@@ -26,24 +29,19 @@ const Media = () => {
   const [photo, setPhoto] = useState([]);
   const dispatch = useDispatch();
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
-  // const {image} = useGetPhotoQuery(token);
 
-  // useEffect(()=>{
-  //   const aa =dispatch(uploadPhoto());
-  //   console.log("aa", aa);
-  // },[photo])
   useEffect(() => {
     dispatch(addPhotos({photos:data?.data}));
   },[data]);
 
   const uploadImg = async (imgUrl) => {
     try {
-      const data = uploadPhoto({ photos: imgUrl, token });
-      console.log("ooo", { photos: imgUrl });
+      // const data = uploadPhoto({ photos: imgUrl, token });
+      // console.log("ooo", { photos: imgUrl });
+      const data = uploadPhoto({photos:imgUrl, token} );
+      console.log("ooo", imgUrl);
       console.log("uurl", data);
-      // console.log("ff", image);
-
-      // const { arg } = uploadPhoto(url);
+      console.log("tt",token);// const { arg } = uploadPhoto(url);
       // console.log("url", arg.originalArgs);
     } catch (error) {
       console.log("err", error);

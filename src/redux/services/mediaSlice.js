@@ -10,7 +10,7 @@ export const mediaSlice = createSlice({
   initialState,
   reducers: {
     addPhotos: (state, { payload }) => {
-      (state.photos = payload.photos), 
+      (state.photos =payload.photos), 
       Cookies.set("photos", JSON.stringify(state.photos));
     },
     // removePhoto: (state) => {

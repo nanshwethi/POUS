@@ -10,7 +10,8 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     addProduct: (state, { payload }) => {
-      (state.product = [...state.product,{...payload}]);
+      // (state.product = [...state.product,{...payload}]);
+      (state.product =payload.product), 
 
       // (state.product = payload.product);
     //   (state.token = payload.token);

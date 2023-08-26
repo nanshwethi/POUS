@@ -1,26 +1,63 @@
-// import { useEffect, useState } from "react";
+// import React from 'react'
+// import { useQuery } from 'react-query';
+
+// const fetchArrayData = async () => {
+//   const response = await fetch(`https://h.mmsdev.site/api/v1/photos=['blob:http://localhost:5173/7b9656eb-b5f0-4b87-8243-07b89abd40b5']`);
+//   const data = await response.json();
+//   console.log('test',data)
+//   return data;
+// };
+
 
 // const Test = () => {
-//     const [photos, setPhotos] = useState([]);
+//     const { data, error, isLoading } = useQuery('arrayData', fetchArrayData);
 
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
 
-//   const fetchData = async () => {
-//     const api = await fetch(
-//       "https://h.mmsdev.site/api/v1/photo"
-//     );
-//     const data = await api.json();
-//     console.log('pho data',data)
-//     // setProducts(meals);
-//   };
+//   if (error) {
+//     return <div>Error: {error.message}</div>;
+//   }
 
 //   return (
-//     <div>Test</div>
-//   )
+
+// <div>
+//       <h1>Array Data</h1>
+//       <ul>
+//         {data.map(item => (
+//           <li key={item}>{item}</li>
+//         ))}
+//       </ul>
+//     </div> 
+
+//      )
 // }
 
 // export default Test
+// // import { useEffect, useState } from "react";
 
-// //blob:http://localhost:5173/7b9656eb-b5f0-4b87-8243-07b89abd40b5
+// // const Test = () => {
+// //     const [photos, setPhotos] = useState([]);
+
+// //   useEffect(() => {
+// //     fetchData();
+// //   }, []);
+
+// //   const fetchData = async () => {
+// //     const api = await fetch(
+// //       "https://h.mmsdev.site/api/v1/photo"
+// //     );
+// //     const data = await api.json();
+// //     console.log('pho data',data)
+// //     // setProducts(meals);
+// //   };
+
+// //   return (
+// //     <div>Test</div>
+// //   )
+// // }
+
+// // export default Test
+
+// // //blob:http://localhost:5173/7b9656eb-b5f0-4b87-8243-07b89abd40b5

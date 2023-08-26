@@ -7,25 +7,42 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useGetPhotoQuery } from "../redux/api/mediaApi";
-// import Cookies from "js-cookie";
-// import { useEffect } from "react";
-// import { addPhotos } from "../redux/services/mediaSlice";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { useDeletePhotoMutation  } from "../redux/api/mediaApi";
+import { useEffect } from "react";
+import { addPhotos } from "../redux/services/mediaSlice";
 
 const MediaTable = ({imgs}) => {
-  // const token = Cookies.get("token");
-  // const {data} = useGetPhotoQuery(token);
-  // console.log('ddd',data?.data);
-  // // const [deletePhoto] = useDeletePhotoMutation();
-  // const dispatch = useDispatch();
-  // const photos = useSelector((state) => state.mediaSlice.photos);
-  // console.log('photos',photos);
+  const token = Cookies.get("token");
+  const [deletePhoto] = useDeletePhotoMutation();
+  const dispatch = useDispatch();
  
+  useEffect(() => {
+    dispatch(addPhotos({photos:imgs}));
+  },[imgs]);
 
-  // useEffect(() => {
-  //   dispatch(addPhotos({photos:data?.data}));
-  // },[data]);
+  
+  const deletePhotoHandler =async (id) => {
+    const { data } = await deletePhoto({ id, token });
+        console.log('del',data);
+
+    // Swal.fire({
+    //   title: "Are you sure?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Yes, delete it!",
+    // }).then(async (result) => {
+    //   if (result.isConfirmed) {
+    //     Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    //     const { data } = await deletePhoto({ id, token });
+    //     console.log('del',data);
+    //   }
+    // });
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -56,6 +73,7 @@ const MediaTable = ({imgs}) => {
               <TableCell align="right">
                 <div className="w-[60px] mx-auto flex justify-end items-center gap-2">
                   <button
+                  onClick={() => deletePhotoHandler(photo?.id)}
                     className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
                   >
                     <RiDeleteBinLine size={'1.3rem'}/>

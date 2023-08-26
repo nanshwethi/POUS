@@ -14,31 +14,16 @@ import { useDispatch } from "react-redux";
 import { removeUser } from "../redux/services/authSlice";
 import Cookies from "js-cookie";
 import { useContextCustom } from "../context/stateContext";
-import { useState } from "react";
 
 const Sidebar = () => {
   // const theme = useMantineTheme();
   // const getColor = (color) =>
   //   theme.colors[color][theme.colorScheme === "dark" ? 5 : 7];
 
-  // const [,set]=useState(false);
-  const [isActivedOverview, setIsActivedOverview] = useState(false);
-  const [isActivedMedia, setIsActivedMedia] = useState(false);
-  const [isActivedLogout, setIsActivedLogout] = useState(false);
-
-  const [isActivedCashier, setIsActivedCashier] = useState(false);
-  const [isActivedRecent, setIsActivedRecent] = useState(false);
-  const [isActivedProducts, setIsActivedProducts] = useState(false);
-  const [isActivedAddProduct, setIsActivedAddProduct] = useState(false);
-  const [isActivedStock, setIsActivedStock] = useState(false);
-  const [isActivedBrands, setIsActivedBrands] = useState(false);
-  const [isActivedUserOverview, setIsActivedUserOverview] = useState(false);
-  const [isActivedUserCreate, setIsActivedUserCreate] = useState(false);
-  const [isActivedUserBanned, setIsActivedUserBanned] = useState(false);
-  const [isActivedMyAccount, setIsActivedMyAccount] = useState(false);
-  const [isActivedEdit, setIsActivedEdit] = useState(false);
-
   const { setCurrent } = useContextCustom();
+  const {liHandler,
+    isActivedOverview, setIsActivedOverview,isActivedMedia, setIsActivedMedia,isActivedLogout, setIsActivedLogout,isActivedCashier, setIsActivedCashier,isActivedRecent, setIsActivedRecent,isActivedProducts, setIsActivedProducts,
+    isActivedAddProduct, setIsActivedAddProduct,isActivedStock, setIsActivedStock,isActivedBrands, setIsActivedBrands,isActivedUserOverview, setIsActivedUserOverview,isActivedUserCreate, setIsActivedUserCreate,isActivedUserBanned, setIsActivedUserBanned,isActivedMyAccount, setIsActivedMyAccount,isActivedEdit, setIsActivedEdit}=useContextCustom();
 
   const token = Cookies.get("token");
   console.log(token);
@@ -47,20 +32,9 @@ const Sidebar = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
 
-  const defaulLiHandler = () => {
-    setIsActivedOverview(false);
-    setIsActivedMedia(false);
-    setIsActivedLogout(false);
-  };
-
-  const liHandler = (liname) => {
-    defaulLiHandler();
-    liname(true);
-  };
-
   const addProductHandler = () => {
     setCurrent(1);
-    setIsActivedCashier(true);
+    liHandler(setIsActivedAddProduct);
   };
 
   const logoutHandler = async () => {
@@ -158,9 +132,7 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
-                <Link to={'/product'}>
-                 Products
-                </Link>
+                <Link to={"/product"}>Products</Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
@@ -168,7 +140,7 @@ const Sidebar = () => {
                 <p
                   onClick={addProductHandler}
                   className={`${
-                    isActivedCashier
+                    isActivedAddProduct
                       ? "text-[var(--font-color)]"
                       : "text-[var(--secondary-color)]"
                   } text-sm font-['Montserrat'] font-medium `}
@@ -188,9 +160,7 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
-                <Link to={'/stock'}>
-                Stock Control
-                </Link>
+                <Link to={"/stock"}>Stock Control</Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text">
@@ -203,13 +173,7 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
-<<<<<<< HEAD
-                Manage Brands
-=======
-                <Link to={'/brand'}>
-                  Manage Brand
-                </Link>
->>>>>>> 17b8e8d245a2d5f592c6304245e836b309934ac7
+                <Link to={"/brand"}>Manage Brand</Link>
               </p>
             </Accordion.Panel>
           </Accordion.Item>
@@ -253,6 +217,21 @@ const Sidebar = () => {
                 >
                   <Dot className="z-20" />
                   Create User
+                </p>
+              </Link>
+            </Accordion.Panel>
+            <Accordion.Panel className="accordion-bg li-text">
+              <Link to={"/banned-user"}>
+                <p
+                  onClick={() => liHandler(setIsActivedUserBanned)}
+                  className={`${
+                    isActivedUserBanned
+                      ? "text-[var(--font-color)]"
+                      : "text-[var(--secondary-color)]"
+                  } text-sm font-['Montserrat'] font-medium `}
+                >
+                  <Dot className="z-20" />
+                  Banned User
                 </p>
               </Link>
             </Accordion.Panel>

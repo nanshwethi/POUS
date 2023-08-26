@@ -48,7 +48,7 @@ const AddProductInfo = () => {
                 Brand
               </label>
               <input
-                type="text"
+                type="number"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 placeholder="brand"
@@ -63,7 +63,7 @@ const AddProductInfo = () => {
                 Stock
               </label>
               <input
-                type="text"
+                type="number"
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
                 placeholder=""

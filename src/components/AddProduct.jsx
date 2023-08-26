@@ -6,25 +6,41 @@ import AddProductInfoPreview from "./AddProductInfoPreview";
 import Modal from "./Modal";
 import AddProductSelectImg from "./AddProductSelectImg";
 import { useContextCustom } from "../context/stateContext";
+import { useGetProductsQuery } from "../redux/api/productApi";
+import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const AddProduct = () => {
-  const { showModal, current } = useContextCustom();
-
+  const { showModal, current,defaultHandler, setIsActivedProducts } = useContextCustom();
+  const token = Cookies.get("token");
+  const {data} = useGetProductsQuery(token);
+  console.log('ddd',data?.data);
   console.log("cu", current);
+
+  const liHandler = () => {
+    defaultHandler();
+    setIsActivedProducts(true);
+  };
 
   return (
     <div className=" container mx-auto py-4 px-5 bg-[--base-color] pb-20">
+      {/* Breadcrumg start */}
       <div className=" flex justify-between items-center mb-20">
         <div>
-          <p className="breadcrumb-title	">Media</p>
+          <p className="breadcrumb-title	">Add Product</p>
           <p className=" text-[14px] text-white opacity-70  select-none">
             Inventory / Add Product
           </p>{" "}
         </div>
-        <button className="w-[140px] h-[40px] font-semibold text-[16px] myBlueBtn">
+        <Link to={'/product'}>
+        <button onClick={liHandler} className="w-[140px] h-[40px] font-semibold text-[16px] myBlueBtn">
           Product List
         </button>
+        </Link>
+
       </div>
+      {/* Breadcrumg end */}
+
       <div className=" flex gap-20 justify-start items-stretch">
         {current === 1 ? <AddProductInfo /> : ""}
         {current === 2 ? <AddProductPrice /> : ""}
