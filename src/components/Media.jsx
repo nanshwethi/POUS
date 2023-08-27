@@ -21,9 +21,9 @@ const Media = () => {
   console.log(isActivedMedia);
   const token = Cookies.get("token");
   const { data } = useGetPhotoQuery(token);
-  console.log("ddd", data?.data);
   const imgs = useSelector((state) => state.mediaSlice.photos);
-  console.log("imgs", imgs);
+  // console.log("ddd", data?.data);
+  // console.log("imgs", imgs);
 
   const [uploadPhoto] = useUploadPhotoMutation();
   const [photo, setPhoto] = useState([]);

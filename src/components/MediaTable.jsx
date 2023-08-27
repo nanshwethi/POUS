@@ -45,36 +45,6 @@ const MediaTable = ({ imgs }) => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>NO</TableCell>
-              <TableCell align="right">NAME</TableCell>
-              <TableCell align="right">ACCOUNT</TableCell>
-              <TableCell align="right">Extension</TableCell>
-              <TableCell align="right">FILE SIZE</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {imgs?.map((photo) => (
-              <TableRow key={photo.id}>
-                <TableCell component="th" scope="row">
-                  {photo.id}
-                </TableCell>
-                <TableCell align="right">{photo.name}</TableCell>
-                <TableCell align="right">{photo.user_name}</TableCell>
-                <TableCell align="right">{photo.extension}</TableCell>
-                {/* <TableCell align="right">{photo.url}</TableCell> */}
-                <TableCell align="right">{photo.fileSize}</TableCell>
-                <TableCell align="right"></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
       <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
         <thead>
           <tr className=" border-b border-b-gray-700">

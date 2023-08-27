@@ -8,6 +8,13 @@ export const productApi = createApi({
   tagTypes: ["product"],
 
   endpoints: (builder) => ({
+    getProducts: builder.query({
+      query: (token) => ({
+        url: "/product",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["product"],
+    }),
     addProduct: builder.mutation({
       query: ({ product, token }) => ({
         url: `/product`,
@@ -20,4 +27,4 @@ export const productApi = createApi({
   }),
 });
 
-export const { useAddProductMutation } = productApi;
+export const { useAddProductMutation, useGetProductsQuery } = productApi;

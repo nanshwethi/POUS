@@ -24,7 +24,9 @@ const AddProductSelectImg = () => {
 
   return (
     <div className="w-[900px] h-[500px] flex flex-col justify-center items-center gap-10 px-5 ">
-      <div className="h-[400px] flex flex-wrap gap-5 justify-start items-center overflow-y-scroll">
+      <div className="h-[400px] flex flex-wrap gap-5 justify-start items-center 
+      ">
+         {/* overflow-y-scroll */}
         {/* Upload img start */}
         <div onClick={() => liHandler("media")} className=" cursor-pointer">
           <Link to={"/media"}>
