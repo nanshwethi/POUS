@@ -4,15 +4,12 @@ import { BsArrowRightShort } from "react-icons/bs";
 
 const AddProductPrice = () => {
   const {
-    stock,
-    unit,
     actualPrice,
     setActualPrice,
     salePrice,
     setSalePrice,
     nextStepperHandler,
   } = useContextCustom();
-  console.log("ss", stock, unit);
 
   return (
     <div className="flex gap-20 justify-start items-stretch bg-[--base-color]">

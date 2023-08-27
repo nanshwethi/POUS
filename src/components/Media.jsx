@@ -1,7 +1,7 @@
 import { FiUploadCloud } from "react-icons/fi";
 import { BsListUl } from "react-icons/bs";
 import { PiGridFour } from "react-icons/pi";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MediaTable from "./MediaTable";
 import MediaGrid from "./MediaGrid";
 import { Button } from "@mantine/core";
@@ -18,12 +18,12 @@ import { useContextCustom } from "../context/stateContext";
 
 const Media = () => {
   const { isActivedMedia } = useContextCustom();
-console.log(isActivedMedia);
+  console.log(isActivedMedia);
   const token = Cookies.get("token");
-  const {data} = useGetPhotoQuery(token);
-  console.log('ddd',data?.data);
+  const { data } = useGetPhotoQuery(token);
+  console.log("ddd", data?.data);
   const imgs = useSelector((state) => state.mediaSlice.photos);
-  console.log('imgs',imgs);
+  console.log("imgs", imgs);
 
   const [uploadPhoto] = useUploadPhotoMutation();
   const [photo, setPhoto] = useState([]);
@@ -31,17 +31,17 @@ console.log(isActivedMedia);
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
 
   useEffect(() => {
-    dispatch(addPhotos({photos:data?.data}));
-  },[data]);
+    dispatch(addPhotos({ photos: data?.data }));
+  }, [data]);
 
   const uploadImg = async (imgUrl) => {
     try {
       // const data = uploadPhoto({ photos: imgUrl, token });
       // console.log("ooo", { photos: imgUrl });
-      const data = uploadPhoto({photos:imgUrl, token} );
+      const data = uploadPhoto({ photos: imgUrl, token });
       console.log("ooo", imgUrl);
       console.log("uurl", data);
-      console.log("tt",token);// const { arg } = uploadPhoto(url);
+      console.log("tt", token); // const { arg } = uploadPhoto(url);
       // console.log("url", arg.originalArgs);
     } catch (error) {
       console.log("err", error);
@@ -58,7 +58,6 @@ console.log(isActivedMedia);
     uploadImg(imgUrl);
   };
 
-  
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
       <p className="breadcrumb-title	">Media</p>
@@ -142,7 +141,13 @@ console.log(isActivedMedia);
           </button>
         </div>
       </div>
-      <div>{btnTableIsActive ? <MediaTable imgs={imgs}/> : <MediaGrid imgs={imgs}/>}</div>
+      <div>
+        {btnTableIsActive ? (
+          <MediaTable imgs={imgs} />
+        ) : (
+          <MediaGrid imgs={imgs} />
+        )}
+      </div>
 
       {/* pagination */}
       <div>

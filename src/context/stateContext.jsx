@@ -14,7 +14,7 @@ export const StateContextProvider = ({ children }) => {
   // for add product
 
   const [productName, setProductName] = useState('table');
-  const [brand, setBrand] = useState("orange");
+  const [brand, setBrand] = useState('');
   const [unit, setUnit] = useState('single');
   const [productInfo, setProductInfo] = useState('ddd');
   const [stock, setStock] = useState(3);

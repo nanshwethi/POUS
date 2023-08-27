@@ -45,7 +45,7 @@ const AddProductSelectImg = () => {
         </div>
 
         {/* Upload img end */}
-        {imgs.map((photo) => {
+        {imgs?.map((photo) => {
           return (
             <div
               key={photo.id}

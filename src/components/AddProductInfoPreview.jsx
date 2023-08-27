@@ -5,35 +5,51 @@ import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
 import { useAddProductMutation } from "../redux/api/productApi";
 import Cookies from "js-cookie";
+import { useMemo } from "react";
 
 const AddProductInfoPreview = () => {
   const {
     productName,
+    setProductName,
     brand,
-    unit,
-    productInfo,
-    stock,
-    actualPrice,
-    salePrice,
-    setShowModal,photo
+    setBrand,
+    unit,setUnit,
+    productInfo,setProductInfo,
+    stock,setStock,
+    actualPrice,setActualPrice,
+    salePrice,setSalePrice,
+    photo,setPhoto,
+    setShowModal
   } = useContextCustom();
-  const [addProduct]=useAddProductMutation();
-  
-  const createProductHandler = async() => {
-    const token=Cookies.get('token');
-    const product={name:productName,
-      brand_id:brand,
-      unit,
-      more_information:productInfo,
-      // stock,
-      actual_price:actualPrice,
-      sale_price:salePrice};
-      const data = await addProduct({product,token});
-      console.log('dddd',data);
-      console.log('pppp',product)
+  const [addProduct] = useAddProductMutation();
+
+  const createProductHandler = async () => {
+    const token = Cookies.get("token");
+    const product = {
+      name: productName,
+      brand_id: brand,
+      unit: unit,
+      more_information: productInfo,
+      stock: Number(stock),
+      actual_price: Number(actualPrice),
+      sale_price: Number(salePrice),
+      photo: photo,
+    };
+    const data = await addProduct({ product, token });
+    console.log("dddd", data);
+    console.log("pppp", product);
 
     setShowModal(true);
+    // setProductName();
+    // setUnit();
+    // setBrand();
+    // setProductInfo();
+    // setStock();
+    // setActualPrice();
+    // setSalePrice();
+    // setPhoto();
   };
+
   return (
     <div className="flex gap-20 justify-start items-stretch bg-[--base-color]">
       <div className="w-[680px]">
@@ -51,7 +67,7 @@ const AddProductInfoPreview = () => {
 
             <div>
               <h1 className=" text-[26px] text-white font-semibold">
-              {productName}
+                {productName}
               </h1>
               <p className=" text-[14px] font-medium text-[#C5C1C1]">
                 Sale price:{" "}
@@ -61,7 +77,9 @@ const AddProductInfoPreview = () => {
               </p>
               <p className=" text-[14px] font-medium text-[#C5C1C1]">
                 Actual price:{" "}
-                <span className=" text-[var(--secondary-color)]">{actualPrice} MMK</span>
+                <span className=" text-[var(--secondary-color)]">
+                  {actualPrice} MMK
+                </span>
               </p>
             </div>
           </div>

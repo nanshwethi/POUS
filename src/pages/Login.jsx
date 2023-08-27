@@ -24,7 +24,7 @@ const Login = () => {
   const form = useForm({
     initialValues: {
       email: "admin@gmail.com",
-      password: "hellohello",
+      password: "asdffdsa",
     },
 
     validate: {

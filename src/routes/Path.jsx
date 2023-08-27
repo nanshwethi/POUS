@@ -3,7 +3,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Media from "../components/Media";
-import Empty from "../components/Empty";
+import Home from "../components/Home";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
 import ProfileEdit from "../components/ProfileEdit";
@@ -29,7 +29,7 @@ const Path = () => {
       <Routes>
         <Route path="/*" element={<Error />} />
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
-        <Route path="/" element={<Dashboard view={<Empty />} />} />
+        <Route path="/" element={<Dashboard view={<Home />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
         <Route
           path="/user-profile"

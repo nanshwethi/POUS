@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../context/stateContext";
-import { Input, Select } from "@mantine/core";
 import { BsSearch } from "react-icons/bs";
-import { FaAngleDown } from "react-icons/fa";
+import { useState } from "react";
 const Recent = () => {
   const { liHandler } = useContextCustom();
-  //   const [filterValue, setFilterValue] = useState(null);
-  //   const [sortValue, setSortValue] = useState(null);
+    const [filterValue, setFilterValue] = useState();
+    const [sortValue, setSortValue] = useState();
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -42,24 +41,32 @@ const Recent = () => {
         </div>
         <div className=" flex items-baseline">
           <p className=" text-sm text-gray-400 me-2">Sort : </p>
-          <Select
-            defaultValue={"last"}
-            className=" recent-dropDrown"
-            rightSection={
-              <FaAngleDown
-                size="1rem"
-                className="text-[var(--secondary-color)]"
-              />
-            }
-            rightSectionWidth={30}
-            unstyled
-            data={[
-              { value: "last", label: "last" },
-              { value: "first", label: "first" },
-            ]}
-          />
+          <select
+              name="sort"
+              value={sortValue}
+              onChange={(e) => setSortValue(e.target.value)}
+              className="recent-dropdown "
+            >
+              <option value="last" className="recent-dropdown">
+                Last
+              </option>
+              <option value="first" className="recent-dropdown">
+                First{" "}
+              </option>
+            </select>
           <p className=" text-sm text-gray-400 ms-5 me-2">Filter : </p>
-          <Select
+          <select
+              name="filter"
+              value={filterValue}
+              onChange={(e) => setFilterValue(e.target.value)}
+              className="recent-dropdown"
+            >
+              <option value="all" className="recent-dropdown">
+                All Files
+              </option>
+             
+            </select>
+          {/* <Select
             defaultValue={"all"}
             className=" recent-dropDrown"
             rightSection={
@@ -74,7 +81,7 @@ const Recent = () => {
               { value: "all", label: "All Files" },
               { value: "aa", label: "aa" },
             ]}
-          />
+          /> */}
         </div>
       </div>
       <table className="w-full text-gray-300 border border-gray-700 text-sm ">
