@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import PropTypes from "prop-types";
 
 const Dashboard = ({ view }) => {
+  
   Dashboard.propTypes = {
     view: PropTypes.any,
   };

@@ -1,6 +1,10 @@
 import { BsCheckLg } from "react-icons/bs";
+import { useContextCustom } from "../context/stateContext";
+import { Link } from "react-router-dom";
 
 const ModalCreateProduct = () => {
+  const { liHandler} = useContextCustom();
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-10">
           <div className=" w-[150px] h-[150px] rounded-full bg-[var(--base-color)] flex justify-center items-center">
@@ -11,9 +15,11 @@ const ModalCreateProduct = () => {
           <p className=" text-[18px] font-semibold text-white">
             Successfully created the product
           </p>
-          <button className="w-[250px] h-[40px] font-medium text-[14px] myBlueBtn">
+          <Link to={'/product'}>
+          <button onClick={()=>liHandler("products")} className="w-[250px] h-[40px] font-medium text-[14px] myBlueBtn">
             SEE ALL PRODUCTS{" "}
           </button>
+          </Link>
         </div>
   )
 }

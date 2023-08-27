@@ -3,7 +3,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Media from "../components/Media";
-import Empty from "../components/Empty";
+import Home from "../components/Home";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
 import ProfileEdit from "../components/ProfileEdit";
@@ -15,12 +15,12 @@ import ProductDetail from "../components/ProductDetail";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
 import ProductEdit from "../components/ProductEdit";
+import Recent from "../components/Recent";
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
 // import ManageBrands from "../components/ManageBrands";
 // import Cashier from "../components/Cashier";
-// import Recent from "../components/Recent";
 
 
 const Path = () => {
@@ -29,7 +29,7 @@ const Path = () => {
       <Routes>
         <Route path="/*" element={<Error />} />
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
-        <Route path="/" element={<Dashboard view={<Empty />} />} />
+        <Route path="/" element={<Dashboard view={<Home />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
         <Route
           path="/user-profile"
@@ -71,10 +71,10 @@ const Path = () => {
           path="/brand"
           element={<Dashboard view={<Brand/>} />}
         />
-        {/* <Route
+        <Route
           path="/recent"
           element={<Dashboard view={<Recent />} />}
-        /> */}
+        />
         {/* <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
