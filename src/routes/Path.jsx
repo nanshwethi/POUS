@@ -15,6 +15,8 @@ import ProductDetail from "../components/ProductDetail";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
 import ProductEdit from "../components/ProductEdit";
+import Shop from "../pages/Shop";
+import ShopList from "../components/ShopList";
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -25,9 +27,10 @@ import ProductEdit from "../components/ProductEdit";
 
 const Path = () => {
   return (
-    <div>
+    <div >
       <Routes>
         <Route path="/*" element={<Error />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Empty />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
@@ -38,6 +41,10 @@ const Path = () => {
         <Route
           path="/profile-edit"
           element={<Dashboard view={<ProfileEdit />} />}
+        />
+        <Route
+          path="/shop-list"
+          element={<Dashboard view={<ShopList />} />}
         />
         <Route
           path="/user-overview"

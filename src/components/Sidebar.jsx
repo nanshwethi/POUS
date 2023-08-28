@@ -91,13 +91,17 @@ const Sidebar = () => {
             <Accordion.Panel className="accordion-bg li-text">
               <p className="text-sm font-['Montserrat'] font-medium">
                 <Dot className="" />
+                <Link to={'/shop'}>
                 Cashier
+                </Link>
               </p>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text ">
               <p className="text-sm font-['Montserrat'] font-medium">
                 <Dot className="z-20" />
+                <Link to={'/shop-list'}>
                 Recent
+                </Link>
               </p>
             </Accordion.Panel>
           </Accordion.Item>

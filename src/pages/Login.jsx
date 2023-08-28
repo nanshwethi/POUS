@@ -7,7 +7,6 @@ import { useLoginMutation } from "../redux/api/authApi";
 import { addUser } from "../redux/services/authSlice";
 import { blueGrey } from "@mui/material/colors";
 import {grey } from "@mui/material/colors";
-
 import Checkbox from "@mui/material/Checkbox";
 import { BiSquare } from "react-icons/bi";
 import { BiSolidSquare } from "react-icons/bi";
@@ -48,8 +47,12 @@ const Login = () => {
 
             console.log(values);
             console.log(data);
-
-            dispatch(addUser({ token: data }));
+            const user = {
+              email : values.email,
+              token : data.data.token
+            }
+            dispatch(addUser({ token: data?.data?.token }));
+            dispatch()
 
             if (data) {
               nav("/");
