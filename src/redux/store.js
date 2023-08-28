@@ -13,6 +13,7 @@ import { productApi } from "./api/productApi";
 import productSlice from "./services/productSlice";
 import { brandApi } from "./api/brandApi";
 import brandSlice from "./services/brandSlice";
+import { userApi } from "./api/userApi";
 
 
 export const store = configureStore({
@@ -23,6 +24,7 @@ export const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     [brandApi.reducerPath]: brandApi.reducer,
     [stockApi.reducerPath]: stockApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
 
     authSlice: authSlice,
     mediaSlice: mediaSlice,
@@ -37,7 +39,8 @@ export const store = configureStore({
       mediaApi.middleware,
       productApi.middleware,
       brandApi.middleware,
-      stockApi.middleware
+      stockApi.middleware,
+      userApi.middleware
     ),
 
 });

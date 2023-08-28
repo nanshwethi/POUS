@@ -20,6 +20,7 @@ import Shop from "../pages/Shop";
 import ShopList from "../components/ShopList";
 
 import Recent from "../components/Recent";
+import BannedUser from "../components/BannedUser";
 
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
@@ -85,10 +86,10 @@ const Path = () => {
           path="/recent"
           element={<Dashboard view={<Recent />} />}
         />
-        {/* <Route
+        <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
-        /> */}
+        />
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>
