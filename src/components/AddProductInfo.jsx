@@ -1,13 +1,55 @@
 import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
+import Cookies from "js-cookie";
+import { useGetBrandsQuery } from "../redux/api/brandApi";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useMemo, useState } from "react";
+import { addBrands } from "../redux/services/brandSlice";
+
 const AddProductInfo = () => {
-  const { nextStepperHandler } = useContextCustom();
+  const {
+    productName,
+    setProductName,
+    brand,
+    setBrand,
+    unit,
+    setUnit,
+    productInfo,
+    setProductInfo,
+    stock,
+    setStock,
+    nextStepperHandler,
+  } = useContextCustom();
+  const token = Cookies.get("token");
+  const { data } = useGetBrandsQuery(token);
+
+  const dispatch = useDispatch();
+  const brands = useSelector((state) => state.brandSlice.brands);
+  // console.log("brand", data);
+  // console.log("bbbrand", brands);
+
+  useEffect(() => {
+    dispatch(addBrands({ brands: data?.data }));
+  }, [data]);
+
+  const nextHandler = () => {
+    // const ppp=dispatch(addProduct)
+    nextStepperHandler();
+  };
+
+  // useMemo(() => {
+  //   console.log("first", brand);
+  // }, [brand]);
 
   return (
-    <div className=" flex gap-20 justify-start items-stretch bg-[--base-color]">
-      <div className=" w-[680px] h-fit bg-[var(--sidebar-color)]">
-        <form action="" className="px-14 py-10 flex flex-col gap-5">
+    <div className=" ">
+      <form
+        onSubmit={nextHandler}
+        action=""
+        className=" flex gap-20 justify-start items-stretch bg-[--base-color]"
+      >
+        <div className=" flex flex-col gap-5 px-14 py-10 w-[680px] h-fit bg-[var(--sidebar-color)]">
           <div className=" flex justify-start items-start">
             <label
               htmlFor=""
@@ -17,10 +59,10 @@ const AddProductInfo = () => {
             </label>
             <input
               type="text"
-              //   value={email}
-              //   onChange={(e) => setEmail(e.target.value)}
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
               placeholder="Product Name"
-              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)]"
+              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />{" "}
           </div>
           <div className=" flex justify-start items-start">
@@ -30,11 +72,24 @@ const AddProductInfo = () => {
             >
               Brand
             </label>
-            <input
-              type="text"
-              placeholder="Product Name"
-              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)]"
-            />
+            <select
+              name="brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="brand-dropdown brand-select "
+            >
+              {brands?.map((brand) => {
+                return (
+                  <option
+                    key={brand?.id}
+                    value={brand?.id}
+                    className="brand-dropdown"
+                  >
+                    {brand?.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div className=" flex justify-start items-start">
             <label
@@ -45,8 +100,10 @@ const AddProductInfo = () => {
             </label>
             <input
               type="text"
-              placeholder="Product Name"
-              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)]"
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+              placeholder=""
+              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />
           </div>{" "}
           <div className=" flex justify-start items-start">
@@ -56,11 +113,19 @@ const AddProductInfo = () => {
             >
               Unit
             </label>
-            <input
-              type="text"
-              placeholder="Product Name"
-              className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)]"
-            />
+            <select
+              name="unit"
+              value={unit}
+              onChange={(e) => setUnit(e.target.value)}
+              className="brand-dropdown "
+            >
+              <option value="single" className="brand-dropdown brand-option">
+                single
+              </option>
+              <option value="dozen" className="brand-dropdown brand-option">
+                dozen{" "}
+              </option>
+            </select>
           </div>{" "}
           <div className=" flex justify-start items-start">
             <label
@@ -70,21 +135,24 @@ const AddProductInfo = () => {
               More Info
             </label>
             <textarea
-              placeholder="Product Name"
-              className="w-[380px] h-[100px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)]"
+              value={productInfo}
+              onChange={(e) => setProductInfo(e.target.value)}
+              placeholder=""
+              className="w-[380px] h-[100px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />
           </div>
-        </form>
-      </div>
-      <div className="w-[150px] h-[460px] flex flex-col justify-between items-center">
-        <AddProductStepper />
-        <button
-          onClick={nextStepperHandler}
-          className="w-[110px] h-[40px] myBlueBtn font-medium text-[14px] flex justify-center items-center gap-2"
-        >
-          Next <BsArrowRightShort size={"1.5rem"} />
-        </button>
-      </div>
+        </div>
+        <div className="w-[150px] h-[460px] flex flex-col justify-between items-center">
+          <AddProductStepper />
+          <button
+            type="submit"
+            // onClick={nextStepperHandler}
+            className="w-[110px] h-[40px] myBlueBtn font-medium text-[14px] flex justify-center items-center gap-2"
+          >
+            Next <BsArrowRightShort size={"1.5rem"} />
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

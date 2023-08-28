@@ -54,10 +54,6 @@ body {
   color: var(--secondary-color);
 }
 
-.myborder:active {
-  border: 3px solid var(--font-color);
-}
-
 .mantine-1fholi4 {
   margin: 0;
 }
@@ -183,6 +179,12 @@ body {
   .step-line-next {
     @apply bg-[var(--border-color)];
   }
+  .brand-dropdown{
+    @apply w-[380px] h-[50px] bg-[var(--base-color)] border border-[var(--border-color)] rounded-[5px] text-[var(--secondary-color)] text-[16px] font-medium px-4 py-1
+  }
+  .recent-dropdown{
+    @apply w-[100px] h-[30px] bg-[var(--base-color)] border border-[var(--border-color)] text-[var(--secondary-color)] text-[16px] font-medium px-1 py-1
+  }
 }
 
 .li-bg:hover,
@@ -204,6 +206,65 @@ body {
 .mantine-1h0npq1 {
   background-color: var(--sidebar-color);
   border-color: var(--border-color);
+}
+/* recent drop  */
+.recent-dropDrown .mantine-Select-wrapper {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--border-color);
+}
+
+.recent-dropDrown{
+  position: relative;
+}
+
+.recent-dropDrown .mantine-Select-wrapper .mantine-Select-input {
+  color: var(--secondary-color);
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  width: 80px;
+  text-align: center;
+  padding-left: 4px;
+  outline: none;
+}
+
+.brand-dropDrown .mantine-Select-wrapper .mantine-Select-input {
+  color: var(--secondary-color);
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  width: 320px;
+  text-align: start;
+  padding: 4px 20px;
+  outline: none;
+  border-width: 2px;
+border-radius: 5px;
+border-color: var(--border-color);
+}
+
+.recent-dropDrown .mantine-Select-dropdown{
+  position: absolute;
+  top: 0px;
+  background-color: rgb(49, 49, 49);
+  color: var(--secondary-color);
+  font-size: 14px;
+  padding: 0;
+  font-weight: 500;
+  border-top: none;
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+}
+
+.recent-dropDrown .mantine-Select-dropdown .mantine-Select-item{
+  border-bottom: 1px solid var(--border-color);
+  padding: 4px 0px 4px 10px;
+}
+
+.recent-dropDrown .mantine-Select-dropdown .mantine-Select-itemsWrapper{
+  padding: 0px;
 }
 
 /* MediaTableCell bg */
@@ -304,101 +365,97 @@ button[data-active="true"] .mlb {
   background-color: rgb(73, 73, 73);
 }
 
-.custom-offcanvas{
+.custom-offcanvas {
   width: 300px;
   height: 100%;
   position: absolute;
   top: 0;
   right: -300px;
-  transition: all .4s ease-out;
+  transition: all 0.4s ease-out;
 }
 
-.openAni{
+.openAni {
   transform: translateX(-300px);
 }
 
-.tab-list [type="button"]:hover{
+.tab-list [type="button"]:hover {
   background-color: transparent;
   border-bottom: none;
-
 }
 
-
-
-.custom-select .mantine-Select-wrapper{
+.custom-select .mantine-Select-wrapper {
   display: flex;
   width: 70px;
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(106, 106, 106);
-
 }
 
-.custom-select{
+.custom-select {
   position: relative;
-} 
-
-.custom-select .mantine-Select-wrapper .mantine-Select-input{
-    color :rgb(222, 222, 222);
-    background-color: transparent;
-    font-size: 14px;
-    font-weight: 500;
-    width: 45px;
-    text-align: center;
-    padding-left: 4px;
-    outline: none;
 }
 
-.custom-select .mantine-Select-dropdown{
+.custom-select .mantine-Select-wrapper .mantine-Select-input {
+  color: rgb(222, 222, 222);
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  width: 45px;
+  text-align: center;
+  padding-left: 4px;
+  outline: none;
+}
+
+.custom-select .mantine-Select-dropdown {
   position: absolute;
   top: 0px;
   background-color: rgb(49, 49, 49);
-  color :rgb(222, 222, 222);
+  color: rgb(222, 222, 222);
   font-size: 14px;
   padding: 0;
   font-weight: 500;
   border-top: none;
-  border : 1px solid rgb(106, 106, 106);
+  border: 1px solid rgb(106, 106, 106);
   border-bottom: none;
-  
 }
 
-.custom-select .mantine-Select-dropdown .mantine-Select-item{
-    border-bottom: 1px solid rgb(106, 106, 106);
-    padding-left: 10px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-
+.custom-select .mantine-Select-dropdown .mantine-Select-item {
+  border-bottom: 1px solid rgb(106, 106, 106);
+  padding-left: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-.custom-select .mantine-Select-dropdown .mantine-Select-itemsWrapper{
+.custom-select .mantine-Select-dropdown .mantine-Select-itemsWrapper {
   padding: 0px;
-
 }
 
-.h-brand{
+.h-brand {
   min-height: calc(100vh + 180px);
 }
 
-.h-edit-profile{
+.h-edit-profile {
   min-height: calc(100vh + 230px);
 }
 
-.h-pEdit{
+.h-pEdit {
   min-height: calc(100vh + 300px);
 }
 
-.myModal .mantine-UnstyledButton-root{
+.myModal .mantine-UnstyledButton-root {
   padding-left: 0;
   padding-right: 0;
   display: block;
 }
 
-.myModal .mantine-UnstyledButton-root .mantine-Button-inner{
+.myModal .mantine-UnstyledButton-root .mantine-Button-inner {
   display: block;
 }
 
-.myModal .mantine-UnstyledButton-root .mantine-Button-inner .mantine-Button-label{
+.myModal
+  .mantine-UnstyledButton-root
+  .mantine-Button-inner
+  .mantine-Button-label {
   height: auto;
 }
 
@@ -406,12 +463,15 @@ button[data-active="true"] .mlb {
   justify-content: space-between;
 }
 
-.mantine-Modal-inner .mantine-Modal-content .mantine-Modal-header .mantine-Modal-title{
+.mantine-Modal-inner
+  .mantine-Modal-content
+  .mantine-Modal-header
+  .mantine-Modal-title {
   margin-left: 20px;
   font-size: larger;
 }
 
-.mantine-Modal-inner .mantine-Modal-content .mantine-Modal-body{
+.mantine-Modal-inner .mantine-Modal-content .mantine-Modal-body {
   padding: 0;
 }
 
@@ -430,3 +490,4 @@ button[data-active="true"] .mlb {
 .active-list{
   border: 1.5px solid rgb(132, 132, 133);
 }
+
