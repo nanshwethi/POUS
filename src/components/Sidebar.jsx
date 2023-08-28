@@ -25,8 +25,6 @@ const Sidebar = () => {
     sidebarActived } = useContextCustom();
 
   const token = Cookies.get("token");
-  console.log(token);
-
   const [logout] = useLogoutMutation();
   const nav = useNavigate();
   const dispatch = useDispatch();

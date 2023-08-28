@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import {useGetPhotoQuery} from '../redux/api/mediaApi'
 import { useDispatch } from "react-redux";
-import { useMemo } from "react";
+import { useEffect } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
   const { data } = useGetPhotoQuery(token);
 const dispatch=useDispatch();
 
-  useMemo(() => {
+  useEffect(() => {
     dispatch(addPhotos({ photos: data?.data }));
   }, [data]);
 

@@ -16,11 +16,11 @@ export const mediaApi = createApi({
         providesTags: ["media"],
       }),
     uploadPhoto: builder.mutation({
-      query: ({data,token}) => ({
+      query: ({photos,token}) => ({
         url: `/photo`,
         method: "POST",
         headers: { authorization: `Bearer ${token}` },
-        body: data,
+        body: photos,
       }),
       invalidatesTags: ["media"],
     }),
