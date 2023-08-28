@@ -18,7 +18,7 @@ import { useContextCustom } from "../context/stateContext";
 
 const Media = () => {
   const { isActivedMedia } = useContextCustom();
-  console.log(isActivedMedia);
+  // console.log(isActivedMedia);
   const token = Cookies.get("token");
   const { data } = useGetPhotoQuery(token);
   const imgs = useSelector((state) => state.mediaSlice.photos);
@@ -36,26 +36,35 @@ const Media = () => {
 
   const uploadImg = async (imgUrl) => {
     try {
-      // const data = uploadPhoto({ photos: imgUrl, token });
-      // console.log("ooo", { photos: imgUrl });
       const data = uploadPhoto({ photos: imgUrl, token });
-      console.log("ooo", imgUrl);
+      // console.log("ooo", { photos: imgUrl });
+
+      // const data = uploadPhoto({ photos:chosenFiles, token });
+      // console.log("ooo", imgUrl);
       console.log("uurl", data);
-      console.log("tt", token); // const { arg } = uploadPhoto(url);
+      // console.log("tt", token);
+      // const { arg } = uploadPhoto(url);
       // console.log("url", arg.originalArgs);
     } catch (error) {
       console.log("err", error);
     }
   };
 
-  const changeToUrl = async (e) => {
-    const chosenFiles = Array.prototype.slice.call(e.target.files);
-    const imgUrl = chosenFiles.map((file) => {
-      return window.URL.createObjectURL(file);
-    });
-    console.log("iu", imgUrl);
-    setPhoto(imgUrl);
-    uploadImg(imgUrl);
+  const changeToUrl = async (files) => {
+    const ary = [];
+    for (let i = 0; i < files.length; i++) {
+      const url = { url: window.URL.createObjectURL(files[i]) };
+      console.log("url", url);
+      ary.push(url);
+    }
+
+    console.log("ary", ary);
+    try {
+      const response = await uploadPhoto({ photos: ary, token });
+      console.log("response", response);
+    } catch (error) {
+      console.log("err", error);
+    }
   };
 
   return (
@@ -78,7 +87,7 @@ const Media = () => {
             accept="image/*"
             type="file"
             name="picture"
-            onChange={changeToUrl}
+            onChange={(e) => changeToUrl([...e.target.files])}
             // console.log('ee',e.target.files)
             //   ({ target: { files } }) => {
             //   // files[0] && setName(files[0].name);

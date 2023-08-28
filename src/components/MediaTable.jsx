@@ -1,19 +1,19 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { useDeletePhotoMutation } from "../redux/api/mediaApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
+import Modal from "./Modal";
+import MediaImgDetail from "./MediaImgDetail";
+import { useContextCustom } from "../context/stateContext";
 
 const MediaTable = ({ imgs }) => {
+  const { showModal, setShowModal } = useContextCustom();
+  const [imgIndex, setImgIndex] = useState();
+  const [imgDetail, setImgDetail] = useState();
+
   const token = Cookies.get("token");
   const [deletePhoto] = useDeletePhotoMutation();
   const dispatch = useDispatch();
@@ -43,6 +43,18 @@ const MediaTable = ({ imgs }) => {
     // });
   };
 
+  const copyHandler = (copytext) => {
+    navigator.clipboard.writeText(copytext);
+    // console.log("a", a);
+  };
+
+  const imgModalHandler = (index) => {
+    setImgIndex(index);
+    setShowModal(true);
+    setImgDetail(imgs[index]);
+    // console.log("id", imgDetail);
+  };
+
   return (
     <div>
       <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
@@ -67,12 +79,18 @@ const MediaTable = ({ imgs }) => {
             return (
               <tr key={photo?.id} className=" border-b border-b-gray-700 ">
                 <td className="px-1 text-center  py-4">{index + 1}</td>
-                <td className="px-1 text-end py-4">{photo?.name}</td>
+                <td
+                  onClick={() => imgModalHandler(index)}
+                  className="px-1 text-end py-4 cursor-pointer"
+                >
+                  {photo?.name}
+                </td>
                 <td className="px-1 text-end py-4">{photo.user_name}</td>
                 <td className="px-1 py-4 text-end">{photo?.extension}</td>
                 <td className="px-1 pe-4 py-4 text-end">{photo?.fileSize}</td>
+
                 <td>
-                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2">
+                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
                     <button
                       onClick={() => deletePhotoHandler(photo?.id)}
                       className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
@@ -80,6 +98,9 @@ const MediaTable = ({ imgs }) => {
                       <RiDeleteBinLine size={"1.3rem"} />
                     </button>
                     <button
+                      // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
+
+                      onClick={() => copyHandler(photo?.url)}
                       className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
                     >
                       <BiCopy size={"1.3rem"} />
@@ -91,6 +112,20 @@ const MediaTable = ({ imgs }) => {
           })}
         </tbody>
       </table>
+      {showModal ? (
+        <Modal
+          title={imgDetail?.name}
+          modalView={
+            <MediaImgDetail
+              imgIndex={imgIndex}
+              imgDetail={imgDetail}
+              imgs={imgs}
+            />
+          }
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const StateContextProvider = ({ children }) => {
     children: PropTypes.any,
   };
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState();
   const [current, setCurrent] = useState(1);
   
   // for add product
@@ -21,8 +21,6 @@ export const StateContextProvider = ({ children }) => {
   const [actualPrice, setActualPrice] = useState(400);
   const [salePrice, setSalePrice] = useState(600);
   const [photo,setPhoto]=useState(null);
-
-// const [photo,setPhoto]=useState('https://h.mmsdev.site/storage/photos/YUy16QtugI8tPG92QkySTXaOb4Gx3tkIAHv7sHBQ.png');
 
   const nextStepperHandler = () => {
     if (current < 4) {
@@ -51,11 +49,7 @@ export const StateContextProvider = ({ children }) => {
     setProductInfo,
     stock,
     setStock,
-    actualPrice,setActualPrice,salePrice,setSalePrice,photo,setPhoto,
-
-    showModal,setShowModal,nextStepperHandler,current,setCurrent,
-
-    liHandler,sidebarActived,setSidebarActived
+    actualPrice,setActualPrice,salePrice,setSalePrice,photo,setPhoto,showModal,setShowModal,nextStepperHandler,current,setCurrent,liHandler,sidebarActived,setSidebarActived
   };
 
   return <StateContext.Provider value={data}>{children}</StateContext.Provider>;
