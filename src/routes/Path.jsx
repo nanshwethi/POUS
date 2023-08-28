@@ -15,7 +15,12 @@ import ProductDetail from "../components/ProductDetail";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
 import ProductEdit from "../components/ProductEdit";
+
+import Shop from "../pages/Shop";
+import ShopList from "../components/ShopList";
+
 import Recent from "../components/Recent";
+
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -25,9 +30,10 @@ import Recent from "../components/Recent";
 
 const Path = () => {
   return (
-    <div>
+    <div >
       <Routes>
         <Route path="/*" element={<Error />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Home />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
@@ -38,6 +44,10 @@ const Path = () => {
         <Route
           path="/profile-edit"
           element={<Dashboard view={<ProfileEdit />} />}
+        />
+        <Route
+          path="/shop-list"
+          element={<Dashboard view={<ShopList />} />}
         />
         <Route
           path="/user-overview"

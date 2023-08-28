@@ -78,6 +78,7 @@ const Sidebar = () => {
               <p className="text-base font-['Montserrat'] font-medium">Sale</p>
             </Accordion.Control>
             <Accordion.Panel className="accordion-bg li-text">
+              <Link to={'/recent'}>
               <p
                 onClick={() => liHandler("cashier")}
                 className={`${
@@ -87,8 +88,11 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
+                
                 Cashier
+                 
               </p>
+              </Link>
             </Accordion.Panel>
             <Accordion.Panel className="accordion-bg li-text ">
               <Link to={'/recent'}>
@@ -101,8 +105,12 @@ const Sidebar = () => {
                 } text-sm font-['Montserrat'] font-medium `}
               >
                 <Dot className="z-20" />
+                
                 Recent
-              </p></Link>
+                 
+              </p>
+              </Link>
+
             </Accordion.Panel>
           </Accordion.Item>
 

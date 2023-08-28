@@ -15,6 +15,11 @@
   --base-font: "Montserrat", serif;
 }
 
+.get-h{
+  min-height: 100vh;
+  background-color: #111827;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -469,3 +474,20 @@ button[data-active="true"] .mlb {
 .mantine-Modal-inner .mantine-Modal-content .mantine-Modal-body {
   padding: 0;
 }
+
+.keypad button:not(.selected):hover{
+  background-color: #131922;
+}
+
+.selected span{
+  color: rgb(53, 53, 53);
+}
+
+.shop-list li:hover{
+  background-color: #131922;
+}
+
+.active-list{
+  border: 1.5px solid rgb(132, 132, 133);
+}
+
