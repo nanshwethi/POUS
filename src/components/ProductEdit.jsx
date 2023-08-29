@@ -11,68 +11,6 @@ const ProductEdit = () => {
     const [ui,setUi] = useState(true)
     const [opened, { open, close }] = useDisclosure(false);
 
-    const dataOne = <div className="p-6 w-[60%] bg-[#171717] rounded">
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-        <div className=' w-48 font-semibold text-gray-400'>Name</div>
-        <div className=' flex-1'>
-            <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-        </div>
-        </div>
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-        <div className=' w-48 font-semibold text-gray-400'>Brand</div> 
-        <div className=' flex-1'>
-            <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-        </div>
-        </div>
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-            <div className=' w-48 font-semibold text-gray-400'>Stock</div> 
-            <div className=' flex-1'>
-                <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-            </div>
-        </div>
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-            <div className=' w-48 font-semibold text-gray-400'>Unit</div> 
-            <div className=' flex-1'>
-                <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-            </div>
-        </div>
-        <div className=' flex py-4 text-gray-200 items-start font-medium'>
-            <div className=' w-48 font-semibold text-gray-400'>More Info</div> 
-            <div className=' flex-1'>
-                <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 h-[100px]' />
-            </div>
-        </div>
-    </div>
-
-    const dataTwo = <div className="p-6 w-[60%] bg-[#171717] h-[250px] rounded">
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-        <div className=' w-48 font-semibold text-gray-400'>Name</div>
-        <div className=' flex-1'>
-            <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-        </div>
-        </div>
-        <div className=' flex py-4 text-gray-200 items-center font-medium'>
-        <div className=' w-48 font-semibold text-gray-400'>Brand</div> 
-        <div className=' flex-1'>
-            <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
-        </div>
-        </div>
-    </div>
-
-
-    const data =()=>{
-        switch (active){
-            case 'one':
-                return dataOne;
-            case 'two':
-                return dataTwo;
-            default :
-                return dataOne;
-        
-        }
-        
-    }
-
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 h-pEdit flex flex-col relative '>
         {/* modal */}
@@ -120,7 +58,54 @@ const ProductEdit = () => {
             </div>
         </div>
         <div className=' mt-12 flex h-[500px]'>
-            {data()}   
+            {
+                active == 'one' ?(<div className="p-6 w-[60%] bg-[#171717] rounded">
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Name</div>
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                </div>
+                </div>
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Brand</div> 
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                </div>
+                </div>
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                    <div className=' w-48 font-semibold text-gray-400'>Stock</div> 
+                    <div className=' flex-1'>
+                        <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                    </div>
+                </div>
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                    <div className=' w-48 font-semibold text-gray-400'>Unit</div> 
+                    <div className=' flex-1'>
+                        <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                    </div>
+                </div>
+                <div className=' flex py-4 text-gray-200 items-start font-medium'>
+                    <div className=' w-48 font-semibold text-gray-400'>More Info</div> 
+                    <div className=' flex-1'>
+                        <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 h-[100px]' />
+                    </div>
+                </div>
+            </div>):(
+                    <div className="p-6 w-[60%] bg-[#171717] h-[250px] rounded">
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Name</div>
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                </div>
+                </div>
+                <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Brand</div> 
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' />
+                </div>
+                </div>
+            </div>)
+            }   
             <div className=' flex-1 flex flex-col ps-20'>
                 <div>
                     <div className=' relative '>
