@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
 import Cookies from "js-cookie";
@@ -5,11 +6,14 @@ import { useDispatch } from "react-redux";
 import { useDeletePhotoMutation } from "../redux/api/mediaApi";
 import { useEffect, useState } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
-import Modal from "./Modal";
 import MediaImgDetail from "./MediaImgDetail";
 import { useContextCustom } from "../context/stateContext";
 
 const MediaTable = ({ imgs }) => {
+  MediaTable.propTypes = {
+    imgs: PropTypes.array,
+  };
+
   const { showModal, setShowModal } = useContextCustom();
   const [imgIndex, setImgIndex] = useState();
   const [imgDetail, setImgDetail] = useState();
@@ -113,16 +117,7 @@ const MediaTable = ({ imgs }) => {
         </tbody>
       </table>
       {showModal ? (
-        <Modal
-          title={imgDetail?.name}
-          modalView={
-            <MediaImgDetail
-              imgIndex={imgIndex}
-              imgDetail={imgDetail}
-              imgs={imgs}
-            />
-          }
-        />
+        <MediaImgDetail show={true} imgIndex={imgIndex} imgDetail={imgDetail} imgs={imgs} />
       ) : (
         ""
       )}

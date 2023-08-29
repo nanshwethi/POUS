@@ -53,6 +53,10 @@ body {
   font-weight: 700;
   color: var(--secondary-color);
 }
+/* login check */
+.css-8ms9g2-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: var(--font-color);
+}
 
 .mantine-1fholi4 {
   margin: 0;
@@ -179,11 +183,11 @@ body {
   .step-line-next {
     @apply bg-[var(--border-color)];
   }
-  .brand-dropdown{
-    @apply w-[380px] h-[50px] bg-[var(--base-color)] border border-[var(--border-color)] rounded-[5px] text-[var(--secondary-color)] text-[16px] font-medium px-4 py-1
+  .brand-dropdown {
+    @apply w-[380px] h-[50px] bg-[var(--base-color)] border border-[var(--border-color)] rounded-[5px] text-[var(--secondary-color)] text-[16px] font-medium px-4 py-1;
   }
-  .recent-dropdown{
-    @apply w-[100px] h-[30px] bg-[var(--base-color)] border border-[var(--border-color)] text-[var(--secondary-color)] text-[16px] font-medium px-1 py-1
+  .recent-dropdown {
+    @apply w-[100px] h-[30px] bg-[var(--base-color)] border border-[var(--border-color)] text-[var(--secondary-color)] text-[16px] font-medium px-1 py-1;
   }
 }
 
@@ -216,7 +220,7 @@ body {
   border: 1px solid var(--border-color);
 }
 
-.recent-dropDrown{
+.recent-dropDrown {
   position: relative;
 }
 
@@ -241,11 +245,11 @@ body {
   padding: 4px 20px;
   outline: none;
   border-width: 2px;
-border-radius: 5px;
-border-color: var(--border-color);
+  border-radius: 5px;
+  border-color: var(--border-color);
 }
 
-.recent-dropDrown .mantine-Select-dropdown{
+.recent-dropDrown .mantine-Select-dropdown {
   position: absolute;
   top: 0px;
   background-color: rgb(49, 49, 49);
@@ -258,12 +262,12 @@ border-color: var(--border-color);
   border-bottom: none;
 }
 
-.recent-dropDrown .mantine-Select-dropdown .mantine-Select-item{
+.recent-dropDrown .mantine-Select-dropdown .mantine-Select-item {
   border-bottom: 1px solid var(--border-color);
   padding: 4px 0px 4px 10px;
 }
 
-.recent-dropDrown .mantine-Select-dropdown .mantine-Select-itemsWrapper{
+.recent-dropDrown .mantine-Select-dropdown .mantine-Select-itemsWrapper {
   padding: 0px;
 }
 
