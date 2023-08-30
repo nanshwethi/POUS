@@ -9,19 +9,23 @@ export const mediaApi = createApi({
 
   endpoints: (builder) => ({
     getPhoto: builder.query({
-        query: (token) => ({
-          url: "/photo",
-          headers: { authorization: `Bearer ${token}` },
-        }),
-        providesTags: ["media"],
-      }),
-    uploadPhoto: builder.mutation({
-      query: ({photos,token}) => ({
-        url: `/photo`,
-        method: "POST",
+      query: (token) => ({
+        url: "/photo",
         headers: { authorization: `Bearer ${token}` },
-        body: photos,
       }),
+      providesTags: ["media"],
+    }),
+    uploadPhoto: builder.mutation({
+      query: ({token,photos }) => {
+        // console.log("ppp", photos, token);
+        return {
+          url: `/photo`,
+          method: "POST",
+          headers: { authorization: `Bearer ${token}` },
+
+          body: photos,
+        };
+      },
       invalidatesTags: ["media"],
     }),
     deletePhoto: builder.mutation({
@@ -35,4 +39,8 @@ export const mediaApi = createApi({
   }),
 });
 
-export const {useGetPhotoQuery, useUploadPhotoMutation,useDeletePhotoMutation} =mediaApi;
+export const {
+  useGetPhotoQuery,
+  useUploadPhotoMutation,
+  useDeletePhotoMutation,
+} = mediaApi;

@@ -59,6 +59,7 @@ const Stock = () => {
     // console.log(token);
     // const data = await createStock({token,content})
     // console.log(data);
+    
     console.log(id);
     const content = {user_id : 1,product_id : id,quantity : Number(qty),more : desc}
     const d = {id,token,content}

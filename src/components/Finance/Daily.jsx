@@ -1,29 +1,27 @@
 // import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useContextCustom } from "../context/stateContext";
+import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
-import {BsArrowRight} from 'react-icons/bs'
-import {BsCalculator} from 'react-icons/bs'
-import ModalSaleClose from "./ModalSaleClose";
-import Modal from "./Modal";
+import { BsArrowRight } from "react-icons/bs";
+import { DateInput } from "@mantine/dates";
+// import { BiExport } from "react-icons/bi";
 
-const Recent = () => {
+const Daily = () => {
   const { liHandler } = useContextCustom();
   const [sortValue, setSortValue] = useState();
-  const { showModal, setShowModal } = useContextCustom();
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
       {/* Breadcrumg start */}
       <div className=" flex justify-between items-center mb-10">
         <div>
-          <p className="breadcrumb-title	">Recent</p>
+          <p className="breadcrumb-title	">Daily</p>
           <p className=" text-[14px] text-white opacity-70  select-none">
-            Sale / Recent
+            Finance / Daily
           </p>{" "}
         </div>
         <Link to={"/cashier"}>
@@ -38,18 +36,11 @@ const Recent = () => {
       {/* Breadcrumg end */}
 
       <div className=" flex justify-between items-center py-5">
-      <p className="breadcrumb-title	">Today Sale Overview</p>
-        {/* <div className="border-[var(--border-color)] rounded border inline px-2 py-1">
-          <BsSearch className=" inline text-gray-400 me-3" />
-          <input
-            type="text"
-            placeholder="search"
-            className=" w-[250px] outline-none bg-transparent text-gray-300 text-sm font-semibold"
-          />
-        </div> */}
+        <p className="breadcrumb-title	">Today Sale Overview</p>
         <div className=" flex items-baseline gap-4">
           <p className=" text-sm text-gray-400">Export : </p>
           <select
+            placeholder="Export"
             name="sort"
             value={sortValue}
             onChange={(e) => setSortValue(e.target.value)}
@@ -65,24 +56,25 @@ const Recent = () => {
               Copy
             </option>
           </select>
+          <div>
+            <DateInput
+              valueFormat="YYYY-MM-DD"
+              label="chose Date"
+              placeholder="Date"
+              // value={cDate}FF
+              // onChange={setCDate}
+              maw={400}
+              mx="auto"
+              className="w-[120px] border-[var(--border-color)] text-[var(--secondary-color)] mx-0"
+            />
+          </div>
 
-          <button onClick={()=>setShowModal(true)} className=" text-[var(--secondary-color)] flex justify-center items-center border-[var(--border-color)] rounded border px-2 py-1"><BsCalculator className="text-[var(--font-color)] me-2"/> sale close</button>
-          {/* <Select
-            defaultValue={"all"}
-            className=" recent-dropDrown"
-            rightSection={
-              <FaAngleDown
-                size="1rem"
-                className="text-[var(--secondary-color)]"
-              />
-            }
-            rightSectionWidth={30}
-            unstyled
-            data={[
-              { value: "all", label: "All Files" },
-              { value: "aa", label: "aa" },
-            ]}
-          /> */}
+          <button
+            onClick={() => liHandler("cashier")}
+            className="w-[40px] h-[30px] font-semibold text-[16px] myBlueBtn flex justify-center items-center"
+          >
+            <BsSearch className=" text-[var(--sidebar-color)]" />
+          </button>
         </div>
       </div>
       {/* showList start */}
@@ -110,6 +102,7 @@ const Recent = () => {
             <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
               TIME
             </th>
+            <th className=" "></th>
           </tr>
         </thead>
         <tbody>
@@ -121,11 +114,14 @@ const Recent = () => {
             <td className="px-1 py-4 text-end">100100</td>
             <td className="px-1 py-4 text-end">12/7/2023</td>
             <td className=" px-1 py-4 text-end">10:00 AM</td>
-            <td className=" pe-5 py-4 text-end"><span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
-
-            <BsArrowRight size={'1rem'} className="text-[var(--secondary-color)]"/>
-            </span>
-                </td>
+            <td className=" pe-5 py-4 text-end">
+              <span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
+                <BsArrowRight
+                  size={"1rem"}
+                  className="text-[var(--secondary-color)]"
+                />
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -213,14 +209,8 @@ const Recent = () => {
         </Button.Group>
         {/* pagination end */}
       </div>
-
-      {/* show modal start */}
-
-      {showModal? <Modal title={'Sale Close'} modalView={<ModalSaleClose/>}/>:''}
-            {/*  show modal end */}
-
     </div>
   );
 };
 
-export default Recent;
+export default Daily;

@@ -26,7 +26,8 @@ const Media = () => {
   // console.log("imgs", imgs);
 
   const [uploadPhoto] = useUploadPhotoMutation();
-  const [photo, setPhoto] = useState([]);
+  const [showPhoto, setShowPhoto] = useState(null);
+
   const dispatch = useDispatch();
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
 
@@ -34,37 +35,18 @@ const Media = () => {
     dispatch(addPhotos({ photos: data?.data }));
   }, [data]);
 
-  const uploadImg = async (imgUrl) => {
-    try {
-      const data = uploadPhoto({ photos: imgUrl, token });
-      // console.log("ooo", { photos: imgUrl });
+  const changeToUrl = async (e) => {
+    const fileListObj = e.target.files;
 
-      // const data = uploadPhoto({ photos:chosenFiles, token });
-      // console.log("ooo", imgUrl);
-      console.log("uurl", data);
-      // console.log("tt", token);
-      // const { arg } = uploadPhoto(url);
-      // console.log("url", arg.originalArgs);
-    } catch (error) {
-      console.log("err", error);
-    }
-  };
+    setShowPhoto(window.URL.createObjectURL(fileListObj[0]));
 
-  const changeToUrl = async (files) => {
-    const ary = [];
-    for (let i = 0; i < files.length; i++) {
-      const url = { url: window.URL.createObjectURL(files[i]) };
-      console.log("url", url);
-      ary.push(url);
+    let photos = new FormData();
+    for(let i = 0; i < fileListObj.length ;i++){
+      photos.append("photos[]",fileListObj[i],fileListObj[i].name)
+      // console.log('first',fileListObj[i],'sec',fileListObj[i].name)
     }
-
-    console.log("ary", ary);
-    try {
-      const response = await uploadPhoto({ photos: ary, token });
-      console.log("response", response);
-    } catch (error) {
-      console.log("err", error);
-    }
+    const response = await uploadPhoto({token,photos});
+    // console.log('response',response)
   };
 
   return (
@@ -87,22 +69,12 @@ const Media = () => {
             accept="image/*"
             type="file"
             name="picture"
-            onChange={(e) => changeToUrl([...e.target.files])}
-            // console.log('ee',e.target.files)
-            //   ({ target: { files } }) => {
-            //   // files[0] && setName(files[0].name);
-            //   if (files) {
-            //     setImage([window.URL.createObjectURL(files[0])]);
-            //     // setExt(files[0].type);
-            //     // setName(files[0].name);
-            //   }
-            //    console.log(files);
-            // }}
+            onChange={changeToUrl}
           />
-          {photo.length !== 0 ? (
+          {showPhoto ? (
             <>
               <img
-                src={photo[0]}
+                src={showPhoto}
                 className=" w-[100px] h-[100px] rounded-full object-cover object-center"
               />
               <span className=" text-[--font-color] select-none mx-auto pt-5">
@@ -131,7 +103,7 @@ const Media = () => {
         <p className="text-white opacity-70 select-none	">
           Media / Uploaded Photo
         </p>
-        <div className="btn-border-table-grid flex ">
+        <div className="btn-border-table-grid  w-[50px] h-[28px] flex ">
           <button
             onClick={() => setBtnTableIsActive(true)}
             className={`${
