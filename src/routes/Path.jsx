@@ -20,6 +20,10 @@ import Shop from "../pages/Shop";
 import ShopList from "../components/ShopList";
 
 import Recent from "../components/Recent";
+import Daily from "../components/Finance/Daily";
+import Monthly from "../components/Finance/Monthly";
+import Yearly from "../components/Finance/Yearly";
+import Custom from "../components/Finance/Custom";
 
 // import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
@@ -74,7 +78,7 @@ const Path = () => {
           element={<Dashboard view={<ProductEdit/>} />}
         />
         <Route
-          path="/stock"
+          path="/stock-control"
           element={<Dashboard view={<Stock/>} />}
         />
         <Route
@@ -88,7 +92,36 @@ const Path = () => {
         {/* <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
-        /> */}
+        />
+        <Route
+          path="/stock"
+          element={<Dashboard view={<StockList />} />}
+        />
+        <Route
+          path="/sale"
+          element={<Dashboard view={<Sale />} />}
+        />
+                */}
+
+{/* finance routes start*/}
+        <Route
+          path="/finance-daily"
+          element={<Dashboard view={<Daily />} />}
+        />
+        <Route
+          path="/finance-monthly"
+          element={<Dashboard view={<Monthly />} />}
+        />
+        <Route
+          path="/finance-yearly"
+          element={<Dashboard view={<Yearly />} />}
+        /> 
+        <Route
+          path="/finance-custom"
+          element={<Dashboard view={<Custom />} />}
+        />
+        {/* finance routes end*/}
+
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>

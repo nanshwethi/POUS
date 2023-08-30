@@ -10,7 +10,7 @@ import { grey } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
 import { BiSquare } from "react-icons/bi";
 import { BiSolidSquare } from "react-icons/bi";
-import LoginImg from "../../public/login.svg";
+import LoginImg from "/public/login.svg";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -36,12 +36,17 @@ const Login = () => {
   return (
     <div className=" w-full bg-[var(--sidebar-color)] flex justify-center items-center h-screen">
       <div className="z-10 md:basis-1/2 lg:basis-2/5 bg-[var(--sidebar-color)] h-full flex justify-center items-center">
-        <img src={LoginImg} className="md:w-full h-full object-cover object-center" alt="" />
+        <img
+          src={LoginImg}
+          className="md:w-full h-full object-cover object-center"
+          alt=""
+        />
       </div>
       <div className="relative md:basis-1/2 lg:basis-1/3 bg-[var(--base-color)] h-full">
         <div className="glass-login w-full h-full flex justify-center items-center">
           <form
             onSubmit={form.onSubmit(async (values) => {
+              console.log("value", values);
               try {
                 const data = await login(values);
                 console.log(data?.data?.token);

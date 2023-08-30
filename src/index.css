@@ -118,7 +118,7 @@ body {
   }
 
   .btn-border-table-grid {
-    @apply w-[50px] h-[28px] rounded-[5px] border border-[#7E7F80];
+    @apply rounded-[5px] border border-[#7E7F80];
   }
   .li-bg {
     @apply h-[56px] py-2 bg-[var(--sidebar-color)] flex justify-start items-center px-5 select-none border-[1px] border-[--border-color];
@@ -204,6 +204,14 @@ body {
   opacity: 0.7;
   user-select: none;
 }
+
+/* date input */
+.mantine-1fzet7j{
+  display: none;
+height: 30px;
+}
+
+
 /* Sidebar Accordion */
 .mantine-15l0h0l,
 .mantine-15l0h0l,
