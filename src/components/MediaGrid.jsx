@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Button } from "@mantine/core";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
@@ -8,9 +9,12 @@ import { useEffect, useState } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
 import { useContextCustom } from "../context/stateContext";
 import MediaImgDetail from "./MediaImgDetail";
-import Modal from "./Modal";
 
 const MediaGrid = ({ imgs }) => {
+  MediaGrid.propTypes = {
+    imgs: PropTypes.array,
+  };
+
   const { showModal, setShowModal } = useContextCustom();
   const [imgIndex, setImgIndex] = useState();
   const [imgDetail, setImgDetail] = useState();
@@ -84,16 +88,7 @@ const MediaGrid = ({ imgs }) => {
         );
       })}
       {showModal ? (
-        <Modal
-          title={imgDetail?.name}
-          modalView={
-            <MediaImgDetail
-              imgIndex={imgIndex}
-              imgDetail={imgDetail}
-              imgs={imgs}
-            />
-          }
-        />
+        <MediaImgDetail show={true} imgIndex={imgIndex} imgDetail={imgDetail} imgs={imgs} />
       ) : (
         ""
       )}
