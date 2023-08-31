@@ -78,7 +78,7 @@ const Sidebar = () => {
               <p className="text-base font-['Montserrat'] font-medium">Sale</p>
             </Accordion.Control>
             <Accordion.Panel className="accordion-bg li-text">
-              <Link to={'/recent'}>
+              <Link to={'/shop'}>
               <p
                 onClick={() => liHandler("cashier")}
                 className={`${
