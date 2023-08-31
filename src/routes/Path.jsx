@@ -7,7 +7,7 @@ import Home from "../components/Home";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
 import ProfileEdit from "../components/ProfileEdit";
-import UserOverView from "../components/UserOverView";
+import UserOverview from "../components/UserOverview";
 import CreateUser from "../components/CreateUser";
 import AddProduct from "../components/AddProduct";
 import Product from "../components/Product";
@@ -55,7 +55,7 @@ const Path = () => {
         />
         <Route
           path="/user-overview"
-          element={<Dashboard view={<UserOverView />} />}
+          element={<Dashboard view={<UserOverview />} />}
         />
         <Route
           path="/create-user"
