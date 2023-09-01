@@ -445,11 +445,7 @@ const Sidebar = () => {
             size={"1.8rem"}
           />
           <p
-            className={`${
-              sidebarActived === "logout"
-                ? "text-[var(--font-color)]"
-                : "text-[var(--secondary-color)]"
-            }`}
+            className={`text-[var(--secondary-color)]`}
           >
             Logout
           </p>

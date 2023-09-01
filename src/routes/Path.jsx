@@ -31,28 +31,36 @@ import Custom from "../components/Finance/Custom";
 // import ManageBrands from "../components/ManageBrands";
 // import Cashier from "../components/Cashier";
 
-
 const Path = () => {
   return (
-    <div >
+    <div>
       <Routes>
-        <Route path="/*" element={<Error />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Home />} />} />
+        <Route path="/*" element={<Error />} />
+
+        {/* media routes start*/}
+        <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
-        <Route
-          path="/user-profile"
-          element={<Dashboard view={<UserProfile />} />}
-        />
+        {/* media routes start*/}
+
+        {/* sale routes start*/}
         <Route
           path="/profile-edit"
           element={<Dashboard view={<ProfileEdit />} />}
         />
         <Route
-          path="/shop-list"
-          element={<Dashboard view={<ShopList />} />}
+          path="/user-profile"
+          element={<Dashboard view={<UserProfile />} />}
         />
+        {/* profile routes start*/}
+
+        {/* sale routes start*/}
+        <Route path="/cashier" element={<Shop />} />
+        <Route path="/shop-list" element={<Dashboard view={<ShopList />} />} />
+        {/* sale routes start*/}
+
+        {/* user routes start*/}
+
         <Route
           path="/user-overview"
           element={<Dashboard view={<UserOverView />} />}
@@ -61,34 +69,30 @@ const Path = () => {
           path="/create-user"
           element={<Dashboard view={<CreateUser />} />}
         />
+        {/* user routes start*/}
+
+        {/* inventory routes start*/}
         <Route
           path="/add-product"
           element={<Dashboard view={<AddProduct />} />}
         />
-        <Route
-          path="/product"
-          element={<Dashboard view={<Product/>} />}
-        />
+        <Route path="/product" element={<Dashboard view={<Product />} />} />
         <Route
           path="/product-detail"
-          element={<Dashboard view={<ProductDetail/>} />}
+          element={<Dashboard view={<ProductDetail />} />}
         />
         <Route
           path="/product-edit"
-          element={<Dashboard view={<ProductEdit/>} />}
+          element={<Dashboard view={<ProductEdit />} />}
         />
-        <Route
-          path="/stock-control"
-          element={<Dashboard view={<Stock/>} />}
-        />
-        <Route
-          path="/brand"
-          element={<Dashboard view={<Brand/>} />}
-        />
-        <Route
-          path="/recent"
-          element={<Dashboard view={<Recent />} />}
-        />
+        <Route path="/stock-control" element={<Dashboard view={<Stock />} />} />
+        <Route path="/brand" element={<Dashboard view={<Brand />} />} />
+        {/* inventory routes start*/}
+        {/* sale routes start*/}
+
+        <Route path="/recent" element={<Dashboard view={<Recent />} />} />
+        {/* sale routes start*/}
+
         {/* <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
@@ -103,11 +107,8 @@ const Path = () => {
         />
                 */}
 
-{/* finance routes start*/}
-        <Route
-          path="/finance-daily"
-          element={<Dashboard view={<Daily />} />}
-        />
+        {/* finance routes start*/}
+        <Route path="/finance-daily" element={<Dashboard view={<Daily />} />} />
         <Route
           path="/finance-monthly"
           element={<Dashboard view={<Monthly />} />}
@@ -115,7 +116,7 @@ const Path = () => {
         <Route
           path="/finance-yearly"
           element={<Dashboard view={<Yearly />} />}
-        /> 
+        />
         <Route
           path="/finance-custom"
           element={<Dashboard view={<Custom />} />}
