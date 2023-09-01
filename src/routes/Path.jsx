@@ -3,6 +3,16 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Media from "../components/Media";
+
+import Empty from "../components/Empty";
+import MediaImgDetail from '../components/MediaImgDetail';
+import UserProfile from '../components/UserProfile'
+import ProfileEdit from '../components/ProfileEdit'
+import UpdateUser from '../pages/UpdateUser';
+import UserOverview from '../pages/UserOverview';
+import CreateUser from '../pages/CreateUser';
+// import Error from "../pages/Error";
+
 import Home from "../components/Home";
 import MediaImgDetail from "../components/MediaImgDetail";
 import UserProfile from "../components/UserProfile";
@@ -41,6 +51,9 @@ const Path = () => {
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Home />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
+        <Route path="/" element={<Dashboard view={<Empty/>}/>} />
+        <Route element={<CreateUser/>} path='createUser'/>
+
         <Route
           path="/user-profile"
           element={<Dashboard view={<UserProfile />} />}
@@ -103,7 +116,7 @@ const Path = () => {
         />
                 */}
 
-{/* finance routes start*/}
+        {/* finance routes start*/}
         <Route
           path="/finance-daily"
           element={<Dashboard view={<Daily />} />}
