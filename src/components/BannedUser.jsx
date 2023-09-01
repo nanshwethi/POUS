@@ -1,5 +1,7 @@
 import { Anchor , Breadcrumbs } from '@mantine/core';
 import React from 'react'
+import { BiCopy } from 'react-icons/bi';
+import { RiDeleteBinLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -27,8 +29,8 @@ const BannedUser = () => {
 	  })
 	  }
   return (
-	<div>
-      <section className="container px-4 ml-12 font-roboto bg-[--base-color] text-[--secondary-color] min-h-screen">
+	<div className="h-full w-full">
+      <section className="container h-full px-4 font-roboto bg-[--base-color] text-[--secondary-color] min-h-screen">
       <div className="mx-6 flex justify-between items-center">
             <div className=" mt-4">
             <h1 className=" text-xl text-white">User</h1>
@@ -52,131 +54,61 @@ const BannedUser = () => {
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden borderborder-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead className=" bg-gray-800">
-                    <tr>
-                    <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        No
-                      </th>
+              <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
+        <thead>
+          <tr className=" border-b border-b-gray-700">
+            <th className=" py-4 text-center px-1 uppercase font-medium">No</th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">Name</th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">
+              Account
+            </th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">
+              Extension
+            </th>
+            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
+              File Size
+            </th>
+            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
+          </tr>
+        </thead>
+        <tbody className=" text-gray-100">
+          {/* {imgs?.map((photo, index) => {
+            return ( */}
+              <tr className=" border-b border-b-gray-700 ">
+                <td className="px-1 text-center  py-4"></td>
+                <td
+                  // onClick={() => imgModalHandler(index)}
+                  className="px-1 text-end py-4 cursor-pointer"
+                >
+                
+                </td>
+                <td className="px-1 text-end py-4"></td>
+                <td className="px-1 py-4 text-end"></td>
+                <td className="px-1 pe-4 py-4 text-end"></td>
 
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
-                      >
-                        Name
-                      </th>
+                <td>
+                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
+                    <button
+                      // onClick={() => deletePhotoHandler(photo?.id)}
+                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                    >
+                      <RiDeleteBinLine size={"1.3rem"} />
+                    </button>
+                    <button
+                      // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
 
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Position
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Email
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Created At
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className=" text-start divide-y divide-gray-700 bg-gray-900">
-                  <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <button className="text-lg bg-[--border-color] rounded-fill px-4 py-1 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-3" onClick={handleRestore}>
-                            Restore
-                          </button>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-					  <button className="text-lg bg-[--border-color] rounded-fill px-4 py-1 items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleRestore}>
-                            Restore
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-4">
-                          <button className="text-lg bg-[--border-color] rounded-fill px-4 py-1  transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleRestore}>
-                            Restore
-                          </button>
-
-                          
-                        </div>
-                      </td>
-                    </tr>
-
-                   
-                  </tbody>
-                </table>
+                      // onClick={() => copyHandler(photo?.url)}
+                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                    >
+                      <BiCopy size={"1.3rem"} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {/* );
+          })} */}
+        </tbody>
+      </table>
               </div>
             </div>
           </div>
