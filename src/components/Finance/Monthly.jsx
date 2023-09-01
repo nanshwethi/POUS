@@ -50,13 +50,15 @@ const Monthly = () => {
         <p className="breadcrumb-title	">This Month Sale Overview</p>
         <div className=" flex items-baseline gap-4">
           <div className=" flex justify-start items-baseline gap-2">
-            <p className=" text-sm text-gray-400">Export : </p>
             <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
               className="recent-dropdown "
             >
+              <option value="" className="recent-dropdown hidden">
+              Export
+            </option>
               <option value="last" className="recent-dropdown">
                 PDF
               </option>
@@ -69,13 +71,15 @@ const Monthly = () => {
             </select>
           </div>
           <div className=" flex justify-start items-baseline gap-2">
-            <p className=" text-sm text-gray-400">Month : </p>
             <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
               className="recent-dropdown "
             >
+              <option value="" className="recent-dropdown hidden">
+              Month
+            </option>
               {monthContainer?.map((month) => (
                 <option key={month} value={month} className="recent-dropdown">
                   {month.slice(0, 3)}
@@ -84,13 +88,15 @@ const Monthly = () => {
             </select>
           </div>
           <div className=" flex justify-start items-baseline gap-2">
-            <p className=" text-sm text-gray-400">Year : </p>
             <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
               className="recent-dropdown "
             >
+              <option value="" className="recent-dropdown hidden">
+              Year
+            </option>
               <option value="2001" className="recent-dropdown">
                 2001
               </option>

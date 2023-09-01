@@ -80,7 +80,7 @@ MySwal.fire({
   ));
   return (
     <div className="min-h-screen w-full">
-      <div className="font-roboto bg-[--base-color]">
+      <div className="font-roboto bg-[--base-color] h-full">
         <div className="">
           <div className=" px-7 flex justify-between items-center">
             <div className="">

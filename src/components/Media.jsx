@@ -11,9 +11,9 @@ import {
   useGetPhotoQuery,
   useUploadPhotoMutation,
 } from "../redux/api/mediaApi";
+import { addPhotos } from "../redux/services/mediaSlice";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { addPhotos } from "../redux/services/mediaSlice";
 import { useContextCustom } from "../context/stateContext";
 
 const Media = () => {

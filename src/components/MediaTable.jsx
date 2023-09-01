@@ -26,7 +26,8 @@ const MediaTable = ({ imgs }) => {
     dispatch(addPhotos({ photos: imgs }));
   }, [imgs]);
 
-  const deletePhotoHandler = async (id) => {
+  const deletePhotoHandler = async (e,id) => {
+    e.stopPropagation();
     const { data } = await deletePhoto({ id, token });
     console.log("del", data);
 
@@ -47,9 +48,9 @@ const MediaTable = ({ imgs }) => {
     // });
   };
 
-  const copyHandler = (copytext) => {
-    navigator.clipboard.writeText(copytext);
-    // console.log("a", a);
+  const copyHandler =(e,copytext) =>{
+    e.stopPropagation();
+    navigator.clipboard.writeText(copytext);  
   };
 
   const imgModalHandler = (index) => {
@@ -63,7 +64,7 @@ const MediaTable = ({ imgs }) => {
     <div>
       <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
         <thead>
-          <tr className=" border-b border-b-gray-700">
+          <tr className=" border-b border-b-gray-700 w-[80%]">
             <th className=" py-4 text-center px-1 uppercase font-medium">No</th>
             <th className=" py-4 text-end px-1 uppercase font-medium">Name</th>
             <th className=" py-4 text-end px-1 uppercase font-medium">
@@ -75,17 +76,19 @@ const MediaTable = ({ imgs }) => {
             <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
               File Size
             </th>
-            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
+            {/* <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th> */}
           </tr>
         </thead>
         <tbody className=" text-gray-100">
-          {imgs?.map((photo, index) => {
+        {imgs?.map((photo, index) => {
             return (
-              <tr key={photo?.id} className=" border-b border-b-gray-700 ">
+              <tr key={photo?.id}
+              onClick={() => imgModalHandler(index)}
+              className=" border-b border-b-gray-700 cursor-pointer">
                 <td className="px-1 text-center  py-4">{index + 1}</td>
                 <td
-                  onClick={() => imgModalHandler(index)}
-                  className="px-1 text-end py-4 cursor-pointer"
+                  // onClick={() => imgModalHandler(index)}
+                  className="px-1 text-end py-4 "
                 >
                   {photo?.name}
                 </td>
@@ -96,7 +99,7 @@ const MediaTable = ({ imgs }) => {
                 <td>
                   <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
                     <button
-                      onClick={() => deletePhotoHandler(photo?.id)}
+                      onClick={(e) =>deletePhotoHandler(e,photo?.id)}
                       className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
                     >
                       <RiDeleteBinLine size={"1.3rem"} />
@@ -104,7 +107,7 @@ const MediaTable = ({ imgs }) => {
                     <button
                       // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
 
-                      onClick={() => copyHandler(photo?.url)}
+                      onClick={(e) => copyHandler(e,photo?.url)}
                       className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
                     >
                       <BiCopy size={"1.3rem"} />
@@ -117,7 +120,12 @@ const MediaTable = ({ imgs }) => {
         </tbody>
       </table>
       {showModal ? (
-        <MediaImgDetail show={true} imgIndex={imgIndex} imgDetail={imgDetail} imgs={imgs} />
+        <MediaImgDetail
+          show={true}
+          imgIndex={imgIndex}
+          imgDetail={imgDetail}
+          imgs={imgs}
+        />
       ) : (
         ""
       )}
