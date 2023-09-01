@@ -9,6 +9,8 @@ import { Swal } from "sweetalert2";
 import { useGetUserQuery } from "../redux/api/userApi";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { BiCopy } from "react-icons/bi";
 // import Swal from 'sweetalert2/dist/sweetalert2.js';
 // import '@sweetalert2/theme-dark/dark.scss';
 
@@ -16,10 +18,10 @@ const UserOverview = () => {
 
   const token=Cookies.get("token");
   
-    const { data } =  useGetUserQuery(token);
-    // console.log(data?.data);
-    const user1=data?.data[0];
-    const user2=data?.data[1];
+    // const { data } =  useGetUserQuery(token);
+    // // console.log(data?.data);
+    // const user1=data?.data[0];
+    // const user2=data?.data[1];
     
  
   const items = [
@@ -43,12 +45,12 @@ const UserOverview = () => {
   
   
   return (
-    <div>
-      <section className=" container mx-8 font-roboto bg-[--base-color] w-[900px] min-h-screen">
-      <div className=" mx-7 flex justify-between items-center">
-            <div className=" mt-4">
+    <div className="min-h-screen w-full">
+      <section className=" container h-full font-roboto bg-[--base-color]">
+      <div className=" px-7 flex justify-between items-center">
+            <div className=" pt-4">
             <h1 className=" text-xl text-white">User</h1>
-            <div className=" mt-3">
+            <div className=" pt-3">
               <Breadcrumbs>{items}</Breadcrumbs>
             </div>
             </div>
@@ -57,218 +59,64 @@ const UserOverview = () => {
             </div>
           </div>
 
-        <div className=" mx-4 flex flex-col mt-6">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className=" px-4 flex flex-col pt-6">
+          <div className="-px-4 -py-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden borderborder-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-700">
-                  <thead className=" bg-gray-800">
-                    <tr>
-                    <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        No
-                      </th>
+              <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
+        <thead>
+          <tr className=" border-b border-b-gray-700">
+            <th className=" py-4 text-center px-1 uppercase font-medium">No</th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">Name</th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">
+              Account
+            </th>
+            <th className=" py-4 text-end px-1 uppercase font-medium">
+              Extension
+            </th>
+            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
+              File Size
+            </th>
+            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
+          </tr>
+        </thead>
+        <tbody className=" text-gray-100">
+          {/* {imgs?.map((photo, index) => {
+            return ( */}
+              <tr className=" border-b border-b-gray-700 ">
+                <td className="px-1 text-center py-4"></td>
+                <td
+                  className="px-1 text-end py-4 cursor-pointer"
+                >
+                  {/* {photo?.name} */}
+                </td>
+                <td className="px-1 text-end py-4"></td>
+                <td className="px-1 py-4 text-end"></td>
+                <td className="px-1 pe-4 py-4 text-end"></td>
 
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right  text-gray-400"
-                      >
-                        Name
-                      </th>
+                <td>
+                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
+                    <button
+                      
+                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                    >
+                      <RiDeleteBinLine size={"1.3rem"} />
+                    </button>
+                    <button
+                      // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
 
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Position
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Email
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        Created At
-                      </th>
-
-                      <th
-                        scope="col"
-                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
-                      >
-                        
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className=" text-start divide-y divide-gray-700 bg-gray-900">
-                  <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        {user1?.id}
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user1?.name}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user1?.gender}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user1?.email}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user1?.created_at}</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleBanned} >
-                            <AiOutlineMinus/>
-                          </button>
-
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" >
-                          <MdOutlineEdit/>
-                          </button>
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <AiOutlineArrowRight/>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        {user2?.id}
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user2?.name}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user2?.gender}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user2?.email}</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>{user2?.created_at}</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleBanned}>
-                            <AiOutlineMinus/>
-                          </button>
-
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <MdOutlineEdit/>
-                          </button>
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <AiOutlineArrowRight/>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleBanned}>
-                            <AiOutlineMinus/>
-                          </button>
-
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <MdOutlineEdit/>
-                          </button>
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <AiOutlineArrowRight/>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleBanned}>
-                            <AiOutlineMinus/>
-                          </button>
-
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <MdOutlineEdit/>
-                          </button>
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <AiOutlineArrowRight/>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-
-                    <tr className="">
-                      <td className="px-4 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        1
-                      </td>
-                      <td className=" text-start px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Snow</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>Admin</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>snow99@gmail.com</h1>
-                      </td>
-                      <td className="px-6 py-4 text-sm font-medium text-white whitespace-nowrap">
-                        <h1>12/3/1998</h1>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <div className="flex items-center gap-x-6">
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none" onClick={handleBanned}>
-                            <AiOutlineMinus/>
-                          </button>
-
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <MdOutlineEdit/>
-                          </button>
-                          <button className="text-lg bg-[--border-color] rounded-full w-7 h-7 flex justify-center items-center transition-colors duration-200 text-gray-300 hover:text-red-500 focus:outline-none">
-                          <AiOutlineArrowRight/>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      // onClick={() => copyHandler(photo?.url)}
+                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                    >
+                      <BiCopy size={"1.3rem"} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {/* );
+          })} */}
+        </tbody>
+      </table>
               </div>
             </div>
           </div>

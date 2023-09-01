@@ -4,21 +4,14 @@ import Login from "../pages/Login";
 import Error from "../pages/Error";
 import Media from "../components/Media";
 
-import Empty from "../components/Empty";
 import MediaImgDetail from '../components/MediaImgDetail';
 import UserProfile from '../components/UserProfile'
 import ProfileEdit from '../components/ProfileEdit'
-import UpdateUser from '../pages/UpdateUser';
-import UserOverview from '../pages/UserOverview';
-import CreateUser from '../pages/CreateUser';
+import UserOverview from '../components/UserOverview';
+import CreateUser from '../components/CreateUser';
 // import Error from "../pages/Error";
 
 import Home from "../components/Home";
-import MediaImgDetail from "../components/MediaImgDetail";
-import UserProfile from "../components/UserProfile";
-import ProfileEdit from "../components/ProfileEdit";
-import UserOverview from "../components/UserOverview";
-import CreateUser from "../components/CreateUser";
 import AddProduct from "../components/AddProduct";
 import Product from "../components/Product";
 import ProductDetail from "../components/ProductDetail";
@@ -35,7 +28,7 @@ import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
 
-// import BannedUser from "../components/BannedUser"
+import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
 // import ManageBrands from "../components/ManageBrands";
@@ -51,8 +44,6 @@ const Path = () => {
         <Route path="/media/media-grid" element={<MediaImgDetail />} />
         <Route path="/" element={<Dashboard view={<Home />} />} />
         <Route path="/media" element={<Dashboard view={<Media />} />} />
-        <Route path="/" element={<Dashboard view={<Empty/>}/>} />
-        <Route element={<CreateUser/>} path='createUser'/>
 
         <Route
           path="/user-profile"
@@ -102,11 +93,11 @@ const Path = () => {
           path="/recent"
           element={<Dashboard view={<Recent />} />}
         />
-        {/* <Route
+         <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
-        />
-        <Route
+        /> 
+        {/*<Route
           path="/stock"
           element={<Dashboard view={<StockList />} />}
         />

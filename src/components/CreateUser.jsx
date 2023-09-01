@@ -79,13 +79,13 @@ MySwal.fire({
     </Anchor>
   ));
   return (
-    <div>
+    <div className="min-h-screen w-full">
       <div className="font-roboto bg-[--base-color]">
         <div className="">
-          <div className=" mx-7 flex justify-between items-center">
+          <div className=" px-7 flex justify-between items-center">
             <div className="">
             <h1 className=" text-xl text-white">User</h1>
-            <div className=" mt-2">
+            <div className=" pt-2">
               <Breadcrumbs>{items}</Breadcrumbs>
             </div>
             </div>
@@ -117,7 +117,7 @@ MySwal.fire({
                     <div className=" flex-1">
                       <input
                         type="text"
-                        className=" bg-[#202124] border-2 border-[#4b4e54] rounded text-slate-400 outline-none w-4/6 py-2 px-3"
+                        className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
                         value={name}
                         onChange={e =>setName(e.target.value)}
                         
@@ -331,7 +331,7 @@ MySwal.fire({
                             <img src={"https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZnJ1aXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60"} alt="" className='myImg'  />
                         </div>
                         <Link to={'/profile-edit'}>
-                            <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
+                            <button className=' edit text-2xl rounded-full'><FiEdit/></button>
                         </Link>
                     </div>
                     <div>
