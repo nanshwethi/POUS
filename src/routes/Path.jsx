@@ -1,31 +1,34 @@
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
+import Home from "../components/Home";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
+
 import Media from "../components/Media";
-import Home from "../components/Home";
-import MediaImgDetail from "../components/MediaImgDetail";
-import UserProfile from "../components/UserProfile";
-import ProfileEdit from "../components/ProfileEdit";
-import UserOverView from "../components/UserOverView";
-import CreateUser from "../components/CreateUser";
+import MediaImgDetail from '../components/MediaImgDetail';
+import UserProfile from '../components/UserProfile'
+import ProfileEdit from '../components/ProfileEdit'
+
+import UserOverview from '../components/UserOverview';
+import CreateUser from '../components/CreateUser';
+import BannedUser from "../components/BannedUser"
+
 import AddProduct from "../components/AddProduct";
 import Product from "../components/Product";
 import ProductDetail from "../components/ProductDetail";
+import ProductEdit from "../components/ProductEdit";
 import Stock from "../components/Stock";
 import Brand from "../components/Brand";
-import ProductEdit from "../components/ProductEdit";
 
 import Shop from "../pages/Shop";
 import ShopList from "../components/ShopList";
-
 import Recent from "../components/Recent";
+
 import Daily from "../components/Finance/Daily";
 import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
 
-// import BannedUser from "../components/BannedUser"
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
 // import ManageBrands from "../components/ManageBrands";
@@ -44,6 +47,11 @@ const Path = () => {
         {/* media routes start*/}
 
         {/* sale routes start*/}
+
+        <Route
+          path="/user-profile"
+          element={<Dashboard view={<UserProfile />} />}
+        />
         <Route
           path="/profile-edit"
           element={<Dashboard view={<ProfileEdit />} />}
@@ -63,7 +71,7 @@ const Path = () => {
 
         <Route
           path="/user-overview"
-          element={<Dashboard view={<UserOverView />} />}
+          element={<Dashboard view={<UserOverview />} />}
         />
         <Route
           path="/create-user"
@@ -93,11 +101,11 @@ const Path = () => {
         <Route path="/recent" element={<Dashboard view={<Recent />} />} />
         {/* sale routes start*/}
 
-        {/* <Route
+         <Route
           path="/banned-user"
           element={<Dashboard view={<BannedUser />} />}
-        />
-        <Route
+        /> 
+        {/*<Route
           path="/stock"
           element={<Dashboard view={<StockList />} />}
         />
@@ -109,6 +117,10 @@ const Path = () => {
 
         {/* finance routes start*/}
         <Route path="/finance-daily" element={<Dashboard view={<Daily />} />} />
+        <Route
+          path="/finance-daily"
+          element={<Dashboard view={<Daily />} />}
+        />
         <Route
           path="/finance-monthly"
           element={<Dashboard view={<Monthly />} />}

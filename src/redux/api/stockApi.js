@@ -20,7 +20,7 @@ export const stockApi = createApi({
             }),
             providesTags : ['stock']
         }),
-        createStock : builder.mutation({
+        updateStock : builder.mutation({
             query : ({token,content})=>({
                 url : '/stock',
                 method : 'POST',
@@ -29,26 +29,7 @@ export const stockApi = createApi({
             }),
             providesTags : ['stock']
         }),
-        updateStock : builder.mutation({
-            query({id,content,token}){
-                console.log(id,content,token)
-                const bd = JSON.stringify(content)
-                return{
-                    url : `/stock/${id}`,
-                    method : 'PUT',
-                    body : content,
-                    prepareHeaders: (headers) => {
-                        // headers.set("Content-Type", "multipart/form-data")
-                        // headers.set("content-type", "application/x-www-form-urlencoded")
-                        headers.set('Authorization' , `Bearer ${token}`)
-                        headers.set('Accept', 'application/json');
-                        return headers
-                    },
-
-                }
-            },
-            providesTags : ['stock']
-        }),
+        
         deleteStock :builder.mutation({
             query : ({id,token})=>({
                 url : `/stock/${id}`,
@@ -63,4 +44,4 @@ export const stockApi = createApi({
 
 })
 
-export const {useCreateStockMutation,useGetUnitStockQuery,useGetSingleStockQuery,useUpdateStockMutation,useDeleteStockMutation} = stockApi
+export const {useUpdateStockMutation,useGetUnitStockQuery,useGetSingleStockQuery,useDeleteStockMutation} = stockApi

@@ -4,7 +4,7 @@ import { TfiClose } from "react-icons/tfi";
 import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import { FaAngleRight, FaAngleDown } from "react-icons/fa";
 import { Select } from "@mantine/core";
-import { useGetUnitStockQuery,useCreateStockMutation,useGetSingleStockQuery,useUpdateStockMutation,useDeleteStockMutation} from "../redux/api/stockApi.js";
+import { useGetUnitStockQuery,useUpdateStockMutation,useGetSingleStockQuery,useDeleteStockMutation} from "../redux/api/stockApi.js";
 import { addStockUnitQty } from "../redux/services/StockSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -27,7 +27,6 @@ const Stock = () => {
   // const {data} = useSelector((state)=>state.stock)
   // console.log(data);
 
-  const [createStock] = useCreateStockMutation()
   const [updateStock] = useUpdateStockMutation()
   const [deleteStock] = useDeleteStockMutation()
   const i =  20;
@@ -47,27 +46,21 @@ const Stock = () => {
   const addStockQty = (e,id) => {
     setPid(id)
     setOffcanvas(true)
-    console.log(id)
-
+    console.log(pid)
   };
 
  
 
   const update =async(id)=>{
     // dispatch(addStockUnitQty(forStock))
-    // const content = {user_id : 1,product_id : 2,quantity : Number(qty),more : desc}
-    // console.log(token);
-    // const data = await createStock({token,content})
-    // console.log(data);
-    
-    console.log(id);
     const content = {user_id : 1,product_id : id,quantity : Number(qty),more : desc}
-    const d = {id,token,content}
-    console.log(content.product_id)
-    const dd = await updateStock(d)
-    console.log(dd)
+    console.log(token);
+    const data = await updateStock({token,content})
+    console.log(data);
     
   }
+
+
 
   return (
     <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col relative overflow-hidden">
@@ -156,6 +149,7 @@ const Stock = () => {
           </table>
         </div>
       </div>
+      {/* pagination */}
       <div className=" mt-auto justify-end flex ">
         <div className=" text-gray-500 border flex items-center border-gray-700 px-4 mt-2">
           <button
