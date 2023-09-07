@@ -8,85 +8,58 @@ import pro3 from '../img/pro3.jpg'
 import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
-import { selectProduct,changeQty,createPrice,editPrice} from '../redux/services/shopSlice'
+import Cookies from 'js-cookie'
+import { selectProduct,changeQty,updatePrice,editPrice,createPrice} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 
-let addNum='';
 
 const Shop = () => {
 
-    const products = [
-        {
-            name : 'avocado',
-            price : 10000,
-            img : pro1,
-            id : 1,
-            qty : 1
-        },
-        {
-            name : 'lychee',
-            price : 20000,
-            img : pro2,
-            id : 2,
-            qty : 1
-        },
-        {
-            name : 'apple',
-            price : 30000,
-            img : pro3,
-            id : 3,
-            qty : 1
-        },
-        {
-            name : 'mango',
-            price : 50000,
-            img : pro4,
-            id : 4,
-            qty : 1
-        },
-        {
-            name : 'kiwi',
-            price : 50000,
-            img : pro6,
-            id : 5,
-            qty : 1
-        },
-    ]
 
+    const token = Cookies.get('token')
+    console.log(token);
+    const [product,setProduct] = useState()
+    const {currentData} = useGetProductsQuery(token)
+    console.log(currentData);
+    const [voucher] = useVoucherMutation()
     const dispatch = useDispatch()
     const receiveList = useSelector((state) => state.shop.list)
     const [selectedList,setSelectedList] = useState()
     const [selectedAction,setSelectedAction] = useState('qty')
-   
-    // console.log(receiveList);
+    const products = []
     let all=0;
     let tax ;
+   
 
+    useEffect(()=>setProduct(currentData?.data))
+    
+    console.log(receiveList);
     const select = (v)=>{
         if(receiveList.length > 0){
-            const select = document.querySelector('.active-list')
-            setSelectedList(select.id)
             const id = receiveList.map((value)=> value.id)
             const IsAlreadSelected = id.includes(v.id)
             IsAlreadSelected == true ? null : dispatch(selectProduct(v))
             console.log(id,IsAlreadSelected)
         }else{
             dispatch(selectProduct(v))
+            setTimeout(()=>{
+                const tag = document.querySelector('.active-list')
+                console.log(tag);
+                setSelectedList(tag.id)
+            },50)
         }
-        
     }
 
-    
     if(receiveList.length > 0){
         
-        const unit = receiveList.map((value)=> value.price*value.qty)
+        const unit = receiveList.map((value)=> value.sale_price*value.total_stock)
         const total = unit.reduce((pv,cv)=>Number(pv)+Number(cv),[0])
-        tax =( total/100)*5
+        tax =((total/100)*5).toFixed(2)
         console.log(tax);
-        all=(total+tax)
-        // console.log(total);
+        all=(total+ Number(tax))
+        console.log(total);
     }
-
 
     const onListClickHandler=(x,e)=>{
 
@@ -100,15 +73,10 @@ const Shop = () => {
             setTimeout(()=>{
                 getList.classList.add('active-list')
             },100)
-            
         }else{
-
             getList.classList.add('active-list')
-
         }
-        // const ind = receiveList.indexOf(value)
-        // setSelectedList(ind)
-        // console.log(ind);
+        
     }
 
     const onQtyClickHandler=()=>{
@@ -119,7 +87,7 @@ const Shop = () => {
     }
 
     const onDeleteHandler=()=>{
-        const data = {id : selectedList,pro : products}
+        const data = {id : selectedList,pro : product}
             console.log(data);
             dispatch(editPrice(data))
     }
@@ -127,16 +95,18 @@ const Shop = () => {
     const onPriceChangeHandler=()=>{
         setSelectedAction('price')
     }
-
+    
     const check =(e)=>{
         if(receiveList.length >= 1){
             if(selectedAction == 'price'){
                 if( selectedList != null){
-                    addNum += e.target.closest('.num-data').childNodes[0].innerText
-                    console.log(addNum)
-                    const data = {price : addNum,id : selectedList}
-                    // console.log(typeof(data.price),data.price)
-                    dispatch(createPrice(data))
+
+                    const p = e.target.closest('.num-data').childNodes[0].innerText
+                    console.log(p);
+                    // dispatch(createPrice(p))
+                    const data = {price : p,id : selectedList}
+                    dispatch(updatePrice(data))
+
                 }else{
                     window.alert('Oops! pick up your product')
                 }
@@ -150,6 +120,35 @@ const Shop = () => {
         }else{
             window.alert(' pick up your product')
         }
+    }
+
+    receiveList.forEach((i)=> {
+        const d = {product_id : i.id,quantity : i.total_stock} 
+        console.log(d);
+        products.push(d)
+    });
+    console.log(products);
+    
+    const pay=async()=>{
+
+        const content  = {
+            customer_name : 'hnin hnin',
+            phone_number : '09123456789',
+            items : products,
+
+        }
+
+        const stData = JSON.stringify(content)
+        console.log(stData);
+
+        const data = {
+            token,
+            stData
+        }
+        
+        const d = await voucher(data)
+        console.log(d);
+        console.log(data);
     }
         
 
@@ -179,13 +178,13 @@ const Shop = () => {
                 </div>
                 {/* products */}
                 <div className=' bg-gray-900 px-4 pt-4'>
-                    <div className=' flex gap-4 flex-wrap'>
+                    <div className=' flex gap-6 flex-wrap'>
                         {
-                            products.map((value)=><div className=' border border-gray-700 rounded overflow-hidden' key={value.id} onClick={()=> select(value) }>
-                            <img src={value.img } alt="" className=' w-[180px] h-[160px]' />
+                            product?.map((value)=><div className=' border border-gray-700 rounded overflow-hidden' key={value.id} onClick={()=> select(value) }>
+                            <img src={value.photo } alt="" className=' w-[180px] h-[160px]' />
                             <div className=' text-gray-400 p-3 text-end'>
                                 <p>{value.name}</p>
-                                <p className=' font-bold'>{value.price}</p>
+                                <p className=' font-bold'>{value.sale_price}</p>
                             </div>
                         </div>)
                         }
@@ -202,9 +201,9 @@ const Shop = () => {
                             receiveList.length != 0 ? receiveList.map((value,index)=><li className={`${index == 0 ? 'active-list' : null} flex py-2 px-5 border-b border-gray-600 justify-between items-center list`} key={value?.id} id={value.id} onClick={(e)=>onListClickHandler(value,e)}>
                             <div>
                                 <p className=' text-gray-300 font-thin '>{value.name} </p>
-                                <span className=' text-gray-400 font-medium text-sm'>{value.qty} / Unit</span><span className=' text-gray-400 font-medium text-sm'>{value?.price}</span>
+                                <span className=' text-gray-400 font-medium text-sm'>{value.total_stock} / {value.unit}</span><span className=' text-gray-400 font-medium text-sm'>{value?.sale_price}</span>
                             </div>
-                            <p className=' text-gray-100 font-semibold price print:text-gray-400' >{value.price*value.qty}</p>
+                            <p className=' text-gray-100 font-semibold price print:text-gray-400' >{value.sale_price*value.total_stock}</p>
                         </li>):null  
                         }
                     </ul>
@@ -213,11 +212,11 @@ const Shop = () => {
                 <div className=' mt-auto '>
                     <div className=' text-end pe-5 mt-3'>
                         <span className=' uppercase text-gray-300 me-3'>total - </span>
-                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[100px] print:text-gray-600'>{all}</span>
+                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[160px] print:text-gray-600'>{all}</span>
                     </div>
                     <div className=' text-end pe-5 mt-3 mb-2'>
                         <span className=' uppercase text-gray-300 me-3'>tax - </span>
-                        <span className=' text-gray-200 text-xl font-bold inline-block w-[100px] print:text-gray-600'> -{tax}</span>
+                        <span className=' text-gray-200 text-xl font-bold inline-block w-[160px] print:text-gray-600'> -{tax}</span>
                     </div>
                      <div className=' flex flex-col keypad print:hidden'>
                         <div className='flex '>
@@ -292,7 +291,7 @@ const Shop = () => {
                             </button>
                         </div>
                     </div>
-                    <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=>window.print()}>
+                    <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=> pay()}>
                         <span className=' text-gray-300 font-semibold'>Payment</span>
                     </div>
                 </div>  
