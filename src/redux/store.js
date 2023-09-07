@@ -39,7 +39,7 @@ export const store = configureStore({
     productSlice: productSlice,
     brandSlice: brandSlice,
     shop: shopSlice,
-    profile : profileSlice
+    profile : profileSlice,
     stock :stockSlice,
     finance:financeSlice,userSlice:userSlice,
   },
@@ -52,7 +52,7 @@ export const store = configureStore({
       stockApi.middleware,
 
       shopApi.middleware,
-      profileApi.middleware
+      profileApi.middleware,
 
       financeApi.middleware,
       userApi.middleware
