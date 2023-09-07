@@ -379,7 +379,6 @@ button[data-active="true"] .mlb {
 
 .custom-offcanvas {
   width: 300px;
-  height: 100%;
   position: absolute;
   top: 0;
   right: -300px;
@@ -503,3 +502,32 @@ button[data-active="true"] .mlb {
   border: 1.5px solid rgb(132, 132, 133);
 }
 
+.btn-comfirm{
+  padding: 10px 20px;
+  color :rgb(255, 252, 252);
+  font-size: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #2763fc;
+}
+
+.progress-bar{
+  background-color: #D9EEE1;
+  height: 3px;
+}
+
+.myBrandModal .mantine-Button-root{
+    width: 100%;
+    display: block;
+    padding: 0;
+    height: 100%;
+} 
+
+.myBrandModal .mantine-Button-root .mantine-Button-inner{
+  width: 100%;
+  display: block;
+  padding: 0;
+  height: 100%;
+
+} 

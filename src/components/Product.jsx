@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import {AiOutlinePlus,AiOutlineArrowRight,AiOutlineClose} from 'react-icons/ai'
+import {AiOutlinePlus,AiOutlineArrowRight,AiFillDelete} from 'react-icons/ai'
 import {BiGridAlt} from 'react-icons/bi'
-import {BsListUl,BsSearch} from 'react-icons/bs'
+import {BsListUl,BsSearch,BsTrash3} from 'react-icons/bs'
 import {MdOutlineModeEditOutline} from 'react-icons/md'
 import {TfiClose} from 'react-icons/tfi'
 import {FaAngleRight} from 'react-icons/fa'
@@ -12,14 +12,35 @@ import pro4 from '../img/pro4.jpg'
 import pro5 from '../img/pro5.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import { useDeleteProductMutation, useGetProductsQuery } from '../redux/api/productApi'
+import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 
 
 
 const Product = () => {
 
     const [ui,setUi] = useState(true);
-    const [offcanvas,setOffcanvas] = useState(false);
+    const token = Cookies.get('token')
+    const [unit,setUnit] = useState(1)
+    const d = {p : unit,token}
+    const {currentData} = useGetProductsQuery(d)
+    const [deleteProduct] = useDeleteProductMutation()
+    const oldData = useSelector((state)=>state.productSlice.oldData)
+    const [products,setProducts] = useState()
+    const nav = useNavigate()
+    console.log(currentData)
+
+    useEffect(()=>{
+        setProducts(currentData?.data)
+        console.log(oldData)
+        console.log(products)
+        
+    },[currentData,oldData])
 
     const changeGridUi =()=>{
         const data = document.querySelector('.selected')
@@ -33,7 +54,55 @@ const Product = () => {
            
     }
 
-    
+    const MySwal = withReactContent(Swal)
+   
+
+    const deleteP = async(id)=>{
+        console.log(id)
+        const d = {token,id}
+        const data = await deleteProduct(d)
+        console.log(data);
+        if (data.data == null) {
+            MySwal.fire({
+                text : 'Successfully Deleted!',
+                width : '300px',
+                padding : '10px 10px 10px',
+                color : '#ffffff',
+                background : '#393d3d',
+                iconColor : '5dfc68',
+            }
+                
+            ).then((result)=>{
+                if(result.isConfirmed){
+                    window.location.reload()
+                }
+            })
+        }
+    }
+
+    const del = (id)=>{
+        MySwal.fire({
+            title: <p>Hello World</p>,
+            didOpen: () => {
+                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+                MySwal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    background : '#393d3d',
+                    color : '#ffffff',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteP(id)
+                    }
+                })
+            },
+            })
+
+    }
 
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col relative overflow-hidden'>
@@ -44,8 +113,12 @@ const Product = () => {
                     <p className=' text-gray-400 mt-1 font-medium text-xs'>Inventory / products</p>
                 </div>
                 <div>
+                    <Link to={'/shop'}>
                     <button className=' px-5 py-2 text-[#8ab4f8] border-2 border-gray-500 rounded font-medium me-3'>Go to shop</button>
+                    </Link>
+                    <Link to={'/add-product'}>
                     <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '> <AiOutlinePlus className=' inline'/> Add Product</button>
+                    </Link>
                 </div>
             </div>
             <div className=' mt-[40px]'>
@@ -68,11 +141,11 @@ const Product = () => {
             </div>
             {
                 ui ? (<div className=' mt-[50px] selected'>
-                <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
+                
+                     <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
                     <thead>
                     <tr className=''>
-                        <th className=' py-4 border-b text-center border-gray-600 px-1 uppercase font-medium'>No</th>
-                        <th className=' py-4 border-b text-start border-gray-600 px-1 uppercase font-medium'>Name</th>
+                        <th className=' py-4 border-b ps-6 text-start border-gray-600 px-1 uppercase font-medium'>Name</th>
                         <th className=' py-4 border-b text-start border-gray-600 px-1 uppercase font-medium'>Brand</th>
                         <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Unit</th>
                         <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Sale Price</th>
@@ -81,115 +154,75 @@ const Product = () => {
                     </tr>
                     </thead>
                     <tbody>
+                        {
+                            
+                            products?.map((v)=>(<tr className=' border-b border-gray-700 ' key={v.id}>
+                                <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
+                                <td className='px-1 text-start py-4' >{v.brand_name}</td>
+                                <td className='px-1 py-4 text-end' >{v.unit}</td>
+                                <td className='px-1 py-4 text-end' >{v.sale_price}</td>
+                                <td className='px-1 py-4 text-end' >{v.total_stock}</td>
+                                <td className=' pe-5 py-4'>
+                                    <div className=' flex items-center justify-end gap-3'>
+
+                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                                        
+                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                        
+                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
+                                        
+                                    </div>
+                                </td>
+                            </tr>))
+                            
+                        }
                         
-                        <tr className=' '>
-                            <td className='px-1 text-center  py-4' >1</td>
-                            <td className='px-1 text-start py-4' >Avocado</td>
-                            <td className='px-1 text-start py-4' >USA</td>
-                            <td className='px-1 py-4 text-end' >s</td>
-                            <td className='px-1 py-4 text-end' >10000</td>
-                            <td className='px-1 py-4 text-end' >10</td>
-                            <td className=' pe-5 py-4'>
-                                <div className=' flex items-center justify-end gap-2'>
-                                    <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> setOffcanvas(!offcanvas)}><AiOutlinePlus className=' text-gray-200'/></button>
-                                    <Link to={'/product-edit'}>
-                                    <button className=' px-2 py-2 bg-slate-600 rounded-full'><MdOutlineModeEditOutline className=' text-gray-200'/></button>
-                                    </Link>
-                                    <Link to={'/product-detail'}>
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full'><AiOutlineArrowRight className=' text-gray-200'/></button>
-                                    </Link>
-                                </div>
-                            </td>
-                        </tr>
                        
                     </tbody>
                 </table>
+                
             </div>):(<div className=' mt-[50px]'>
                 <div className=' flex gap-4 flex-wrap'>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro1} alt="" className=' w-[180px] h-[160px]' />
+                    {
+                        products?.map((v)=>(<div className=' border border-gray-700 rounded overflow-hidden' key={v.id}>
+                        <img src={products.photo} alt="" className=' w-[180px] h-[160px]' />
                         <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p className=' font-bold'>1000Ks</p>
+                            <p>{v.name}</p>
+                            <p className=' font-bold'>{v.sale_price}</p>
                         </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro2} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro3} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro4} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro5} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro6} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
-                    <div className=' border border-gray-700 rounded overflow-hidden'>
-                        <img src={pro7} alt="" className=' w-[180px] h-[160px]' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>Avocado</p>
-                            <p>1000Ks</p>
-                        </div>
-                    </div>
+                    </div>))
+                    }
+                    
                 </div>
             </div>)
             }
         </div>
         <div className=' mt-auto justify-end flex '>
-            <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-2'>
-                <div className=" px-3 py-2 text-gray-300">1</div>
-                <div className=" px-3 py-2">2</div>
-                <div className=" px-3 py-2">3</div>
-                <div className=" px-3 py-2">4</div>
-                <div className=" px-3 py-2"><FaAngleRight/></div>
+            <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-6'>
+            <button
+            className={` px-3 py-2 ${
+              unit == 1 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(1)}>
+            1
+          </button>
+          <button
+            className={` px-3 py-2 ${
+              unit == 2 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(2)}>
+            2
+          </button>
+          <button
+            className={` px-3 py-2 ${
+              unit == 4 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(3)}>
+            <FaAngleRight />
+          </button>
             </div>
         </div>
-        {/* offcanvas */}
-        <div className={` custom-offcanvas ${offcanvas && 'openAni'} bg-[#26272c] flex flex-col p-8`}>
-            <div className=' '>
-                <div className=' flex justify-between items-center'>
-                    <p className=' text-gray-200 font-bold text-xl'>Add Stock</p>
-                    <button className=' text-gray-50' onClick={()=> setOffcanvas(!offcanvas)}><TfiClose/></button>
-                </div>
-                <div className=' pt-7'>
-                    <div>
-                        <p className=' text-gray-300 mb-2'>Quantity</p>
-                        <input type="text" name="" id="" className=' outline-none p-2 border bg-transparent text-gray-400 rounded border-gray-700' />
-                    </div>
-                    <div className=' mt-3'>
-                        <p className=' text-gray-300 mb-2'>More</p>
-                        <textarea className=' outline-none text-gray-400 h-[130px] resize-none p-2 border bg-transparent rounded border-gray-700' />
-                    </div>
-                </div>
-            </div>
-            <div className=' mt-auto '>
-                <div className=' bg-slate-400 text-center py-2 text-lg text-gray-900 font-extrabold rounded'>Add</div>
-            </div>
-        </div>
+        
     </div>
   )
 }

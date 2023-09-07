@@ -8,13 +8,23 @@ export const productApi = createApi({
   tagTypes: ["product"],
 
   endpoints: (builder) => ({
+
     getProducts: builder.query({
-      query: (token) => ({
-        url: "/product",
+      query: ({token,p}) => ({
+        url: `/product?page=${p}`,
         headers: { authorization: `Bearer ${token}` },
       }),
       providesTags: ["product"],
     }),
+
+    getSingleProduct: builder.query({
+      query: ({token,id}) => ({
+        url: `/product/${id}`,
+        headers: { authorization: `Bearer ${token}`},
+      }),
+      providesTags: ["product"],
+    }),
+
     addProduct: builder.mutation({
       query: ({ product, token }) => ({
         url: `/product`,
@@ -24,7 +34,31 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+
+    deleteProduct : builder.mutation({
+      query: ({ token,id }) => ({
+        url: `/product/${id}`,
+        method: "DELETE",
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      invalidatesTags: ["product"],
+    }),
+
+    updateProduct : builder.mutation({
+      query({content,token,id}){
+        // console.log(content,token,id)
+        return {
+          url : `/product/${id}`,
+          method : 'PUT',
+          headers: { authorization: `Bearer ${token}` },
+          body : content
+        }
+        
+      },
+      invalidatesTags : ['shop']
+    })
+
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery } = productApi;
+export const { useAddProductMutation, useGetProductsQuery,useGetSingleProductQuery ,useUpdateProductMutation,useDeleteProductMutation} = productApi;

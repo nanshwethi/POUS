@@ -3,16 +3,13 @@ import Dashboard from "../pages/Dashboard";
 import Home from "../components/Home";
 import Login from "../pages/Login";
 import Error from "../pages/Error";
-
 import Media from "../components/Media";
 import MediaImgDetail from '../components/MediaImgDetail';
 import UserProfile from '../components/UserProfile'
 import ProfileEdit from '../components/ProfileEdit'
-
 import UserOverview from '../components/UserOverview';
 import CreateUser from '../components/CreateUser';
 import BannedUser from "../components/BannedUser"
-
 import AddProduct from "../components/AddProduct";
 import Product from "../components/Product";
 import ProductDetail from "../components/ProductDetail";
@@ -28,6 +25,8 @@ import Daily from "../components/Finance/Daily";
 import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
+import BrandEdit from "../components/BrandEdit";
+import StockEdit from "../components/StockEdit";
 
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -53,7 +52,7 @@ const Path = () => {
           element={<Dashboard view={<UserProfile />} />}
         />
         <Route
-          path="/profile-edit"
+          path="/profile-edit/:id"
           element={<Dashboard view={<ProfileEdit />} />}
         />
         <Route
@@ -84,14 +83,25 @@ const Path = () => {
           path="/add-product"
           element={<Dashboard view={<AddProduct />} />}
         />
-        <Route path="/product" element={<Dashboard view={<Product />} />} />
+        <Route path="/product" element={<Dashboard view={<Product/>} />}/>
         <Route
-          path="/product-detail"
-          element={<Dashboard view={<ProductDetail />} />}
+          path="/product-detail/:id"
+          element={<Dashboard view={<ProductDetail/>} />}
+        />
+
+        <Route path="/product/:id" element={<Dashboard view={<ProductEdit/>} />}/>
+
+        <Route path="/brand-edit/:id" element={<Dashboard view={<BrandEdit/>} />}/>
+
+        <Route path="/stock-edit/:id" element={<Dashboard view={<StockEdit/>} />}/>
+
+        <Route
+          path="/stock-control"
+          element={<Dashboard view={<Stock/>} />}
         />
         <Route
-          path="/product-edit"
-          element={<Dashboard view={<ProductEdit />} />}
+          path="/brand"
+          element={<Dashboard view={<Brand/>} />}
         />
         <Route path="/stock-control" element={<Dashboard view={<Stock />} />} />
         <Route path="/brand" element={<Dashboard view={<Brand />} />} />
