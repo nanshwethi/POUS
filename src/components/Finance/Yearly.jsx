@@ -37,13 +37,15 @@ const Yearly = () => {
       <p className="breadcrumb-title	">This Month Sale Overview</p>
       <div className=" flex items-baseline gap-4">
           <div className=" flex justify-start items-baseline gap-2">
-            <p className=" text-sm text-gray-400">Export : </p>
             <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
               className="recent-dropdown "
             >
+              <option value="" className="recent-dropdown hidden">
+              Export
+            </option>
               <option value="last" className="recent-dropdown">
                 PDF
               </option>
@@ -56,13 +58,15 @@ const Yearly = () => {
             </select>
           </div>
           <div className=" flex justify-start items-baseline gap-2">
-            <p className=" text-sm text-gray-400">Year : </p>
             <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
               className="recent-dropdown "
             >
+              <option value="" className="recent-dropdown hidden">
+              Year
+            </option>
               <option value="2001" className="recent-dropdown">
                 2001
               </option>

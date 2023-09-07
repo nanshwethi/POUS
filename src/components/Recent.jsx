@@ -1,7 +1,7 @@
 // import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../context/stateContext";
-import { BsSearch } from "react-icons/bs";
+// import { BiExport } from "react-icons/bi";
 import { useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -48,13 +48,15 @@ const Recent = () => {
           />
         </div> */}
         <div className=" flex items-baseline gap-4">
-          <p className=" text-sm text-gray-400">Export : </p>
           <select
             name="sort"
             value={sortValue}
             onChange={(e) => setSortValue(e.target.value)}
-            className="recent-dropdown "
+            className="recent-dropdown w-[100px]"
           >
+            <option value="" className="recent-dropdown hidden">
+              Export
+            </option>
             <option value="last" className="recent-dropdown">
               PDF
             </option>
@@ -110,6 +112,7 @@ const Recent = () => {
             <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
               TIME
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -121,10 +124,11 @@ const Recent = () => {
             <td className="px-1 py-4 text-end">100100</td>
             <td className="px-1 py-4 text-end">12/7/2023</td>
             <td className=" px-1 py-4 text-end">10:00 AM</td>
-            <td className=" pe-5 py-4 text-end"><span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
+          
+            <td className=" pe-5 py-4 text-end"><button className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
 
             <BsArrowRight size={'1rem'} className="text-[var(--secondary-color)]"/>
-            </span>
+            </button>
                 </td>
           </tr>
         </tbody>

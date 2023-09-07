@@ -6,7 +6,8 @@ import { addPhotos } from "../redux/services/mediaSlice";
 
 const Home = () => {
   const token = Cookies.get("token");
-  const { data } = useGetPhotoQuery(token);
+  const  data  = useGetPhotoQuery(token);
+  // console.log('photos',data)
 const dispatch=useDispatch();
 
   useEffect(() => {

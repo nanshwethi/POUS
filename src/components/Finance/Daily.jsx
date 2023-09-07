@@ -2,17 +2,32 @@
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import { BsArrowRight } from "react-icons/bs";
 import { DateInput } from "@mantine/dates";
+// import { useDispatch, useSelector } from "react-redux";
+// import Cookies from "js-cookie";
+// import { useGetDailySaleRecordsQuery } from "../../redux/api/financeApi";
+// import { addDailySaleRecords } from "../../redux/services/financeSlice";
+
 // import { BiExport } from "react-icons/bi";
 
 const Daily = () => {
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
+  // const [sortValue, setSortValue] = useState();
+  // const dispatch=useDispatch();
+  // const token = Cookies.get("token");
+  // const data = useGetDailySaleRecordsQuery(token);
+  // console.log("ddd", data);
+  // const daily = useSelector((state) => state.financeSlice.addDailySaleRecords);
+  // console.log("daily", daily);
+
+  // useEffect(() => {
+  //   dispatch(addDailySaleRecords({ dailySaleRecords: data?.data }));
+  // }, [data]);
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -38,14 +53,16 @@ const Daily = () => {
       <div className=" flex justify-between items-center py-5">
         <p className="breadcrumb-title	">Today Sale Overview</p>
         <div className=" flex items-baseline gap-4">
-          <p className=" text-sm text-gray-400">Export : </p>
           <select
             placeholder="Export"
             name="sort"
-            value={sortValue}
-            onChange={(e) => setSortValue(e.target.value)}
+            // value={sortValue}
+            // onChange={(e) => setSortValue(e.target.value)}
             className="recent-dropdown "
           >
+            <option value="" className="recent-dropdown hidden">
+              Export
+            </option>
             <option value="last" className="recent-dropdown">
               PDF
             </option>
@@ -70,7 +87,7 @@ const Daily = () => {
           </div>
 
           <button
-            onClick={() => liHandler("cashier")}
+            // onClick={() => liHandler("cashier")}
             className="w-[40px] h-[30px] font-semibold text-[16px] myBlueBtn flex justify-center items-center"
           >
             <BsSearch className=" text-[var(--sidebar-color)]" />

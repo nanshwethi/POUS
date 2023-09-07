@@ -338,7 +338,7 @@ const Sidebar = () => {
                 </p>
               </Accordion.Panel>
             </Link>
-            <Link to={"/monthly"} onClick={() => liHandler("user create")}>
+            <Link to={"/create-user"} onClick={() => liHandler("user create")}>
               <Accordion.Panel className="accordion-bg li-text">
                 <p
                   className={`${
@@ -445,11 +445,7 @@ const Sidebar = () => {
             size={"1.8rem"}
           />
           <p
-            className={`${
-              sidebarActived === "logout"
-                ? "text-[var(--font-color)]"
-                : "text-[var(--secondary-color)]"
-            }`}
+            className={`text-[var(--secondary-color)]`}
           >
             Logout
           </p>

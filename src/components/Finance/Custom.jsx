@@ -37,7 +37,6 @@ const Custom = () => {
       <div className=" flex justify-between items-center py-5">
       <p className="breadcrumb-title	">Today Sale Overview</p>
       <div className=" flex items-baseline gap-4">
-          <p className=" text-sm text-gray-400">Export : </p>
           <select
             placeholder="Export"
             name="sort"
@@ -45,6 +44,9 @@ const Custom = () => {
             onChange={(e) => setSortValue(e.target.value)}
             className="recent-dropdown "
           >
+             <option value="" className="recent-dropdown hidden">
+              Export
+            </option>
             <option value="last" className="recent-dropdown">
               PDF
             </option>

@@ -14,6 +14,11 @@ import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
 
+import {financeApi} from './api/financeApi';
+import financeSlice from "./services/financeSlice";
+import { userApi } from "./api/userApi";
+import userSlice from "./services/userSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +30,9 @@ export const store = configureStore({
     [stockApi.reducerPath]: stockApi.reducer,
     [shopApi.reducerPath] : shopApi.reducer,
     [profileApi.reducerPath] : profileApi.reducer,
+    [financeApi.reducerPath]:financeApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+
 
     authSlice: authSlice,
     mediaSlice: mediaSlice,
@@ -32,6 +40,8 @@ export const store = configureStore({
     brandSlice: brandSlice,
     shop: shopSlice,
     profile : profileSlice
+    stock :stockSlice,
+    finance:financeSlice,userSlice:userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -40,8 +50,13 @@ export const store = configureStore({
       productApi.middleware,
       brandApi.middleware,
       stockApi.middleware,
+
       shopApi.middleware,
       profileApi.middleware
+
+      financeApi.middleware,
+      userApi.middleware
+
     ),
 
 });
