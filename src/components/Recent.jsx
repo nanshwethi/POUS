@@ -10,11 +10,14 @@ import {BsArrowRight} from 'react-icons/bs'
 import {BsCalculator} from 'react-icons/bs'
 import ModalSaleClose from "./ModalSaleClose";
 import Modal from "./Modal";
+import { useSelector } from "react-redux";
 
 const Recent = () => {
   const { liHandler } = useContextCustom();
   const [sortValue, setSortValue] = useState();
   const { showModal, setShowModal } = useContextCustom();
+  const recentData = useSelector((state)=>state.shop.recent)
+
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">

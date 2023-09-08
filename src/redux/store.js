@@ -13,7 +13,7 @@ import brandSlice from "./services/brandSlice";
 import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
-
+import stockSlice from './services/stockSlice'
 import {financeApi} from './api/financeApi';
 import financeSlice from "./services/financeSlice";
 import { userApi } from "./api/userApi";

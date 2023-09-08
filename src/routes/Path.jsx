@@ -27,6 +27,7 @@ import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
 import BrandEdit from "../components/BrandEdit";
 import StockEdit from "../components/StockEdit";
+import SaleVoucher from "../pages/SaleVoucher";
 
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -63,6 +64,7 @@ const Path = () => {
 
         {/* sale routes start*/}
         <Route path="/cashier" element={<Shop />} />
+        <Route path="/voucher" element={<SaleVoucher />} />
         <Route path="/shop-list" element={<Dashboard view={<ShopList />} />} />
         {/* sale routes start*/}
 

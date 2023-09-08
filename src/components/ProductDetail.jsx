@@ -37,7 +37,7 @@ const ProductDetail = () => {
                             <div  className=' mt-[-120px]'>
                                 <img src={pro1} alt="" className=' rounded-full ' style={{width : '180px',height:'180px'}}/>
                             </div>
-                            <Link to={`/product-edit/${id}`}>
+                            <Link to={`/product/${id}`}>
                                 <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
                             </Link>
                         </div>
@@ -74,7 +74,7 @@ const ProductDetail = () => {
                         </div>
                         <div className=' flex pt-5 pb-12  text-gray-200 items-start font-medium '>
                             <div className=' w-[185px] font-semibold text-gray-400'>More Information</div> 
-                            <div className=' ps-2'>: {data.data.more_information}</div>
+                            <div className=' ps-2 w-[400px]'>: {data.data.more_information}</div>
                         </div>
                     </div>
                 </div>
