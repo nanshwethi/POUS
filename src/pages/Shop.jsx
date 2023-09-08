@@ -9,7 +9,7 @@ import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import Cookies from 'js-cookie'
-import { selectProduct,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent} from '../redux/services/shopSlice'
+import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 import { Link } from 'react-router-dom'
@@ -26,7 +26,8 @@ const Shop = () => {
     const [voucher] = useVoucherMutation()
     const dispatch = useDispatch()
     const receiveList = useSelector((state) => state.shop.list)
-    const [selectedList,setSelectedList] = useState()
+    const selectedList = useSelector((state)=> state.shop.selectedList)
+    // const [selectedList,setSelectedList] = useState()
     const [selectedAction,setSelectedAction] = useState('qty')
     const products = []
     let all=0;
@@ -36,21 +37,29 @@ const Shop = () => {
     useEffect(()=>setProduct(currentData?.data))
     
     console.log(receiveList);
+
     const select = (v)=>{
         if(receiveList.length > 0){
             const id = receiveList.map((value)=> value.id)
             const IsAlreadSelected = id.includes(v.id)
             IsAlreadSelected == true ? null : dispatch(selectProduct(v))
+            setTimeout(()=>{
+                const tag = document.querySelector('.active-list')
+                console.log(tag);
+               dispatch(setSelectedList(tag.id))
+            },50)
             console.log(id,IsAlreadSelected)
         }else{
             dispatch(selectProduct(v))
             setTimeout(()=>{
                 const tag = document.querySelector('.active-list')
                 console.log(tag);
-                setSelectedList(tag.id)
+                dispatch(setSelectedList(tag.id))
             },50)
         }
     }
+
+    console.log(selectedList)
 
     if(receiveList.length > 0){
         
@@ -66,11 +75,11 @@ const Shop = () => {
 
     const onListClickHandler=(x,e)=>{
 
-        setSelectedList(x.id)
+        dispatch(setSelectedList(x.id))
         const selected = document.querySelector('.active-list')
         const getList = e.target.closest('.list')
         // console.log(getList)
-        if(selected !=null ){
+        if(selected != null ){
             // console.log(e);
             selected.classList.remove('active-list')
             setTimeout(()=>{
@@ -90,9 +99,16 @@ const Shop = () => {
     }
 
     const onDeleteHandler=()=>{
-        const data = {id : selectedList,pro : product}
+        if(selectedAction == 'qty'){
+            const data = {id : selectedList,pro : product}
+            dispatch(deleteQty(data))
+        }else{
+            const data = {id : selectedList,pro : product}
             console.log(data);
             dispatch(editPrice(data))
+
+        }
+            
     }
 
     const onPriceChangeHandler=()=>{
@@ -202,7 +218,7 @@ const Shop = () => {
                     <h1 className=' font-bold text-3xl text-gray-200 pt-3 ps-5 print:my-6 print:text-gray-400 print:ps-0 print:text-center'>Receive</h1>
                     <ul >
                         {
-                            receiveList.length != 0 ? receiveList.map((value,index)=><li className={`${index == 0 ? 'active-list' : null} flex py-2 px-5 border-b border-gray-600 justify-between items-center list`} key={value?.id} id={value.id} onClick={(e)=>onListClickHandler(value,e)}>
+                            receiveList.length != 0 ? receiveList.map((value,index)=><li className={`${index == receiveList.length-1 ? 'active-list' : null} flex py-2 px-5 border-b border-gray-600 justify-between items-center list`} key={value?.id} id={value.id} onClick={(e)=>onListClickHandler(value,e)}>
                             <div>
                                 <p className=' text-gray-300 font-thin '>{value.name} </p>
                                 <span className=' text-gray-400 font-medium text-sm'>{value.total_stock} / {value.unit}</span><span className=' text-gray-400 font-medium text-sm'>{value?.sale_price}</span>
