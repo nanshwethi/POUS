@@ -59,7 +59,6 @@ const ProductEdit = () => {
         if( dt?.data){
 
             MySwal.fire({
-            title: <p>Hello World</p>,
             didOpen: () => {
                 // `MySwal` is a subclass of `Swal` with all the same instance & static methods
                 const Toast = MySwal.mixin({
@@ -86,8 +85,7 @@ const ProductEdit = () => {
                   })
             },
             })
-            // setSuccess(true)
-            // nav('/product')
+           
         }
             
     }

@@ -13,7 +13,7 @@ import brandSlice from "./services/brandSlice";
 import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
-
+import stockSlice from './services/stockSlice'
 import {financeApi} from './api/financeApi';
 import financeSlice from "./services/financeSlice";
 import { userApi } from "./api/userApi";
@@ -39,7 +39,7 @@ export const store = configureStore({
     productSlice: productSlice,
     brandSlice: brandSlice,
     shop: shopSlice,
-    profile : profileSlice
+    profile : profileSlice,
     stock :stockSlice,
     finance:financeSlice,userSlice:userSlice,
   },
@@ -52,7 +52,7 @@ export const store = configureStore({
       stockApi.middleware,
 
       shopApi.middleware,
-      profileApi.middleware
+      profileApi.middleware,
 
       financeApi.middleware,
       userApi.middleware

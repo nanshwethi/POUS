@@ -9,9 +9,10 @@ import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import Cookies from 'js-cookie'
-import { selectProduct,changeQty,updatePrice,editPrice,createPrice} from '../redux/services/shopSlice'
+import { selectProduct,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
+import { Link } from 'react-router-dom'
 
 
 const Shop = () => {
@@ -59,6 +60,8 @@ const Shop = () => {
         console.log(tax);
         all=(total+ Number(tax))
         console.log(total);
+        dispatch(addTotal(all))
+        dispatch(addTax(tax))
     }
 
     const onListClickHandler=(x,e)=>{
@@ -149,6 +152,7 @@ const Shop = () => {
         const d = await voucher(data)
         console.log(d);
         console.log(data);
+        if(d?.data?.data) dispatch(addRecent(d.data.data))
     }
         
 
@@ -193,7 +197,7 @@ const Shop = () => {
             </div>
             {/* Receive */}
             <div className=' w-[35vw] min-h-full bg-slate-950 flex flex-col print:w-full'>
-                <div className='h-[400px] overflow-auto shop-list'>
+                <div className=' overflow-auto shop-list'>
                     <h1 className=' font-extrabold hidden text-4xl pt-3 ps-5 print:my-6 print:ps-0 print:text-center print:block'>MMS Shop</h1>
                     <h1 className=' font-bold text-3xl text-gray-200 pt-3 ps-5 print:my-6 print:text-gray-400 print:ps-0 print:text-center'>Receive</h1>
                     <ul >
@@ -291,9 +295,12 @@ const Shop = () => {
                             </button>
                         </div>
                     </div>
-                    <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=> pay()}>
-                        <span className=' text-gray-300 font-semibold'>Payment</span>
-                    </div>
+                    <Link to={'/voucher'}>
+                    {/* onClick={()=> pay()} */}
+                        <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=>pay()}> 
+                            <span className=' text-gray-300 font-semibold'>Payment</span>
+                        </div>
+                    </Link>
                 </div>  
             </div>
         </div> 

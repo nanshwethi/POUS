@@ -4,7 +4,10 @@ export const shopSlice = createSlice({
     name : 'shop',
     initialState  : {
         list : [],
-        price : ''
+        price : '',
+        total : null,
+        tax : null,
+        recent : [],
     },
     reducers :{
         selectProduct :(state,{payload})=>{
@@ -22,6 +25,15 @@ export const shopSlice = createSlice({
             state.list = fun
             console.log(state.list);
 
+        },
+        addTotal : (state,{payload})=>{
+            state.total = payload
+        },
+        addTax : (state,{payload})=>{
+            state.tax = payload
+        },
+        addRecent : (state,{payload})=>{
+            state.recent = [...state.recent,payload]
         },
         createPrice :(state,{payload})=>{
             
@@ -86,4 +98,4 @@ export const shopSlice = createSlice({
 })
 
 export default shopSlice.reducer;
-export const {selectProduct,changeQty,updatePrice,editPrice,createPrice} = shopSlice.actions
+export const {selectProduct,addRecent,changeQty,addTax,addTotal,updatePrice,editPrice,createPrice} = shopSlice.actions
