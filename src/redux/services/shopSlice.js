@@ -8,6 +8,7 @@ export const shopSlice = createSlice({
         total : null,
         tax : null,
         recent : [],
+        selectedList : null
     },
     reducers :{
         selectProduct :(state,{payload})=>{
@@ -91,11 +92,38 @@ export const shopSlice = createSlice({
                 
             }
 
-            
+        },
+        deleteQty :(state,{payload})=>{
 
+            const last = state.list.find((v)=> v.id == payload.id)
+            console.log(last);
+
+            if(last.total_stock == 1 || last.total_stock == 0){
+                const filter = state.list.filter((v)=> v.id != payload.id)
+                state.list = [...filter]
+                if(state.list.length >= 1){
+                    state.selectedList = state.list[state.list.length-1].id
+
+                }
+                console.log(state.list);
+                console.log(state.selectedList);
+
+            }else{
+                let fun = []
+                state.list.forEach((v)=>{
+                if(v.id == payload.id) v.total_stock -= 1
+                fun.push(v)
+            })
+
+            state.list = fun
+            }
+
+        },
+        setSelectedList : (state,{payload})=>{
+            state.selectedList = payload
         }
     }
 })
 
 export default shopSlice.reducer;
-export const {selectProduct,addRecent,changeQty,addTax,addTotal,updatePrice,editPrice,createPrice} = shopSlice.actions
+export const {selectProduct,setSelectedList,deleteQty,addRecent,changeQty,addTax,addTotal,updatePrice,editPrice,createPrice} = shopSlice.actions
