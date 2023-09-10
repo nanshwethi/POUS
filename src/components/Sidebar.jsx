@@ -80,7 +80,7 @@ const Sidebar = () => {
               <p className="text-base font-['Montserrat'] font-medium">Sale</p>
             </Accordion.Control>
 
-            <Link to={"/shop"} onClick={() => liHandler("cashier")}>
+            <Link to={"/cashier"} onClick={() => liHandler("cashier")}>
               <Accordion.Panel className="accordion-bg li-text w-full">
                 <p
                   className={`${
@@ -217,7 +217,7 @@ const Sidebar = () => {
                 </p>
               </Accordion.Panel>
             </Link>
-            <Link to={"/sale"} onClick={() => liHandler("sale")}>
+            <Link to={"/report-sale"} onClick={() => liHandler("sale")}>
               <Accordion.Panel className="accordion-bg li-text">
                 <p
                   className={`${

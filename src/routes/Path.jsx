@@ -28,6 +28,7 @@ import Daily from "../components/Finance/Daily";
 import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
+import SaleReport from "../components/Report/SaleReport";
 
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -109,11 +110,12 @@ const Path = () => {
           path="/stock"
           element={<Dashboard view={<StockList />} />}
         />
+                        */}
+
         <Route
-          path="/sale"
-          element={<Dashboard view={<Sale />} />}
+          path="/report-sale"
+          element={<Dashboard view={<SaleReport />} />}
         />
-                */}
 
         {/* finance routes start*/}
         <Route path="/finance-daily" element={<Dashboard view={<Daily />} />} />
