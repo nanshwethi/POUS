@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
 import MediaImgDetail from "./MediaImgDetail";
 import { useContextCustom } from "../context/stateContext";
+import Swal from "sweetalert2";
 
 const MediaTable = ({ imgs }) => {
   MediaTable.propTypes = {
@@ -28,24 +29,21 @@ const MediaTable = ({ imgs }) => {
 
   const deletePhotoHandler = async (e,id) => {
     e.stopPropagation();
-    const { data } = await deletePhoto({ id, token });
-    console.log("del", data);
-
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "You won't be able to revert this!",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    // }).then(async (result) => {
-    //   if (result.isConfirmed) {
-    //     Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    //     const { data } = await deletePhoto({ id, token });
-    //     console.log('del',data);
-    //   }
-    // });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        const { data } = await deletePhoto({ id, token });
+        console.log('del',data);
+      }
+    });
   };
 
   const copyHandler =(e,copytext) =>{
@@ -80,7 +78,8 @@ const MediaTable = ({ imgs }) => {
           </tr>
         </thead>
         <tbody className=" text-gray-100">
-        {imgs?.map((photo, index) => {
+        {imgs!==null?
+        imgs?.map((photo, index) => {
             return (
               <tr key={photo?.id}
               onClick={() => imgModalHandler(index)}
@@ -116,7 +115,7 @@ const MediaTable = ({ imgs }) => {
                 </td>
               </tr>
             );
-          })}
+          }): ''}
         </tbody>
       </table>
       {showModal ? (

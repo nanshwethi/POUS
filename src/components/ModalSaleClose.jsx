@@ -1,9 +1,28 @@
 import { useContextCustom } from "../context/stateContext";
 import { Link } from "react-router-dom";
 import { FiFolderPlus } from "react-icons/fi";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const ModalSaleClose = () => {
-  const { liHandler, setShowModal } = useContextCustom();
+  const { liHandler, setShowModal, setCloseDate } = useContextCustom();
+  const token = Cookies.get("token");
+
+  const fetchData = async () => {
+    const data = await axios({
+      method: "post",
+      url: `https://h.mmsdev.site/api/v1/sale_close`,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "sale",
+    });
+    // const closeSale = await JSON.parse(data);
+    // setVouchers(voucher.data);
+    setCloseDate(true);
+    setShowModal(false);
+    liHandler("daily");
+    console.log("data", data);
+    // console.log("closeSale", closeSale);
+  };
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-10">
@@ -13,23 +32,23 @@ const ModalSaleClose = () => {
         </div>
       </div>
       <p className=" text-[18px] font-semibold text-white">
-        Are you sure to sale close?{" "}
+        Are you sure to sale close?
       </p>
       <div className="flex justify-between items-center gap-10">
         <button
           onClick={() => setShowModal(false)}
           className="w-[150px] h-[40px] font-medium text-[14px] bg-transparent text-[var(--secondary-color)] border-[var(--border-color)] rounded border px-2 py-1"
         >
-          Cancle{" "}
+          Cancel
         </button>
-        <Link to={"/product"}>
+        <Link to={"/finance-daily"}>
           <button
-            onClick={() => liHandler("products")}
+            onClick={fetchData}
             className="w-[150px] h-[40px] font-medium text-[14px] bg-[var(--secondary-color)] text-[var(--base-color)] border-[1px] border-[var(--border-color)] rounded-[5px]"
           >
-            Calculate{" "}
+            Sale Close
           </button>
-        </Link>{" "}
+        </Link>
       </div>
     </div>
   );
