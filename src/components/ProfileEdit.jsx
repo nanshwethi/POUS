@@ -2,10 +2,133 @@ import user from "../img/user.jpg";
 import { PiDotFill } from "react-icons/pi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
-import ProfileEditTab from "./ProfileEditTab";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Tabs } from '@mantine/core';
+import {HiOutlineHome} from 'react-icons/hi'
+import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAddress, addCurrentP, addDateOfBirth, addEmail, addGender, addName, addPConfrim, addPassword, addPhone_number, addPhoto, addRole, addUser, addp } from '../redux/services/profileSlice';
+import { useChangePassswordMutation, useGetSingleUserQuery, useUpdateProfileMutation } from '../redux/api/profileApi';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import Tooltip from '@mui/material/Tooltip';
+
+
 
 const ProfileEdit = () => {
+
+  const token = Cookies.get('token')
+  const user = useSelector((state)=> state.profile.user)
+  const content = useSelector((state)=> state.profile.data)
+  const password = useSelector((state)=> state.profile.password)
+  const {id} = useParams()
+  const forUser = {token,id}
+  const {currentData} = useGetSingleUserQuery(forUser)
+  const [updateProfile] = useUpdateProfileMutation()
+  const [changePassword] = useChangePassswordMutation()
+  const dispatch = useDispatch()
+  console.log(user);
+  console.log(currentData );
+  console.log(password);
+
+  const check =()=>{
+    const male = document.querySelector('.male')
+    const female = document.querySelector('.female')
+    if(content?.gender == 'male'){
+      male.checked = true
+      female.checked = false
+    }else{
+      male.checked = false
+      female.checked = true
+    }
+
+  }
+
+  useEffect(()=>{
+    dispatch(addUser(currentData))
+    dispatch(addName(currentData?.name))
+    dispatch(addEmail(currentData?.email))
+    dispatch(addGender(currentData?.gender))
+    dispatch(addPhone_number(currentData?.phone_number))
+    dispatch(addAddress(currentData?.address))
+    dispatch(addRole(currentData?.role))
+    dispatch(addDateOfBirth(currentData?.date_of_birth))
+    dispatch(addPhoto(currentData?.photo))
+
+    check()
+    
+  },[currentData])
+
+  console.log(content);
+
+  const MySwal = withReactContent(Swal)
+
+  const save = async()=>{
+   
+      if(password.current_password != null && password.password != null && password_confirmation != null){
+        const forPassword = {token,password}
+        const pd = await changePassword(forPassword)
+        console.log(pd);
+        console.log(forPassword);
+      }
+
+      const forUpdate = { id,token,content}
+      const {data} = await updateProfile(forUpdate)
+      
+      console.log(data);
+      if( data ){
+        
+        console.log(user);
+        const Toast = MySwal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          padding : '10px 10px 10px',
+          color : '#ffffff',
+          background : '#393d3d',
+          timer: 3000,
+          customClass : {
+              timerProgressBar : 'progress-bar'
+          },
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'successfully updated'
+        })
+      }else if(pd?.message){
+        const Toast = MySwal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          padding : '10px 10px 10px',
+          color : '#ffffff',
+          background : '#393d3d',
+          timer: 3000,
+          customClass : {
+              timerProgressBar : 'progress-bar'
+          },
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: pd.message
+        })
+      }
+  }
+    
   return (
     <div className=' flex-1 bg-[#202124] h-edit-profile relative'>
         {/* breadcrumb & btn */}
@@ -27,6 +150,9 @@ const ProfileEdit = () => {
                 <div className=' flex gap-5 items-center  ps-14 '>
                     <div className='relative'>
                         <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden mt-[-50px]'>
+                            {
+                              user?<img src={user.photo} alt="" className='myImg'  /> :null
+                            }
                             <img src={user} alt="" className='myImg'  />
                         </div>
                     </div>
@@ -46,14 +172,103 @@ const ProfileEdit = () => {
             </div>
             {/* tabs */}
             <div className=' mt-2'>
-            <ProfileEditTab/>
+            <Tabs color="teal" unstyled defaultValue="first">
+          <Tabs.List className=' tab-list  '>
+            <Tabs.Tab value="first" icon={<HiOutlineHome className=' text-blue-400'/>} >
+              <p className=' text-sm mlb text-gray-400'>Personal</p>
+            </Tabs.Tab>
+            {/* <Tabs.Tab value="second" icon={<HiOutlineHome className=' text-blue-400'/>} >
+             <p className=' text-sm mlb text-gray-400'>Login Information</p>
+            </Tabs.Tab> */}
+            <Tabs.Tab value="third" icon={<HiOutlineHome className=' text-blue-400'/>} >
+            <p className=' text-sm mlb text-gray-400'>Password</p>
+            </Tabs.Tab>
+          </Tabs.List>
+    
+          <Tabs.Panel value="first" className=' h-[550px]'>
+            <div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Name</div>
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' placeholder={user?.name} onChange={(e)=>dispatch(addName(e.target.value))}/>
+                </div>
+              </div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Phone</div> 
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' placeholder={user?.phone_number} onChange={(e)=>dispatch(addPhone_number(e.target.value))} />
+                </div>
+              </div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Gender</div>
+                <div className=' flex-1'>
+                    <div className=' flex justify-start items-center'>
+                      <div className=' me-4 flex items-center'>
+                        <input type="radio" id='male' name='gender' className={`male opacity-0 absolute`}  onClick={(e)=>dispatch(addGender('male'))}/>
+                        <span className=' fakeRadio me-2'></span>
+                        <label htmlFor="male" className=' text-gray-500'>male</label>
+                      </div>
+                      <div className=' flex items-center'>
+                        <input type="radio" id='female' name='gender' className='female absolute opacity-0 ' onClick={(e)=> dispatch(addGender('female'))} />
+                        <span className=' fakeRadio me-2'></span>
+                        <label htmlFor="female" className='  text-gray-500'>female</label>
+                      </div>
+                    </div>
+                    
+                </div>
+              </div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Email</div> 
+                <div className=' flex-1'>
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' placeholder={user?.email} onChange={(e)=>dispatch(addEmail(e.target.value))}/>
+                </div>
+              </div>
+              <div className=' flex py-4 text-gray-200 items-start font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Address</div> 
+                <div className=' flex-1'>
+                    <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3 h-[100px]' placeholder={user?.address} onChange={(e)=>dispatch(addAddress(e.target.value))}/>
+                </div>
+              </div>
+            </div>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="third" pt="xs" className=' h-[400px]' >
+          <div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Current Password</div>
+                <div className=' flex-1'>
+                  <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' onChange={(e)=>dispatch(addCurrentP(e.target.value))} />
+                  
+                </div>
+              </div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>New Password</div> 
+                
+                <div className=' flex-1'>
+                  <Tooltip title="minimum 8 characters required " arrow={true} disableHoverListener={true} disableInteractive={true}>
+                    <input type="text"  className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' onChange={(e)=>dispatch(addp(e.target.value))} />
+                  </Tooltip>
+                </div>
+
+              </div>
+              <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                <div className=' w-48 font-semibold text-gray-400'>Password Confirmation</div> 
+                <div className=' flex-1'>
+                  <input type="text"  className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3' onChange={(e)=>dispatch(addPConfrim(e.target.value))} />
+
+                </div>
+
+              </div>
+            </div>
+          </Tabs.Panel>
+        </Tabs>
             </div>
         </div>
         {/* footer */}
         <div className=' border border-b-0 border-t border-[#404044] myfooter w-full'>
             <div className=' flex bg-[#121212] ps-24 py-4'>
                 <button className=' px-5 py-2 font-semibold text-[#7f8189] border me-4 text-xs uppercase border-[#646569] rounded'>Cancel</button>
-                <button className=' px-5 py-2 font-semibold text-[#292929] bg-[#8ab4f8] text-xs uppercase  rounded'>Save</button>
+                <button className=' px-5 py-2 font-semibold text-[#292929] bg-[#8ab4f8] text-xs uppercase  rounded' onClick={()=>save()}>Save</button>
             </div>
         </div>
     </div>

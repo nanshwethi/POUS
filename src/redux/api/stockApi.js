@@ -5,10 +5,9 @@ export const stockApi = createApi({
     baseQuery : fetchBaseQuery({baseUrl : 'https://h.mmsdev.site/api/v1'}),
     tagTypes : ['stock'],
     endpoints : builder =>({
-
         getSingleStock : builder.query({
-            query : ({token,i})=>({
-                url : `/stock/${i}`,
+            query : ({token,id})=>({
+                url : `/stock/${id}`,
                 headers : {authorization : `Bearer ${token}`}
             }),
             providesTags : ['stock']
@@ -22,7 +21,7 @@ export const stockApi = createApi({
         }),
         updateStock : builder.mutation({
             query : ({token,content})=>({
-                url : '/stock',
+                url : `/stock`,
                 method : 'POST',
                 body : content,
                 headers : {authorization : `Bearer ${token}`}

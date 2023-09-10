@@ -10,7 +10,7 @@ export const stockSlice = createSlice({
             state.data = payload
             console.log(state.data);
         },
-        
+
     }
 })
 

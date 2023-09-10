@@ -5,35 +5,24 @@ import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
 import { FaAngleRight, FaAngleDown } from "react-icons/fa";
 import { Select } from "@mantine/core";
 import { useGetUnitStockQuery,useUpdateStockMutation,useGetSingleStockQuery,useDeleteStockMutation} from "../redux/api/stockApi.js";
-import { addStockUnitQty } from "../redux/services/StockSlice.js";
-import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 const Stock = () => {
-  const token = Cookies.get("token");
-  // console.log(token)
-  const [unit, setUnit] = useState(1);
-  // console.log(unit)
-  const path = { token: token, p: unit };
-  const currentData  = useGetUnitStockQuery(path);
-  console.log(currentData);
-  const [offcanvas, setOffcanvas] = useState(false);
-  const dispatch = useDispatch()
-  const [qty, setQty] = useState(null);
-  // const [qty, setQty] = useState(null);
-  const [desc, setDesc] = useState();
-  const [pid, setPid] = useState();
-  // const {data} = useSelector((state)=>state.stock)
-  // console.log(data);
 
-  const [updateStock] = useUpdateStockMutation()
+  const token = Cookies.get("token");
+  const [unit, setUnit] = useState(1);
+  const path = { token: token, p: unit };
+  const stock  = useGetUnitStockQuery(path);
+  console.log(stock)
+  const [pid, setPid] = useState();
+  const nav = useNavigate()
   const [deleteStock] = useDeleteStockMutation()
-  const i =  20;
-  const d = {token,i}
-  const data = useGetSingleStockQuery(d)
-  console.log(data)
-  // console.log(update(d));
+  const MySwal = withReactContent(Swal)
+
 
   const delStock = async(id)=>{
     setPid(id)
@@ -41,26 +30,56 @@ const Stock = () => {
     const d ={token,id}
     const data = await deleteStock(d)
     console.log(data)
+    if (data.data == null) {
+      MySwal.fire({
+        text : 'Successfully Deleted!',
+        width : '300px',
+        padding : '10px 10px 10px',
+        color : '#ffffff',
+        background : '#393d3d',
+        iconColor : '5dfc68',
+    }
+        
+    ).then((result)=>{
+        if(result.isConfirmed){
+            window.location.reload()
+        }
+    })
+  }
+  }
+
+  const del = (id)=>{
+      MySwal.fire({
+          title: <p>Hello World</p>,
+          didOpen: () => {
+              // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+              MySwal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  background : '#393d3d',
+                  color : '#ffffff',
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      delStock(id)
+                  }
+              })
+          },
+          })
+
   }
 
   const addStockQty = (e,id) => {
     setPid(id)
-    setOffcanvas(true)
+    // setOffcanvas(true)
+    nav(`/stock-edit/${id}`)
     console.log(pid)
   };
 
- 
-
-  const update =async(id)=>{
-    // dispatch(addStockUnitQty(forStock))
-    const content = {user_id : 1,product_id : id,quantity : Number(qty),more : desc}
-    console.log(token);
-    const data = await updateStock({token,content})
-    console.log(data);
-    
-  }
-
-
+  console.log(pid)
 
   return (
     <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col relative overflow-hidden">
@@ -126,17 +145,17 @@ const Stock = () => {
               </tr>
             </thead>
             <tbody className=" text-gray-100">
-              {currentData?.data?.data.map((v) => (
+              {stock?.currentData?.data.map((v) => (
                 <tr
                   className=" border-b border-b-gray-700 "
                   key={v.id}
                   >
                   <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
                   <td className="px-1 text-start py-4 ">{v.user_name}</td>
-                  <td className="px-1 py-4 text-end">{v.quantitiy}</td>
+                  <td className="px-1 py-4 text-end">{v.total_stock}</td>
                   <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
                   <td className="px-1 pe-4 py-4 text-end flex justify-center ">
-                    <button className=" delete-stock block w-1/2 " onClick={(e)=> delStock(v.id)}>
+                    <button className=" delete-stock block w-1/2 " onClick={(e)=> del(v.id)}>
                     <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
                     </button>
                     <button className=" add block w-1/2 text-center" onClick={(e) => addStockQty(e,v.id)}>
@@ -183,10 +202,10 @@ const Stock = () => {
           {/* <button className={` px-3 py-2 `} ></button> */}
         </div>
       </div>
-      <div
+      {/* <div
         className={` custom-offcanvas ${
           offcanvas && "openAni"
-        } bg-[#26272c] flex flex-col p-8`}>
+        } bg-[#26272c] flex flex-col min-h-full p-8`}>
         <div className=" ">
           <div className=" flex justify-between items-center">
             <p className=" text-gray-200 font-bold text-xl">Add Stock</p>
@@ -204,14 +223,14 @@ const Stock = () => {
                 name=""
                 id=""
                 className=" outline-none p-2 border bg-transparent text-gray-400 rounded border-gray-700"
-                onChange={(e) => setQty(e.target.value)}
+                onChange={(e) => dispatch(addStockQty(e.target.value))}
               />
             </div>
             <div className=" mt-3">
               <p className=" text-gray-300 mb-2">More</p>
               <textarea
                 className=" outline-none text-gray-400 h-[130px] resize-none p-2 border bg-transparent rounded border-gray-700"
-                onChange={(e) => setDesc(e.target.value)}
+                onChange={(e) => dispatch(addStockMore(e.target.value))}
               />
             </div>
           </div>
@@ -219,11 +238,11 @@ const Stock = () => {
         <div className=" mt-auto ">
           <button
             className=" bg-slate-400 block w-full text-center py-2 text-lg text-gray-900 font-extrabold rounded"
-            onClick={() => update(pid)}>
+            onClick={() => save()}>
             Add
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

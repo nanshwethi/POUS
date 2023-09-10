@@ -3,6 +3,8 @@ import Cookies from "js-cookie";
 
 const initialState = {
   photos: [],
+  
+
 };
 
 export const mediaSlice = createSlice({
@@ -17,6 +19,7 @@ export const mediaSlice = createSlice({
     //   (state.photo = null), 
     //   Cookies.remove("photo");
     // },
+    
   },
 });
 
