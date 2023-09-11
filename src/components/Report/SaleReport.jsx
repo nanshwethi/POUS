@@ -25,19 +25,19 @@ const SaleReport = () => {
         <Button.Group className=" border-[--border-color] flex justify-end basis-1/3">
           <Button
             variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
           >
             Year
           </Button>
           <Button
             variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
           >
             Month
           </Button>
           <Button
             variant="default"
-            className=" text-[--font-color] hover:text-[--font-color] hover:bg-transparent"
+            className=" text-[--font-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
           >
             week
           </Button>
@@ -48,9 +48,9 @@ const SaleReport = () => {
 
       {/* sale week start */}
       <div className=" flex items-stretch gap-5">
-        <div className="basis-1/3 border-[1px] border-[var(--border-color)] p-5 flex flex-col gap-3">
+        <div className="basis-1/3 border-[1px] border-[var(--border-color)] p-5 flex flex-col gap-3 rounded-[3px]">
           <span className=" text-[20px] font-medium text-[var(--secondary-color)] flex justify-between items-center mb-3">
-            Today Sales{" "}
+            Today Sales
             <BsThreeDotsVertical
               className="text-[var(--secondary-color)]"
               size={"1.5rem"}
@@ -116,7 +116,7 @@ const SaleReport = () => {
           </button>          </Link>
 
         </div>
-        <div className="basis-2/3 border-[1px] border-[var(--border-color)] p-5">
+        <div className="basis-2/3 border-[1px] border-[var(--border-color)] p-5 rounded-[3px]">
           <p className=" text-[20px] font-medium text-[var(--secondary-color)] mb-3">
             Weekly Sales
           </p>
@@ -129,7 +129,7 @@ const SaleReport = () => {
             </div>
             <div className="basis-2/5 flex flex-col gap-5">
               <div className=" flex justify-center gap-2">
-                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] text-[var(--secondary-color)] flex justify-center items-center">
+                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] text-[var(--secondary-color)] flex justify-center items-center rounded-[5px]">
                   T
                 </p>
                 <div className="px-3">
@@ -150,7 +150,7 @@ const SaleReport = () => {
               </div>
 
               <div className=" flex justify-center gap-2">
-                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--secondary-color)]">
+                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--secondary-color)] rounded-[5px]">
                   A
                 </p>
                 <div className="px-3">
@@ -169,7 +169,7 @@ const SaleReport = () => {
                 </div>
               </div>
               <div className=" flex justify-center gap-2">
-                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--secondary-color)]">
+                <p className=" w-12 h-12 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--secondary-color)] rounded-[5px]">
                   S
                 </p>
                 <div className="px-3">
@@ -197,7 +197,7 @@ const SaleReport = () => {
 
       {/* product sale start */}
       <div className="flex items-stretch mt-16 gap-5">
-        <div className=" basis-2/3 border-[1px] border-[var(--border-color)] p-5">
+        <div className=" basis-2/3 border-[1px] border-[var(--border-color)] p-5 rounded-[3px]">
           <p className=" text-[20px] font-medium text-[var(--secondary-color)] mb-5">
             Product Sales
           </p>
@@ -231,7 +231,7 @@ const SaleReport = () => {
             </tbody>
           </table>
         </div>
-        <div className=" basis-1/3 border-[1px] border-[var(--border-color)] px-5">
+        <div className=" basis-1/3 border-[1px] border-[var(--border-color)] px-5 rounded-[3px]">
           <p className=" text-[20px] font-medium text-[var(--secondary-color)] pt-5">
             Brand Sales
           </p>

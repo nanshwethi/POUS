@@ -15,6 +15,7 @@ import { BiSolidUserBadge } from "react-icons/bi";
 import { LiaMoneyBillWaveAltSolid } from "react-icons/lia";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
+import TodaySaleOverview from "./TodaySaleOverview";
 
 const Home = () => {
   const { liHandler } = useContextCustom();
@@ -41,7 +42,7 @@ const Home = () => {
       {/* overview section start */}
       <section className=" flex items-stretch gap-5 mb-10">
         <div className=" basis-3/5 flex items-stretch gap-5">
-          <div className="basis-1/2 border-[1px] border-[var(--border-color)] flex justify-center items-center gap-8">
+          <div className="basis-1/2 border-[1px] border-[var(--border-color)] flex justify-center items-center gap-8 rounded-[3px]">
             <div className=" w-[100px] h-[100px] rounded-full bg-zinc-700 flex justify-center items-center">
               <div className=" w-[70px] h-[70px] rounded-full border border-[var(--font-color)]  bg-[var(--border-color)] flex justify-center items-center">
                 <BsCart4
@@ -59,7 +60,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="basis-1/2 border-[1px] border-[var(--border-color)] flex justify-center items-center gap-8">
+          <div className="basis-1/2 border-[1px] border-[var(--border-color)] flex justify-center items-center gap-8 rounded-[3px]">
             <div className=" w-[100px] h-[100px] rounded-full bg-zinc-700 flex justify-center items-center">
               <div className=" w-[70px] h-[70px] rounded-full border border-[var(--font-color)]  bg-[var(--border-color)] flex justify-center items-center">
                 <BiSolidUserBadge
@@ -78,18 +79,18 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className=" basis-2/5 border-[1px] border-[var(--border-color)] p-5">
+        <div className=" basis-2/5 border-[1px] border-[var(--border-color)] p-5 rounded-[3px]">
           <p className="text-[18px] font-semibold text-[var(--secondary-color)] mb-4">
             Quick Actions
           </p>
-          <div className=" flex items-stretch justify-between">
+          <div className=" flex items-stretch justify-between gap-10">
             <Link to={"/add-product"}>
               <div
                 onClick={() => liHandler("add product")}
-                className="basis-2/5 border-[1px] border-[var(--border-color)] flex items-center gap-5 p-5"
+                className="basis-2/5 border-[1px] border-[var(--border-color)] flex items-center gap-5 p-5 rounded-[3px]"
               >
                 <AiOutlinePlus
-                  className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)]"
+                  className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)] rounded-[5px]"
                   size={"0.8rem"}
                 />
                 <div>
@@ -103,9 +104,9 @@ const Home = () => {
               </div>{" "}
             </Link>
             <Link to={"/cashier"}>
-              <div className="basis-3/5 border-[1px] border-[var(--border-color)] flex items-center gap-5 p-5">
+              <div className="basis-3/5 border-[1px] border-[var(--border-color)] flex items-center gap-5 p-5 rounded-[3px]">
                 <BsShop
-                  className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)]"
+                  className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)] rounded-[5px]"
                   size={"0.5rem"}
                 />
                 <div>
@@ -131,26 +132,26 @@ const Home = () => {
       <section className=" flex items-stretch gap-5 p-5 border-[1px] border-[var(--border-color)]">
         <div className=" basis-2/3 ">
           {/* Breadcrumg start */}
-          <div className="flex justify-between items-center  mb-10">
+          <div className="flex justify-between items-center  mb-10 rounded-[3px]">
             <p className="breadcrumb-title w-fit">Monthly Sales</p>
 
             {/* btn group start */}
             <Button.Group className="w-[50%] border-[--border-color] flex justify-end basis-1/3">
               <Button
                 variant="default"
-                className=" text-[var(--font-color)] hover:text-[--font-color] hover:bg-transparent"
+                className=" text-[var(--font-color)] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
               >
                 Year
               </Button>
               <Button
                 variant="default"
-                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
               >
                 Month
               </Button>
               <Button
                 variant="default"
-                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
+                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
               >
                 week
               </Button>
@@ -168,7 +169,7 @@ const Home = () => {
           <p className=" text-[14px] text-[var(--gray-color)] mb-5">kyats</p>
           <div className="flex items-center gap-5 mb-4">
             <LiaMoneyBillWaveAltSolid
-              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-green-500"
+              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-green-500 rounded-[5px]"
               size={"0.8rem"}
             />
             <div>
@@ -182,7 +183,7 @@ const Home = () => {
           </div>
           <div className="flex items-center gap-5 mb-4">
             <RiMoneyDollarBoxLine
-              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)]"
+              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-[var(--font-color)] rounded-[5px]"
               size={"0.8rem"}
             />
             <div>
@@ -197,7 +198,7 @@ const Home = () => {
 
           <div className="flex items-center gap-5 mb-5">
             <BiMoneyWithdraw
-              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-red-500"
+              className=" w-12 h-12 p-2 border-[1px] border-[var(--border-color)] flex justify-center items-center text-red-500 rounded-[5px]"
               size={"0.8rem"}
             />
             <div>
@@ -219,6 +220,7 @@ const Home = () => {
           </Link>
         </div>
       </section>
+      <TodaySaleOverview/>
     </div>
   );
 };
