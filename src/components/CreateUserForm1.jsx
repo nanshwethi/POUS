@@ -65,18 +65,7 @@ const CreateUserForm1 = () => {
 			  
 			  
 			  <div className=" flex justify-start items-start">
-				<label
-				  htmlFor=""
-				  className="text-white w-[170px] pt-[2px] h-[24px] text-[16px] font-semibold"
-				>
-				  Gender
-				</label>
-				<input
-				  type="checkbox"
-				  value={gender}
-				  onChange={(e) => setGender(e.target.value)}
-				  className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
-				/>{" "}
+				<div className=" flex py-4 text-gray-200 items-center font-medium"><div className=" w-48 font-semibold text-[var(--secondary-color)]">Gender</div><div className=" flex-1"><div className=" flex justify-start items-center"><div className=" me-4 flex items-center"><input type="radio" id="male" name="gender" className="male opacity-0 absolute"/><span className=" fakeRadio me-2"></span><label htmlFor="male" className=" text-[var(--secondary-color)]">male</label></div><div className=" flex items-center"><input type="radio" id="female" name="gender" className="female absolute opacity-0 "/><span className=" fakeRadio me-2"></span><label htmlFor="female" className="  text-[var(--secondary-color)]">female</label></div></div></div></div>
 			  </div>
 			  <div className=" flex justify-start items-start">
 				<label
