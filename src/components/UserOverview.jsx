@@ -1,34 +1,32 @@
 import { Anchor, Breadcrumbs } from "@mantine/core";
 import React from "react";
-import { AiOutlineArrowRight, AiOutlineEdit, AiOutlineMinus } from "react-icons/ai";
-import { HiOutlineMinus } from "react-icons/hi";
+import { AiOutlineArrowRight, AiOutlineMinus } from "react-icons/ai";
 import { MdOutlineEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
-import withReactContent from "sweetalert2-react-content";
-import { Swal } from "sweetalert2";
+
 import { useGetUserQuery } from "../redux/api/userApi";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiCopy } from "react-icons/bi";
-// import Swal from 'sweetalert2/dist/sweetalert2.js';
-// import '@sweetalert2/theme-dark/dark.scss';
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+
 
 const UserOverview = () => {
 
   const token=Cookies.get("token");
+  console.log(token);
   
-    // const { data } =  useGetUserQuery(token);
-    // // console.log(data?.data);
-    // const user1=data?.data[0];
-    // const user2=data?.data[1];
-    
+    const { data } =  useGetUserQuery(token);
+    console.log(data);
+ 
  
   const items = [
-    { title: "User", href: "/userOverview" },
-    { title: "CreateUser", href: "/createUser" },
+    { title: "User", href: "/user-overview" },
+    { title: "CreateUser", href: "/create-user" },
   ].map((item, index) => (
-    <Anchor className=" " href={item.href} key={index}>
+    <Anchor className=" text-3xl font-semibold" href={item.href} key={index}>
       {item.title}
     </Anchor>
   )); 
@@ -45,7 +43,7 @@ const UserOverview = () => {
   
   
   return (
-    <div className="min-h-screen w-full">
+    <div className="h-full w-full">
       <section className=" container h-full font-roboto bg-[--base-color]">
       <div className=" px-7 flex justify-between items-center">
             <div className=" pt-4">
@@ -66,55 +64,60 @@ const UserOverview = () => {
               <table className=" w-full text-gray-200 border border-gray-700 text-sm ">
         <thead>
           <tr className=" border-b border-b-gray-700">
-            <th className=" py-4 text-center px-1 uppercase font-medium">No</th>
-            <th className=" py-4 text-end px-1 uppercase font-medium">Name</th>
-            <th className=" py-4 text-end px-1 uppercase font-medium">
-              Account
+            <th className=" py-4 text-start px-1 uppercase font-medium">No</th>
+            <th className=" py-4 text-start px-1 uppercase font-medium">Name</th>
+            <th className=" py-4 text-start px-1 uppercase font-medium">
+              Position
             </th>
-            <th className=" py-4 text-end px-1 uppercase font-medium">
-              Extension
+            <th className=" py-4 text-start px-1 uppercase font-medium">
+              Email
             </th>
-            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
-              File Size
+            <th className=" py-4 pe-4 text-start px-1 uppercase font-medium">
+              Created At
             </th>
-            <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
+            <th className=" py-4 pe-4 text-start px-1 uppercase font-medium"></th>
           </tr>
         </thead>
         <tbody className=" text-gray-100">
-          {/* {imgs?.map((photo, index) => {
-            return ( */}
+          {data?.map((user, index) => {
+            return (
               <tr className=" border-b border-b-gray-700 ">
-                <td className="px-1 text-center py-4"></td>
+                <td className="px-1 text-start py-4">{index}</td>
                 <td
-                  className="px-1 text-end py-4 cursor-pointer"
+                  className="px-1 text-start py-4 cursor-pointer"
                 >
-                  {/* {photo?.name} */}
+                  {user?.name}
                 </td>
-                <td className="px-1 text-end py-4"></td>
-                <td className="px-1 py-4 text-end"></td>
-                <td className="px-1 pe-4 py-4 text-end"></td>
+                <td className="px-1 text-start py-4">{user?.role}</td>
+                <td className="px-1 py-4 text-start">{user?.email}</td>
+                <td className="px-1 pe-4 py-4 text-start">{user?.created_at}</td>
 
                 <td>
-                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
+                  <div className="w-[60px] mx-auto flex justify-end items-center gap-4 z-20">
+                    <button
+                      onClick={handleBanned}
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-red-500 `}
+                    >
+                      <AiOutlineMinus/>
+                    </button>
                     <button
                       
-                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-[#8AB4F8] `}
                     >
-                      <RiDeleteBinLine size={"1.3rem"} />
+                      <MdOutlineEdit/>
                     </button>
                     <button
-                      // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
-
-                      // onClick={() => copyHandler(photo?.url)}
-                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                      
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-[#8AB4F8] `}
                     >
-                      <BiCopy size={"1.3rem"} />
+                     <AiOutlineArrowRight/>
                     </button>
+                
                   </div>
                 </td>
               </tr>
-            {/* );
-          })} */}
+            );
+          })} 
         </tbody>
       </table>
               </div>
