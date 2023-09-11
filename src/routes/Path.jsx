@@ -28,6 +28,7 @@ import Daily from "../components/Finance/Daily";
 import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
+import CreateUsera from "../components/CreateUser";
 
 // import Products from "../components/Products";
 // import StockControl from "../components/StockControl";
@@ -75,7 +76,9 @@ const Path = () => {
         />
         <Route
           path="/create-user"
-          element={<Dashboard view={<CreateUser />} />}
+          // element={<Dashboard view={<CreateUser />} />}
+          element={<Dashboard view={<CreateUsera />} />}
+
         />
         {/* user routes start*/}
 

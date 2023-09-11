@@ -27,7 +27,6 @@ const AddProductInfo = () => {
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brandSlice.brands);
   // console.log("brand", data);
-  // console.log("bbbrand", brands);
 
   useEffect(() => {
     dispatch(addBrands({ brands: data?.data }));
