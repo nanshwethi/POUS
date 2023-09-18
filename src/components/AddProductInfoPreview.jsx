@@ -30,7 +30,7 @@ const AddProductInfoPreview = () => {
       brand_id: brand,
       unit: unit,
       more_information: productInfo,
-      // stock: Number(stock),
+      total_stock: Number(stock),
       actual_price: Number(actualPrice),
       sale_price: Number(salePrice),
       photo: photo,

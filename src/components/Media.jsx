@@ -23,7 +23,7 @@ const Media = () => {
   const { data } = useGetPhotoQuery(token);
   const imgs = useSelector((state) => state.mediaSlice.photos);
   // console.log("ddd", data?.data);
-  // console.log("imgs", imgs);
+  console.log("imgs", imgs);
 
   const [uploadPhoto] = useUploadPhotoMutation();
   const [showPhoto, setShowPhoto] = useState(null);

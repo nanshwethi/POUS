@@ -25,6 +25,9 @@ import Daily from "../components/Finance/Daily";
 import Monthly from "../components/Finance/Monthly";
 import Yearly from "../components/Finance/Yearly";
 import Custom from "../components/Finance/Custom";
+import CreateUsera from "../components/CreateUser";
+
+import SaleReport from "../components/Report/SaleReport";
 import BrandEdit from "../components/BrandEdit";
 import StockEdit from "../components/StockEdit";
 import SaleVoucher from "../pages/SaleVoucher";
@@ -80,7 +83,9 @@ const Path = () => {
         />
         <Route
           path="/create-user"
-          element={<Dashboard view={<CreateUser />} />}
+          // element={<Dashboard view={<CreateUser />} />}
+          element={<Dashboard view={<CreateUsera />} />}
+
         />
         <Route
           path="/report-stock"
@@ -144,11 +149,12 @@ const Path = () => {
           path="/stock"
           element={<Dashboard view={<StockList />} />}
         />
+                        */}
+
         <Route
-          path="/sale"
-          element={<Dashboard view={<Sale />} />}
+          path="/report-sale"
+          element={<Dashboard view={<SaleReport />} />}
         />
-                */}
 
         {/* finance routes start*/}
         <Route path="/finance-daily" element={<Dashboard view={<Daily />} />} />
