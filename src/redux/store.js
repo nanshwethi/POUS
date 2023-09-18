@@ -15,7 +15,7 @@ import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
 
 import stockSlice from './services/stockSlice'
-import {financeApi} from './api/financeApi';
+// import {financeApi} from './api/financeApi';
 import { reportStockApi } from "./api/reportStockApi";
 // import financeSlice from "./services/financeSlice";
 
@@ -59,7 +59,7 @@ export const store = configureStore({
 
       profileApi.middleware,
 
-      financeApi.middleware,
+      // financeApi.middleware,
       userApi.middleware,
 
       reportStockApi.middleware
