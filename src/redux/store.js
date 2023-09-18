@@ -17,7 +17,7 @@ import profileSlice from "./services/profileSlice";
 import stockSlice from './services/stockSlice'
 import {financeApi} from './api/financeApi';
 import { reportStockApi } from "./api/reportStockApi";
-import financeSlice from "./services/financeSlice";
+// import financeSlice from "./services/financeSlice";
 
 
 
