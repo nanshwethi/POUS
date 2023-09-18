@@ -69,11 +69,7 @@ const Product = () => {
                 iconColor : '5dfc68',
             }
                 
-            ).then((result)=>{
-                if(result.isConfirmed){
-                    window.location.reload()
-                }
-            })
+            )
         }
     }
 
@@ -182,7 +178,7 @@ const Product = () => {
                 <div className=' flex gap-4 flex-wrap'>
                     {
                         products?.map((v)=>(<div className=' border border-gray-700 rounded overflow-hidden' key={v.id}>
-                        <img src={products.photo} alt="" className=' w-[180px] h-[160px]' />
+                        <img src={v.photo} alt="" className=' w-[180px] h-[160px] object-cover' />
                         <div className=' text-gray-400 p-3 text-end'>
                             <p>{v.name}</p>
                             <p className=' font-bold'>{v.sale_price}</p>

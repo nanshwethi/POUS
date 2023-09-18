@@ -340,7 +340,7 @@ const Brand = () => {
                                 <div className={`text-gray-200 text-lg text-center py-8 ${ upload ? 'block':'hidden' }`}>
                                     <AiOutlinePlus className=' inline'/> <span>Add Image</span>
                                 </div>
-                                <img src={selectfoto?.url} className={`w-full h-full ${ upload ? 'hidden': 'block'}`} alt="" />
+                                <img src={selectfoto?.url} className={`w-full h-full object-cover ${ upload ? 'hidden': 'block'}`} alt="" />
                                 {/* <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 uploadImgInput hidden ' /> */}
                             </div>
                         </Button>

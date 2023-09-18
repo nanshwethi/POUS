@@ -5,7 +5,7 @@ import {FiPhoneCall} from 'react-icons/fi'
 import { Tabs } from '@mantine/core';
 import {HiOutlineHome} from 'react-icons/hi'
 import {FiEdit} from 'react-icons/fi'
-import { Link as RLink } from 'react-router-dom'
+import { Link, Link as RLink } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useGetSingleUserQuery } from '../redux/api/profileApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -34,17 +34,17 @@ const UserProfile = () => {
                 <p className=' text-gray-400 mt-1 font-medium text-xs'>Profile/My Account/Information</p>
             </div>
             <div>
-                
-                <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>My Profile</button>
-
+              <Link to={`/profile-edit/${d.id}`}>
+              <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>Edit Profile</button>
+              </Link>
             </div>
         </div>
         <div className=' mt-[100px] bg-[#171717]'>
             {user ?( <div className=' flex justify-between items-center px-6 '>
                 <div className=' flex gap-5 items-center  ps-14 '>
                     <div className='relative'>
-                      <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden mt-[-50px]'>
-                          <img src={user.photo} alt="" className='myImg'  /> :null
+                      <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden bg-slate-300 z-0 mt-[-50px]'>
+                          <img src={user.photo} alt="" className='myImg z-10'  /> :null
                       </div>
                       <RLink to={`/profile-edit/${d.id}`}>
                           <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>

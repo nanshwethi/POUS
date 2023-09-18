@@ -15,6 +15,7 @@ import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
 import stockSlice from './services/stockSlice'
 import {financeApi} from './api/financeApi';
+import { reportStockApi } from "./api/reportStockApi";
 import financeSlice from "./services/financeSlice";
 import { userApi } from "./api/userApi";
 import userSlice from "./services/userSlice";
@@ -32,7 +33,7 @@ export const store = configureStore({
     [profileApi.reducerPath] : profileApi.reducer,
     [financeApi.reducerPath]:financeApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-
+    [reportStockApi.reducerPath] : reportStockApi.reducer,
 
     authSlice: authSlice,
     mediaSlice: mediaSlice,
@@ -55,7 +56,9 @@ export const store = configureStore({
       profileApi.middleware,
 
       financeApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+
+      reportStockApi.middleware
 
     ),
 

@@ -40,11 +40,7 @@ const Stock = () => {
         iconColor : '5dfc68',
     }
         
-    ).then((result)=>{
-        if(result.isConfirmed){
-            window.location.reload()
-        }
-    })
+    )
   }
   }
 
@@ -154,11 +150,11 @@ const Stock = () => {
                   <td className="px-1 text-start py-4 ">{v.user_name}</td>
                   <td className="px-1 py-4 text-end">{v.total_stock}</td>
                   <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
-                  <td className="px-1 pe-4 py-4 text-end flex justify-center ">
-                    <button className=" delete-stock block w-1/2 " onClick={(e)=> del(v.id)}>
+                  <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
+                    <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
                     <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
                     </button>
-                    <button className=" add block w-1/2 text-center" onClick={(e) => addStockQty(e,v.id)}>
+                    <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
                       <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
                     </button>
                   </td>
