@@ -6,7 +6,7 @@ export const stockSlice = createSlice({
         data :null
     },
     reducers : {
-        addStockUnitQty : (state,{payload})=>{
+        Stock : (state,{payload})=>{
             state.data = payload
             console.log(state.data);
         },
@@ -14,5 +14,5 @@ export const stockSlice = createSlice({
     }
 })
 
-export const {addStockUnitQty} = stockSlice.actions
+export const {Stock} = stockSlice.actions
 export default stockSlice.reducer

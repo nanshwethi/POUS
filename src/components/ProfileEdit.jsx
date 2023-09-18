@@ -1,6 +1,6 @@
 import user from "../img/user.jpg";
 import { PiDotFill } from "react-icons/pi";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail,AiOutlinePlus } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
@@ -13,6 +13,11 @@ import { useChangePassswordMutation, useGetSingleUserQuery, useUpdateProfileMuta
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Tooltip from '@mui/material/Tooltip';
+import { Modal, Group, Button } from '@mantine/core';
+import { modals } from '@mantine/modals'
+import {FiUploadCloud} from 'react-icons/fi'
+import { useDisclosure } from '@mantine/hooks';
+import { useGetPhotoQuery } from "../redux/api/mediaApi";
 
 
 
@@ -27,10 +32,15 @@ const ProfileEdit = () => {
   const {currentData} = useGetSingleUserQuery(forUser)
   const [updateProfile] = useUpdateProfileMutation()
   const [changePassword] = useChangePassswordMutation()
+  const getPhoto = useGetPhotoQuery(token)
   const dispatch = useDispatch()
+  const [selectfoto,setSelectfoto] = useState()
   console.log(user);
   console.log(currentData );
   console.log(password);
+  console.log(getPhoto);
+  const [opened, { open, close }] = useDisclosure(false);
+
 
   const check =()=>{
     const male = document.querySelector('.male')
@@ -128,9 +138,47 @@ const ProfileEdit = () => {
         })
       }
   }
+
+  const selectPhoto = ()=>{
+        
+    dispatch(addPhoto(selectfoto.url))
+    console.log('mm');
+    modals.close('modal-brand')
+  }
     
   return (
-    <div className=' flex-1 bg-[#202124] h-edit-profile relative'>
+    <div className=' flex-1 bg-[#202124] min-h-screen relative'>
+
+        <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
+            <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
+                <div className=" flex flex-wrap gap-5 justify-start items-center ">
+                    {/* Upload img start */}
+                    <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
+                        <div className=' text-gray-200 text-lg text-center my-[40px]'>
+                            <FiUploadCloud className=' inline text-4xl'/>
+                            <p className=' mt-2'>Upload Image</p>
+                        </div>
+                        <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 ' />
+                            {/* Upload img end */}
+                    </div>
+                    {
+                        getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
+                            <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
+                                <img src={`${i.url}`} className="w-full h-full object-cover object-center rounded-lg" alt="" />
+                            </div>
+                            
+                        </div>))
+                    }
+                </div>
+                <Group className=' w-full'>
+                    <Button onClick={close} unstyled className=' ms-auto'>
+                        <div className=" px-4 py-2 font-semibold text-[16px] myBlueBtn ml-auto" onClick={()=>selectPhoto()}>
+                            insert
+                        </div>
+                    </Button>
+                </Group>
+            </div>
+        </Modal>
         {/* breadcrumb & btn */}
         <div className=' flex justify-between p-5 pb-0 px-6 items-center'>
             <div>
@@ -149,9 +197,9 @@ const ProfileEdit = () => {
             <div className=' flex justify-between items-center px-6 '>
                 <div className=' flex gap-5 items-center  ps-14 '>
                     <div className='relative'>
-                        <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden mt-[-50px]'>
+                        <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden bg-slate-300 mt-[-50px] z-0'>
                             {
-                              user?<img src={user.photo} alt="" className='myImg'  /> :null
+                              user?<img src={user.photo} alt="" className='myImg z-10'  /> :null
                             }
                             <img src={user} alt="" className='myImg'  />
                         </div>
@@ -185,7 +233,7 @@ const ProfileEdit = () => {
             </Tabs.Tab>
           </Tabs.List>
     
-          <Tabs.Panel value="first" className=' h-[550px]'>
+          <Tabs.Panel value="first" className=' h-[700px]'>
             <div>
               <div className=' flex py-4 text-gray-200 items-center font-medium'>
                 <div className=' w-48 font-semibold text-gray-400'>Name</div>
@@ -229,6 +277,16 @@ const ProfileEdit = () => {
                     <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-4/6 py-2 px-3 h-[100px]' placeholder={user?.address} onChange={(e)=>dispatch(addAddress(e.target.value))}/>
                 </div>
               </div>
+              <Group position="right" unstyled className=' ms-[200px] w-[200px] myBrandModal h-[60px] mt-4'>
+                  <Button onClick={open}>
+                      <div className=' w-full h-[100px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
+                          <div className={`text-gray-200 text-lg text-center py-8 `}>
+                              <AiOutlinePlus className=' inline'/> <span>Add Image</span>
+                          </div>
+                          {/* <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 uploadImgInput hidden ' /> */}
+                      </div>
+                  </Button>
+              </Group>
             </div>
           </Tabs.Panel>
 

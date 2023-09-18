@@ -102,9 +102,12 @@ const StockEdit = () => {
                     <h1 className=' text-2xl font-medium text-white'>Stock</h1>
                     <p className=' text-gray-400 mt-1 font-medium text-xs'>Inventory / products / edit Stock</p>
                 </div>
-                <div>
+                <div className=' flex items-center gap-5'>
                     <Link to={'/stock-control'}>
                     <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>Stock</button>
+                    </Link>
+                    <Link to={'/report-stock'}>
+                    <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>report</button>
                     </Link>
                 </div>
             </div>
