@@ -1,9 +1,9 @@
-import React from 'react'
+// import React from 'react'
 
-const BarChart = () => {
-  return (
-    <div>BarChart</div>
-  )
-}
+// const BarChart = () => {
+//   return (
+//     <div>BarChart</div>
+//   )
+// }
 
-export default BarChart
+// export default BarChart
