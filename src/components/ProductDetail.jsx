@@ -31,11 +31,11 @@ const ProductDetail = () => {
 
         {
             data?.data ? (<div className=' mt-[140px] '>
-                <div className=' bg-[#171717] w-[80%] me-5'>
+                <div className=' bg-[#171717] w-[83%] me-5'>
                     <div className=' flex items-center ps-14'>
                         <div className='relative '>
                             <div  className=' mt-[-120px]'>
-                                <img src={pro1} alt="" className=' rounded-full ' style={{width : '180px',height:'180px'}}/>
+                                <img src={data.data.photo} alt="" className=' rounded-full ' style={{width : '180px',height:'180px'}}/>
                             </div>
                             <Link to={`/product/${id}`}>
                                 <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
@@ -73,8 +73,8 @@ const ProductDetail = () => {
                             <div className=''>: {data.data.unit}</div>
                         </div>
                         <div className=' flex pt-5 pb-12  text-gray-200 items-start font-medium '>
-                            <div className=' w-[185px] font-semibold text-gray-400'>More Information</div> 
-                            <div className=' ps-2 w-[400px]'>: {data.data.more_information}</div>
+                            <div className=' w-48 font-semibold text-gray-400'>More Information</div> 
+                            <div className='  w-[300px]'>: {data.data.more_information}</div>
                         </div>
                     </div>
                 </div>

@@ -94,21 +94,26 @@ const ProductEdit = () => {
         dispatch(updatePhoto(selectfoto.url))
     }
 
+    // const selectFromLocal = (e)=>{
+    //     console.dir(e.target.files[0].name)
+    //     dispatch(updatePhoto(e.target.value))
+    // }
+
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 h-pEdit flex flex-col relative '>
         
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
-                <div className=" flex flex-wrap gap-5 justify-start items-center ">
+                <div className=" flex flex-wrap w-full gap-5 justify-start items-center ">
                     {/* Upload img start */}
-                    <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
+                    {/* <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
                         <div className=' text-gray-200 text-lg text-center my-[40px]'>
                             <FiUploadCloud className=' inline text-4xl'/>
                             <p className=' mt-2'>Upload Image</p>
                         </div>
-                        <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 ' />
-                            {/* Upload img end */}
-                    </div>
+                        <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 ' onChange={(e)=>selectFromLocal(e)} />
+                            Upload img end
+                    </div> */}
                     {
                         getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
@@ -186,7 +191,7 @@ const ProductEdit = () => {
                 <div className=' flex py-4 text-gray-200 items-start font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Sale Price</div> 
                     <div className=' flex-1'>
-                    <input type='number' className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 ' placeholder={`${oldData.sale_price}`} onChange={(e)=>dispatch(updateSalePrice(e.target.value))} />
+                    <input type='number' className=' bg-[#202124] border-2  border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 ' placeholder={`${oldData.sale_price}`} onChange={(e)=>dispatch(updateSalePrice(e.target.value))} />
 
                     </div>
                 </div>
