@@ -31,10 +31,10 @@ const Daily = () => {
       responseType: "finance",
     });
     const dData = await JSON.parse(data?.data);
-    setDRecords(dData?.data);
+    setDRecords(dData);
     setDate(null);
     console.log("data", data);
-    console.log("dd", dRecords);
+    console.log("dd", dData);
   };
 
   return (

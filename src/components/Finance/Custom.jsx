@@ -45,7 +45,7 @@ const Custom = () => {
   };
 
   return (
-    <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
+    <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20 ">
       {/* Breadcrumg start */}
       <div className=" flex justify-between items-center mb-10">
         <div>

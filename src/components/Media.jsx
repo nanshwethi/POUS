@@ -21,15 +21,17 @@ const Media = () => {
   // console.log(isActivedMedia);
   const token = Cookies.get("token");
   const { data } = useGetPhotoQuery(token);
-  const imgs = useSelector((state) => state.mediaSlice.photos);
-  // console.log("ddd", data?.data);
-  console.log("imgs", imgs);
+  
 
   const [uploadPhoto] = useUploadPhotoMutation();
   const [showPhoto, setShowPhoto] = useState(null);
 
   const dispatch = useDispatch();
   const [btnTableIsActive, setBtnTableIsActive] = useState(true);
+  
+  const imgs = useSelector((state) => state.mediaSlice.photos);
+  // console.log("ddd", data?.data);
+  console.log("imgs", imgs);
 
   useEffect(() => {
     dispatch(addPhotos({ photos: data?.data }));

@@ -13,10 +13,13 @@ import brandSlice from "./services/brandSlice";
 import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
-import stockSlice from './services/stockSlice';
+import stockSlice from "./services/stockSlice";
 import { userApi } from "./api/userApi";
 import userSlice from "./services/userSlice";
-
+import { reportSaleApi } from "./api/reportSaleApi";
+import reportSaleSlice from "./services/reportSaleSlice";
+import { overviewApi } from "./api/overviewApi";
+import overviewSlice from "./services/overviewSlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,19 +29,22 @@ export const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     [brandApi.reducerPath]: brandApi.reducer,
     [stockApi.reducerPath]: stockApi.reducer,
-    [shopApi.reducerPath] : shopApi.reducer,
-    [profileApi.reducerPath] : profileApi.reducer,
+    [shopApi.reducerPath]: shopApi.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-
+    [reportSaleApi.reducerPath]: reportSaleApi.reducer,
+    [overviewApi.reducerPath]:overviewApi.reducer,
 
     authSlice: authSlice,
     mediaSlice: mediaSlice,
     productSlice: productSlice,
     brandSlice: brandSlice,
     shop: shopSlice,
-    profile : profileSlice,
-    stock :stockSlice,
-    userSlice:userSlice,
+    profile: profileSlice,
+    stock: stockSlice,
+    userSlice: userSlice,
+    reportSaleSlice: reportSaleSlice,
+    overviewSlice:overviewSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -49,9 +55,9 @@ export const store = configureStore({
       stockApi.middleware,
       userApi.middleware,
       shopApi.middleware,
-      profileApi.middleware
+      profileApi.middleware,
+      reportSaleApi.middleware,
+      overviewApi.middleware,
     ),
-
 });
 
-// setupListeners(store.dispatch);
