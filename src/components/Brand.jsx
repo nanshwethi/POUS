@@ -213,7 +213,6 @@ const Brand = () => {
 
 
     const selectPhoto = ()=>{
-        
         setUpload(false)
         dispatch(addPhoto(selectfoto.url))
         console.log('mm');

@@ -1,11 +1,9 @@
 import { PieChart, Pie, Cell } from "recharts";
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 const COLORS = ["#8AB4F8", "#6a88b8", "#404d64", "#e8eaed", "#2a58b8"];
 
 const SalePieChart = ({ bdata }) => {
-  const [brandData, setBrandData] = useState();
   SalePieChart.propTypes = {
     bdata: PropTypes.object,
   };
