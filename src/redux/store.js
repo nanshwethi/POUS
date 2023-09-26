@@ -13,18 +13,10 @@ import brandSlice from "./services/brandSlice";
 import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
-<<<<<<< HEAD
-import stockSlice from "./services/stockSlice";
-=======
 
 import stockSlice from './services/stockSlice'
-// import {financeApi} from './api/financeApi';
 import { reportStockApi } from "./api/reportStockApi";
-// import financeSlice from "./services/financeSlice";
 
-
-
->>>>>>> 2ba4600898975db5a9fcc6d98479cfcb1260753e
 import { userApi } from "./api/userApi";
 import userSlice from "./services/userSlice";
 import { reportSaleApi } from "./api/reportSaleApi";
@@ -43,12 +35,9 @@ export const store = configureStore({
     [shopApi.reducerPath]: shopApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
-<<<<<<< HEAD
     [reportSaleApi.reducerPath]: reportSaleApi.reducer,
     [overviewApi.reducerPath]:overviewApi.reducer,
-=======
     [reportStockApi.reducerPath] : reportStockApi.reducer,
->>>>>>> 2ba4600898975db5a9fcc6d98479cfcb1260753e
 
     authSlice: authSlice,
     mediaSlice: mediaSlice,
@@ -70,21 +59,13 @@ export const store = configureStore({
       stockApi.middleware,
       userApi.middleware,
       shopApi.middleware,
-<<<<<<< HEAD
       profileApi.middleware,
       reportSaleApi.middleware,
       overviewApi.middleware,
-=======
-
-      profileApi.middleware,
-
-      // financeApi.middleware,
       userApi.middleware,
-
       reportStockApi.middleware
 
 
->>>>>>> 2ba4600898975db5a9fcc6d98479cfcb1260753e
     ),
 });
 
