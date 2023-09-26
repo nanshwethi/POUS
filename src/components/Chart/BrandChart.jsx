@@ -45,8 +45,7 @@ const BrandChart = () => {
     };
 
   return (
-    <></>
-    //  <ReactEcharts option={option} style={{width : '100%'}}  />
+     <ReactEcharts option={option} style={{width : '100%'}}  />
   )
 }
 
