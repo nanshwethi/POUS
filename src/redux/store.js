@@ -13,21 +13,8 @@ import brandSlice from "./services/brandSlice";
 import { shopApi } from "./api/shopApi";
 import { profileApi } from "./api/profileApi";
 import profileSlice from "./services/profileSlice";
-<<<<<<< HEAD
-
 import stockSlice from './services/stockSlice'
-=======
-import stockSlice from "./services/stockSlice";
-
-// import {financeApi} from './api/financeApi';
->>>>>>> fe46d3117deb63e3cac7974f624a6eb8df4e8cdc
 import { reportStockApi } from "./api/reportStockApi";
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> fe46d3117deb63e3cac7974f624a6eb8df4e8cdc
 import { userApi } from "./api/userApi";
 import userSlice from "./services/userSlice";
 import { reportSaleApi } from "./api/reportSaleApi";
@@ -75,18 +62,7 @@ export const store = configureStore({
       reportSaleApi.middleware,
       overviewApi.middleware,
       userApi.middleware,
-<<<<<<< HEAD
-      reportStockApi.middleware
-=======
-  
-      // profileApi.middleware,
-
-      // financeApi.middleware,
-
       reportStockApi.middleware,
->>>>>>> fe46d3117deb63e3cac7974f624a6eb8df4e8cdc
-
-
     ),
 });
 
