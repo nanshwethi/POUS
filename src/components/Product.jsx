@@ -18,6 +18,7 @@ import { useDeleteProductMutation, useGetProductsQuery } from '../redux/api/prod
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Loading from './Loading'
 
 const Product = () => {
 
@@ -132,8 +133,11 @@ const Product = () => {
                     
                 </div>
             </div>
-            {
-                ui ? (<div className=' mt-[50px] selected'>
+            
+        </div>
+        {
+                products ? (
+                    ui ? (<div className=' mt-[50px] selected'>
                 
                      <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
                     <thead>
@@ -166,11 +170,9 @@ const Product = () => {
                                         
                                     </div>
                                 </td>
-                            </tr>))
-                            
+                            </tr>))                           
                         }
                         
-                       
                     </tbody>
                 </table>
                 
@@ -188,8 +190,9 @@ const Product = () => {
                     
                 </div>
             </div>)
+            ):(<Loading/>)
+                
             }
-        </div>
         <div className=' mt-auto justify-end flex '>
             <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-6'>
             <button

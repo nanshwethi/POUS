@@ -239,7 +239,7 @@ const Brand = () => {
                     {
                         getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
-                                <img src={`${i.url}`} className="w-full h-full object-cover object-center rounded-lg" alt="" />
+                                <img src={`${i.url}`} className="w-full h-full object-cover rounded-lg" alt="" />
                             </div>
                             
                         </div>))
