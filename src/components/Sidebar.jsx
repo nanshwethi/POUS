@@ -217,7 +217,7 @@ const Sidebar = () => {
                 </p>
               </Accordion.Panel>
             </Link>
-            <Link to={"/sale"} onClick={() => liHandler("sale")}>
+            <Link to={"/report-sale"} onClick={() => liHandler("sale")}>
               <Accordion.Panel className="accordion-bg li-text">
                 <p
                   className={`${

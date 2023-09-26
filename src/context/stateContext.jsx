@@ -38,6 +38,10 @@ export const StateContextProvider = ({ children }) => {
     setSidebarActived(liname);
   };
 
+  //for sale close
+  const [closeDate, setCloseDate] = useState(false);
+
+
   const data = {
     productName,
     setProductName,
@@ -49,7 +53,8 @@ export const StateContextProvider = ({ children }) => {
     setProductInfo,
     stock,
     setStock,
-    actualPrice,setActualPrice,salePrice,setSalePrice,photo,setPhoto,showModal,setShowModal,nextStepperHandler,current,setCurrent,liHandler,sidebarActived,setSidebarActived
+    actualPrice,setActualPrice,salePrice,setSalePrice,photo,setPhoto,showModal,setShowModal,nextStepperHandler,current,setCurrent,liHandler,sidebarActived,setSidebarActived,
+    closeDate,setCloseDate
   };
 
   return <StateContext.Provider value={data}>{children}</StateContext.Provider>;

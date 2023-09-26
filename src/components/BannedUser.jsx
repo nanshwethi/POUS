@@ -1,6 +1,8 @@
 import { Anchor , Breadcrumbs } from '@mantine/core';
 import React from 'react'
+import { AiOutlineArrowRight, AiOutlineMinus } from 'react-icons/ai';
 import { BiCopy } from 'react-icons/bi';
+import { MdOutlineEdit } from 'react-icons/md';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -60,13 +62,13 @@ const BannedUser = () => {
             <th className=" py-4 text-center px-1 uppercase font-medium">No</th>
             <th className=" py-4 text-end px-1 uppercase font-medium">Name</th>
             <th className=" py-4 text-end px-1 uppercase font-medium">
-              Account
+              Position
             </th>
             <th className=" py-4 text-end px-1 uppercase font-medium">
-              Extension
+              Email
             </th>
             <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
-              File Size
+              Created At
             </th>
             <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
           </tr>
@@ -87,21 +89,25 @@ const BannedUser = () => {
                 <td className="px-1 pe-4 py-4 text-end"></td>
 
                 <td>
-                  <div className="w-[60px] mx-auto flex justify-end items-center gap-2 z-20">
+                  <div className="w-[60px] mx-auto flex justify-end items-center gap-4 z-20">
                     <button
-                      // onClick={() => deletePhotoHandler(photo?.id)}
-                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-red-500 `}
                     >
-                      <RiDeleteBinLine size={"1.3rem"} />
+                      <AiOutlineMinus/>
                     </button>
                     <button
-                      // onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
-
-                      // onClick={() => copyHandler(photo?.url)}
-                      className={`text-[--secondary-color] basis-1/2 hover:text-[#8AB4F8]px-1 `}
+                      
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-[#8AB4F8] `}
                     >
-                      <BiCopy size={"1.3rem"} />
+                      <MdOutlineEdit/>
                     </button>
+                    <button
+                      
+                      className={`text-[--secondary-color] text-xl basis-1/2 hover:text-[#8AB4F8] `}
+                    >
+                     <AiOutlineArrowRight/>
+                    </button>
+                
                   </div>
                 </td>
               </tr>
