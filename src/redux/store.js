@@ -42,7 +42,8 @@ export const store = configureStore({
     shop: shopSlice,
     profile : profileSlice,
     stock :stockSlice,
-    finance:financeSlice,userSlice:userSlice,
+    finance:financeSlice,
+    userSlice:userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

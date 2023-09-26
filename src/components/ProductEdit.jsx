@@ -94,10 +94,10 @@ const ProductEdit = () => {
         dispatch(updatePhoto(selectfoto.url))
     }
 
-    // const selectFromLocal = (e)=>{
-    //     console.dir(e.target.files[0].name)
-    //     dispatch(updatePhoto(e.target.value))
-    // }
+    const selectFromLocal = (e)=>{
+        console.dir(e.target)
+        dispatch(updatePhoto(e.target.value))
+    }
 
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 h-pEdit flex flex-col relative '>
@@ -106,14 +106,14 @@ const ProductEdit = () => {
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
                 <div className=" flex flex-wrap w-full gap-5 justify-start items-center ">
                     {/* Upload img start */}
-                    {/* <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
+                    <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
                         <div className=' text-gray-200 text-lg text-center my-[40px]'>
                             <FiUploadCloud className=' inline text-4xl'/>
                             <p className=' mt-2'>Upload Image</p>
                         </div>
                         <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 ' onChange={(e)=>selectFromLocal(e)} />
                             Upload img end
-                    </div> */}
+                    </div>
                     {
                         getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
