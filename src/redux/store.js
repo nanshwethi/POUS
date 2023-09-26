@@ -53,6 +53,7 @@ export const store = configureStore({
     userSlice: userSlice,
     reportSaleSlice: reportSaleSlice,
     overviewSlice:overviewSlice,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

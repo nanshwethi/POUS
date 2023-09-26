@@ -21,8 +21,16 @@ export const reportStockApi = createApi({
             }),
             providesTags : ['reportStock']
 
+        }),
+        getBrandReport : builder.query({
+            query : (token)=>({
+                url : `/brand_report`,
+                headers : {authorization : `Bearer ${token}`}
+            }),
+            providesTags : ['reportStock']
+
         })
     })
 })
 
-export const {useGetStockOverviewQuery,useGetBestSellerBrandQuery} = reportStockApi
+export const {useGetStockOverviewQuery,useGetBestSellerBrandQuery,useGetBrandReportQuery} = reportStockApi
