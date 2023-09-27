@@ -65,6 +65,5 @@ export const store = configureStore({
       reportStockApi.middleware,
       branApi.middleware
     )
-  
 });
 

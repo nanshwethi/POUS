@@ -132,6 +132,7 @@ const Shop = () => {
                 }
             }else{
                 const num = e.target.closest('.num-data').childNodes[0].innerText;
+                
                 const data = {id : selectedList,qty : num}
                 console.log(data);
                 dispatch(changeQty(data))
