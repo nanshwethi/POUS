@@ -7,6 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useGetSingleStockQuery, useUpdateStockMutation } from '../redux/api/stockApi';
 import { useParams,Link } from 'react-router-dom';
 import { addStockMore, addStockProduct, addStockQty } from '../redux/services/brandSlice'
+import Loading from './Loading';
 
 const StockEdit = () => {
 
@@ -134,7 +135,7 @@ const StockEdit = () => {
                     </div>
                 </div>
             
-        </div>:null
+        </div>:<Loading/>
         }
         
     </div>

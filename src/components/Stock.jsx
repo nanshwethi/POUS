@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Loading from "./Loading.jsx";
 
 
 const Stock = () => {
@@ -120,7 +121,9 @@ const Stock = () => {
           </div>
         </div>
         {/* table */}
-        <div className=" mt-[50px]">
+        {
+          stock?.currentData?(
+            <div className=" mt-[50px]">
           <table className=" w-full text-gray-300 border border-gray-700 text-sm ">
             <thead>
               <tr className=" border-b border-b-gray-700">
@@ -141,28 +144,34 @@ const Stock = () => {
               </tr>
             </thead>
             <tbody className=" text-gray-100">
-              {stock?.currentData?.data.map((v) => (
-                <tr
-                  className=" border-b border-b-gray-700 "
-                  key={v.id}
-                  >
-                  <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
-                  <td className="px-1 text-start py-4 ">{v.user_name}</td>
-                  <td className="px-1 py-4 text-end">{v.total_stock}</td>
-                  <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
-                  <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
-                    <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
-                    <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
-                    </button>
-                    <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
-                      <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {
+                stock?.currentData?.data.map((v) => (
+                  <tr
+                    className=" border-b border-b-gray-700 "
+                    key={v.id}
+                    >
+                    <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
+                    <td className="px-1 text-start py-4 ">{v.user_name}</td>
+                    <td className="px-1 py-4 text-end">{v.total_stock}</td>
+                    <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
+                    <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
+                      <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
+                      <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
+                      </button>
+                      <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
+                        <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              
+              }
             </tbody>
           </table>
         </div>
+          ):(<Loading/>)
+        }
+        
       </div>
       {/* pagination */}
       <div className=" mt-auto justify-end flex ">

@@ -7,10 +7,11 @@ import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useGetSingleBrandQuery, useUpdateBrandMutation } from '../redux/api/brandApi';
 import { addOldData, addUpdateAgent, addUpdateCompany, addUpdateData, addUpdateDesc, addUpdateName, addUpdatePhone } from '../redux/services/brandSlice';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import { useGetSingleBrandQuery, useUpdateBrandMutation } from '../redux/api/branApi';
+import Loading from './Loading';
 
 const BrandEdit = () => {
 
@@ -161,11 +162,13 @@ const BrandEdit = () => {
                     </div>
                 </div>
             
-        </div>:null
+        </div>:<Loading/>
         }
         
     </div>
   )
 }
+
+
 
 export default BrandEdit

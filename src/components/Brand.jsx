@@ -4,7 +4,7 @@ import {TfiClose} from 'react-icons/tfi'
 import {FaAngleRight,FaAngleDown} from 'react-icons/fa'
 import {AiOutlinePlus} from 'react-icons/ai'
 import { Select } from '@mantine/core';
-import { useCreateBrandMutation, useDeleteBrandMutation, useGetBrandsQuery } from '../redux/api/brandApi'
+// import { useCreateBrandMutation, useDeleteBrandMutation, useGetBrandsQuery } from '../redux/api/brandApi'
 import Cookies from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAgent, addCompany, addDesc, addName, addPhone, addPhoto } from '../redux/services/brandSlice'
@@ -19,8 +19,8 @@ import { modals } from '@mantine/modals'
 import { useDisclosure } from '@mantine/hooks';
 import {FiUploadCloud} from 'react-icons/fi'
 import { useGetPhotoQuery } from '../redux/api/mediaApi'
-
-
+import Loading from './Loading'
+import { useCreateBrandMutation, useDeleteBrandMutation, useGetBrandQuery } from '../redux/api/branApi'
 
 const Brand = () => {
     const token = Cookies.get('token')
@@ -28,24 +28,19 @@ const Brand = () => {
     console.dir(uploadImg)
     const [offcanvas,setOffcanvas] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
-    const [data,setData] = useState()
     const [p,setP] = useState(1)
     const forBrand = {token,p}
-    const {currentData} = useGetBrandsQuery(forBrand)
+    const {currentData} = useGetBrandQuery(forBrand)
     const getPhoto = useGetPhotoQuery(token)
     const [create] = useCreateBrandMutation()
     const [deleteBrand] = useDeleteBrandMutation()
     const [upload,setUpload] = useState(true)
     const [selectfoto,setSelectfoto] = useState()
     const dispatch = useDispatch()
-    const nav =useNavigate()
+    const nav = useNavigate()
     const content = useSelector((state)=> state.brandSlice.data)
-    console.log((currentData));
+    console.log(currentData);
     console.log(content);
-    // const [age, setAge] = React.useState('');
-    // const handleChange = (event) => {
-    //     setAge(event.target.value);
-    // };
     const MySwal = withReactContent(Swal)
 
     const createNew = async()=>{
@@ -101,10 +96,6 @@ const Brand = () => {
         }
     }
 
-    useEffect(()=>setData(currentData?.data))
-
-    // if(updateData){window.location.reload()}
-
     const save=()=>{
 
         MySwal.fire({
@@ -137,27 +128,7 @@ const Brand = () => {
             },
             })
 
-        // Swal.fire({
-        //     title: 'Do you want to save the changes?',
-        //     showDenyButton: true,
-        //     showCancelButton: true,
-        //     confirmButtonText: 'Save',
-        //     denyButtonText: `Don't save`,
-        //     width : '400px',
-        //     padding : '0px 10px 20px',
-        //     color : '#ffffff',
-        //     background : '#393d3d',
-        //     iconColor : '5dfc68',
-        //   }).then((result) => {
-        //     /* Read more about isConfirmed, isDenied below */
-        //     if (result.isConfirmed) {
-
-        //         createNew()
-                
-        //     } else if (result.isDenied) {
-        //       Swal.fire('Changes are not saved', '', 'info')
-        //     }
-        //   })
+        
         
     }
 
@@ -185,30 +156,26 @@ const Brand = () => {
     }
 
     const del = (id)=>{
+
         MySwal.fire({
-            
-            didOpen: () => {
-                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-                MySwal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    width : '400px',
-                    padding : '0px 10px 20px',
-                    color : '#ffffff',
-                    background : '#393d3d',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        deleteB(id)
-                        
-                    }
-                })
-            },
-            })
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            width : '400px',
+            padding : '0px 10px 20px',
+            color : '#ffffff',
+            background : '#393d3d',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteB(id)
+                
+            }
+        })
+
     }
 
 
@@ -219,8 +186,8 @@ const Brand = () => {
         modals.close('modal-brand')
     }
 
-
     console.log(getPhoto)
+
   return (
     <div className=' flex-1 bg-[#202124] min-h-screen '>
         {/* modal */}
@@ -237,12 +204,13 @@ const Brand = () => {
                             {/* Upload img end */}
                     </div>
                     {
-                        getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
+                        getPhoto?(getPhoto.currentData.data.map((i)=>(<div key={i.id}>
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
                                 <img src={`${i.url}`} className="w-full h-full object-cover rounded-lg" alt="" />
                             </div>
                             
                         </div>))
+                        ):(<Loading/>)
                     }
                 </div>
                 <Group className=' w-full'>
@@ -254,7 +222,6 @@ const Brand = () => {
                 </Group>
             </div>
         </Modal>
-
         <div className=' p-5 px-6 flex flex-col relative overflow-x-hidden h-full '>
             <div className=''>
                 <div className=' flex justify-between items-center'>
@@ -293,7 +260,9 @@ const Brand = () => {
                     </div>
                 </div>
                 {/* table */}
-                <div className=' mt-[50px] selected'>
+                {
+                    currentData?(
+                        <div className=' mt-[50px] selected'>
                     <table className=' w-full text-gray-200 border border-gray-700 text-sm '>
                         <thead>
                         <tr className=' border-b border-b-gray-700'>
@@ -308,7 +277,7 @@ const Brand = () => {
                         </thead>
                         <tbody className=' text-gray-100'>
                             {
-                                data?.map((v)=>(<tr className=' border-b border-b-gray-700 ' key={v.id}>
+                                currentData?.data?.map((v)=>(<tr className=' border-b border-b-gray-700 ' key={v.id}>
                                 <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
                                 <td className='px-1 text-start py-4' >{v.company}</td>
                                 <td className='px-1 py-4 text-center' >{v.agent}</td>
@@ -324,6 +293,8 @@ const Brand = () => {
                         </tbody>
                     </table>
                 </div>
+                    ):(<Loading/>)
+                } 
             </div>
             {/* offcanvas */}
             <div className={` custom-offcanvas ${offcanvas && 'openAni'} bg-[#26272c] min-h-screen flex flex-col p-8`}>
@@ -394,6 +365,7 @@ const Brand = () => {
                 </div>
             </div>
         </div>
+        
         
     </div>
   )

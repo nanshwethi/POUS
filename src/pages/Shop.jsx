@@ -13,6 +13,7 @@ import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPri
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 import { Link } from 'react-router-dom'
+import Loading from '../components/Loading'
 
 
 const Shop = () => {
@@ -181,8 +182,8 @@ const Shop = () => {
         <div className=' print:hidden'>
         <Navbar/>
         </div>
-        <div className=' flex min-h-screen '>
-            <div className=' w-[65vw] bg-gray-900 print:hidden'>
+        <div className=' flex min-h-screen justify-between '>
+            <div className=' w-[70%] bg-gray-900 print:hidden'>
                 <div className=' flex bg-slate-800 py-3 px-5 justify-between border-y border-gray-400'>
                     <div className=' flex items-center'>
                         <p className=' text-gray-400 font-medium text-sm  me-5'>Sale / Cashier</p>
@@ -198,22 +199,27 @@ const Shop = () => {
                     </div>
                 </div>
                 {/* products */}
-                <div className=' bg-gray-900 px-4 pt-4'>
-                    <div className=' flex gap-6 flex-wrap'>
-                        {
-                            product?.map((value)=><div className=' border border-gray-700 rounded overflow-hidden' key={value.id} onClick={()=> select(value) }>
-                            <img src={value.photo } alt="" className=' w-[180px] h-[160px]' />
-                            <div className=' text-gray-400 p-3 text-end'>
-                                <p>{value.name}</p>
-                                <p className=' font-bold'>{value.sale_price}</p>
+                {
+                    currentData?(
+                        <div className=' bg-gray-900 px-4 pt-4'>
+                            <div className=' flex gap-4 flex-wrap'>
+                                {
+                                    product?.map((value)=><div className=' border border-gray-700 rounded overflow-hidden' key={value.id} onClick={()=> select(value) }>
+                                    <img src={value.photo } alt="" className=' w-[180px] h-[160px]' />
+                                    <div className=' text-gray-400 p-3 text-end'>
+                                        <p>{value.name}</p>
+                                        <p className=' font-bold'>{value.sale_price}</p>
+                                    </div>
+                                    </div>)
+                                }
                             </div>
-                        </div>)
-                        }
-                    </div>
-                </div>
+                        
+                        </div>
+                    ):(<Loading/>)
+                }
             </div>
             {/* Receive */}
-            <div className=' w-[35vw] min-h-full bg-slate-950 flex flex-col print:w-full'>
+            <div className=' flex-1 min-h-full bg-slate-950 flex flex-col print:w-full'>
                 <div className=' overflow-auto shop-list'>
                     <h1 className=' font-extrabold hidden text-4xl pt-3 ps-5 print:my-6 print:ps-0 print:text-center print:block'>MMS Shop</h1>
                     <h1 className=' font-bold text-3xl text-gray-200 pt-3 ps-5 print:my-6 print:text-gray-400 print:ps-0 print:text-center'>Receive</h1>
