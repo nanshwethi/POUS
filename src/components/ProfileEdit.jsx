@@ -146,6 +146,8 @@ const ProfileEdit = () => {
     modals.close('modal-brand')
   }
     
+  
+
   return (
     <div className=' flex-1 bg-[#202124] min-h-screen relative'>
 
@@ -166,7 +168,6 @@ const ProfileEdit = () => {
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
                                 <img src={`${i.url}`} className="w-full h-full object-cover object-center rounded-lg" alt="" />
                             </div>
-                            
                         </div>))
                     }
                 </div>
@@ -199,7 +200,7 @@ const ProfileEdit = () => {
                     <div className='relative'>
                         <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden bg-slate-300 mt-[-50px] z-0'>
                             {
-                              user?<img src={user.photo} alt="" className='myImg z-10'  /> :null
+                              user?.photo?(<img src={user.photo} alt="" className=' h-full w-full object-cover z-10'/>) : (<img src={selectfoto?.url} alt="" className=' w-full h-full object-cover z-10'/>)
                             }
                             <img src={user} alt="" className='myImg'  />
                         </div>
