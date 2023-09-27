@@ -31,8 +31,7 @@ const Brand = () => {
     const [p,setP] = useState(1)
     const forBrand = {token,p}
     const {currentData} = useGetBrandQuery(forBrand)
-    // const getPhoto = useGetPhotoQuery(token)
-    const getPhoto = null
+    const getPhoto = useGetPhotoQuery(token)
     const [create] = useCreateBrandMutation()
     const [deleteBrand] = useDeleteBrandMutation()
     const [upload,setUpload] = useState(true)
