@@ -11,6 +11,7 @@ import { addOldData, updateActualPrice, updateBrandId, updateMoreInfo, updateNam
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useGetPhotoQuery } from '../redux/api/mediaApi';
+import Loading from './Loading';
 
 
 const ProductEdit = () => {
@@ -224,7 +225,7 @@ const ProductEdit = () => {
                     <button className=' px-4 py-2 text-gray-200 bg-blue-900 rounded ' onClick={()=>submit()}>Submit</button>
                 </div>
             </div>
-        </div>:null
+        </div>:<Loading/>
         }
         
     </div>

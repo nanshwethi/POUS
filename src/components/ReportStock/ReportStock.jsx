@@ -339,8 +339,8 @@ export const ReportStock = () => {
               </thead>
                 {
                   sort == 'high-stock'?(stock?.currentData? [...stock.currentData.data].sort((a,b)=> b.total_stock - a.total_stock).map((v, index) => (
-                    <tbody className=" text-gray-100">
-                      <tr className=" border-b border-b-gray-700 " key={v.id}>
+                    <tbody className=" text-gray-100"  key={v.id}>
+                      <tr className=" border-b border-b-gray-700 ">
                         <td className="px-1 text-start py-4 ps-7">{index + 1}</td>
                         <td className="px-1 text-start py-4 ps-7">
                           {v.name}

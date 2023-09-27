@@ -6,6 +6,7 @@ import {FaAngleRight} from 'react-icons/fa'
 import pro1 from '../img/pro1.jpg'
 import { useGetSingleProductQuery } from '../redux/api/productApi'
 import Cookies from 'js-cookie'
+import Loading from './Loading'
 
 const ProductDetail = () => {
 
@@ -60,21 +61,21 @@ const ProductDetail = () => {
                             <div className=' w-48 font-semibold text-gray-400'>Name</div>
                             <div className=''>: Avocado</div>
                         </div> */}
-                        <div className=' flex  text-gray-200 items-center font-medium'>
+                        <div className=' flex justify-between  text-gray-200 items-center font-medium'>
                             <div className=' w-48 font-semibold text-gray-400'>Brand</div>
-                            <div className=''>: {data.data.name}</div>
+                            <div className=' flex-1'>: {data.data.name}</div>
                         </div>
-                        <div className=' flex py-5 text-gray-200 items-center font-medium'>
+                        <div className=' flex justify-between py-5 text-gray-200 items-center font-medium'>
                             <div className=' w-48 font-semibold text-gray-400'>Stock</div> 
-                            <div className=''>: {data.data.total_stock}</div>
+                            <div className=' flex-1'>: {data.data.total_stock}</div>
                         </div>
-                        <div className=' flex text-gray-200 items-center font-medium'>
+                        <div className=' flex justify-between text-gray-200 items-center font-medium'>
                             <div className=' w-48 font-semibold text-gray-400'>Unit</div> 
-                            <div className=''>: {data.data.unit}</div>
+                            <div className=' flex-1'>: {data.data.unit}</div>
                         </div>
-                        <div className=' flex pt-5 pb-12  text-gray-200 items-start font-medium '>
+                        <div className=' flex justify-between pt-5 pb-12  text-gray-200 items-start font-medium '>
                             <div className=' w-48 font-semibold text-gray-400'>More Information</div> 
-                            <div className='  w-[300px]'>: {data.data.more_information}</div>
+                            <div className=' flex-1'>: {data.data.more_information}</div>
                         </div>
                     </div>
                 </div>
@@ -152,7 +153,7 @@ const ProductDetail = () => {
                         </div> 
                     </div>
                 </div> */}
-            </div>):null
+            </div>):<Loading/>
         }
         
     </div>
