@@ -46,12 +46,14 @@ const ProfileEdit = () => {
   const check =()=>{
     const male = document.querySelector('.male')
     const female = document.querySelector('.female')
-    if(content?.gender == 'male'){
-      male.checked = true
-      female.checked = false
-    }else{
-      male.checked = false
-      female.checked = true
+    if(male != undefined && female != undefined){
+      if(content?.gender == 'male'){
+        male.checked = true
+        female.checked = false
+      }else{
+        male.checked = false
+        female.checked = true
+      }
     }
 
   }
