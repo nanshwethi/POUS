@@ -99,7 +99,7 @@ const Product = () => {
     }
 
   return (
-    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col'>
+    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[117vh] flex flex-col'>
         <div className=''>
             <div className=' flex justify-between items-center'>
                 <div>

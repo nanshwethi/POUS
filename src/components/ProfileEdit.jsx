@@ -152,11 +152,11 @@ const ProfileEdit = () => {
   
 
   return (
-    <div className=' flex-1 bg-[#202124] min-h-screen relative'>
+    <div className=' flex-1 bg-[#202124] min-h-[110vh] relative'>
 
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
-            <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
-                <div className=" flex flex-wrap gap-5 justify-start items-center ">
+            <div className="w-full h-full flex flex-col items-center gap-10 p-5 bg-gray-900">
+                <div className=" flex flex-wrap w-full gap-5 items-center ">
                     {/* Upload img start */}
                     {/* <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
                         <div className=' text-gray-200 text-lg text-center my-[40px]'>

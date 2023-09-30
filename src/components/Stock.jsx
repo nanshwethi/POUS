@@ -10,14 +10,16 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Loading from "./Loading.jsx";
+import { useGetStockOverviewQuery } from "../redux/api/reportStockApi.js";
 
 
 const Stock = () => {
 
   const token = Cookies.get("token");
-  const [unit, setUnit] = useState(1);
+  const [unit, setUnit] = useState(2);
   const path = { token: token, p: unit };
   const stock  = useGetUnitStockQuery(path);
+  // const stock  = useGetStockOverviewQuery(path);
   console.log(stock)
   const [pid, setPid] = useState();
   const nav = useNavigate()
@@ -79,7 +81,7 @@ const Stock = () => {
   console.log(pid)
 
   return (
-    <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col relative overflow-hidden">
+    <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-[110vh] flex flex-col relative overflow-hidden">
       <div className="">
         <div>
           <h1 className=" text-2xl font-medium text-white">Stock Control</h1>
@@ -180,22 +182,16 @@ const Stock = () => {
             className={` px-3 py-2 ${
               unit == 1 ? "text-gray-50" : "text-gray-500"
             }`}
-            onClick={() => setUnit(1)}>
+            onClick={() => setUnit(2)}>
             1
           </button>
-          <button
-            className={` px-3 py-2 ${
-              unit == 2 ? "text-gray-50" : "text-gray-500"
-            }`}
-            onClick={() => setUnit(2)}>
-            2
-          </button>
+          
           <button
             className={` px-3 py-2 ${
               unit == 3 ? "text-gray-50" : "text-gray-500"
             }`}
             onClick={() => setUnit(3)}>
-            3
+            2
           </button>
           <button
             className={` px-3 py-2 ${
