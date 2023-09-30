@@ -28,7 +28,7 @@ const UserProfile = () => {
     })
 
   return (
-    <div className=' flex-1 min-h-screen bg-[#202124] p-5 px-6'>
+    <div className=' flex-1 min-h-[110vh] bg-[#202124] p-5 px-6'>
         <div className=' flex justify-between items-center'>
             <div>
                 <h1 className=' text-2xl font-medium text-white'>Profile</h1>

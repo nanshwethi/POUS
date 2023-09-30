@@ -189,7 +189,7 @@ const Brand = () => {
     console.log(getPhoto)
 
   return (
-    <div className=' flex-1 bg-[#202124] h-screen relative overflow-x-hidden'>
+    <div className=' flex-1 bg-[#202124] min-h-[110vh] flex flex-col relative overflow-x-hidden'>
         {/* modal */}
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '} size="xl" >
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
@@ -230,8 +230,8 @@ const Brand = () => {
                 </Group>
             </div>
         </Modal>
-        <div className=' p-5 px-6 flex flex-col justify-between h-screen '>
-            <div className=' flex-1 '>
+        <div className=' p-5 px-6 '>
+            <div className='  '>
                 <div className=' flex justify-between items-center'>
                     <div>
                         <h1 className=' text-2xl font-medium text-white'>Manage Brand</h1>
@@ -305,19 +305,10 @@ const Brand = () => {
                 } 
             </div>
             
-            {/* pagination */}
-            <div className=' mt-auto justify-end flex '>
-                <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-2'>
-                    <button className={`px-3 py-2 ${p == 1 ? 'text-gray-50': null}`} onClick={()=>setP(1)}>1</button>
-                    <button className={`px-3 py-2 ${p == 2 ? 'text-gray-50': null}`} onClick={()=>setP(2)}>2</button>
-                    <button className={`px-3 py-2 ${p == 3 ? 'text-gray-50': null}`} onClick={()=>setP(3)}>3</button>
-                    {/* <button className=" px-3 py-2">4</button>
-                    <button className=" px-3 py-2" onClick={()=>setP(1)}><FaAngleRight/></button> */}
-                </div>
-            </div>
+            
         </div>
         {/* offcanvas */}
-        <div className={` custom-offcanvas ${offcanvas && 'openAni'} bg-[#26272c] min-h-screen flex flex-col p-8`}>
+        <div className={` custom-offcanvas ${offcanvas && 'openAni'} bg-[#26272c] min-h-full flex flex-col p-8`}>
             <div className=' '>
                 
                 <div className=' flex justify-between items-center'>
@@ -372,6 +363,16 @@ const Brand = () => {
             </div>
             <div className=' mt-10 '>
                 <button className=' bg-slate-400 block w-full text-center py-2  text-lg text-gray-900 font-extrabold rounded' onClick={()=>save()}>Save</button>
+            </div>
+        </div>
+         {/* pagination */}
+         <div className=' mt-auto justify-end flex mb-3 me-6 '>
+            <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-2'>
+                <button className={`px-3 py-2 ${p == 1 ? 'text-gray-50': null}`} onClick={()=>setP(1)}>1</button>
+                <button className={`px-3 py-2 ${p == 2 ? 'text-gray-50': null}`} onClick={()=>setP(2)}>2</button>
+                <button className={`px-3 py-2 ${p == 3 ? 'text-gray-50': null}`} onClick={()=>setP(3)}>3</button>
+                {/* <button className=" px-3 py-2">4</button>
+                <button className=" px-3 py-2" onClick={()=>setP(1)}><FaAngleRight/></button> */}
             </div>
         </div>
         

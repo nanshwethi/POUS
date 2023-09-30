@@ -105,7 +105,7 @@ const BrandEdit = () => {
     }
 
   return (
-    <div className=' flex-1 bg-[#202124] p-5 px-6 flex flex-col relative '>
+    <div className=' flex-1 bg-[#202124] min-h-[110vh] p-5 px-6 flex flex-col relative '>
         
         <div className=''>
             <div className=' flex justify-between items-center'>
