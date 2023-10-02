@@ -101,7 +101,7 @@ const ProductEdit = () => {
     }
 
   return (
-    <div className=' flex-1 bg-[#202124] p-5 px-6 h-pEdit flex flex-col relative '>
+    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[110vh] flex flex-col relative '>
         
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">

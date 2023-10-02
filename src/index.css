@@ -461,9 +461,6 @@ button[data-active="true"] .mlb {
   min-height: calc(100vh + 230px);
 }
 
-.h-pEdit {
-  min-height: calc(100vh + 300px);
-}
 
 .myModal .mantine-UnstyledButton-root {
   padding-left: 0;

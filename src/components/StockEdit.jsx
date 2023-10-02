@@ -122,14 +122,13 @@ const StockEdit = () => {
                             <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 name'  placeholder={`${currentData?.data.total_stock}`} onChange={(e)=>dispatch(addStockQty(e.target.value))}  />
                         </div>
                         </div>
-                    <div className=' flex py-4 text-gray-200 items-center font-medium'>
+                    <div className=' flex py-4 text-gray-200 font-medium'>
                         <div className=' w-48 font-semibold text-gray-400'>More</div> 
                         <div className=' flex-1'>
                             <textarea className=' bg-[#202124] h-[150px] resize-none border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${currentData?.data.more}`}  onChange={(e)=>dispatch(addStockMore(e.target.value))}/>
 
                         </div>
                     </div>
-                    
                     <div className=' mt-[50px] text-end'>
                         <button className=' px-6 py-2 text-gray-50 bg-[#273c5d] font-semibold rounded' onClick={(e)=> save(e)}>Save</button>
                     </div>
