@@ -30,37 +30,52 @@ const Shop = () => {
     const selectedList = useSelector((state)=> state.shop.selectedList)
     // const [selectedList,setSelectedList] = useState()
     const [selectedAction,setSelectedAction] = useState('qty')
+    const isTag = document.querySelector('.active-list')
+    const list = document.querySelectorAll('.list')
+
+
     const products = []
     let all=0;
     let tax ;
-   
 
-    useEffect(()=>setProduct(currentData?.data))
+    const addPro = ()=>{
+        const notZero = currentData?.data?.filter(i => i.total_stock != 0)
+        setProduct(notZero)
+    }
+
+    useEffect(()=> addPro(),[currentData])
+
+    if(isTag == null & receiveList.length > 1) updateClass()
     
     console.log(receiveList);
 
     const select = (v)=>{
+        
         if(receiveList.length > 0){
             const id = receiveList.map((value)=> value.id)
             const IsAlreadSelected = id.includes(v.id)
             IsAlreadSelected == true ? null : dispatch(selectProduct(v))
-            setTimeout(()=>{
-                const tag = document.querySelector('.active-list')
-                console.log(tag);
-               dispatch(setSelectedList(tag.id))
-            },50)
+            console.log(isTag)
+            dispatch(setSelectedList(v.id))
             console.log(id,IsAlreadSelected)
+            // setTimeout(()=>{
+            //     // const tag = document.querySelector('.active-list')
+            //     console.log(isTag);
+            //    dispatch(setSelectedList(isTag.id))
+            // },50)
         }else{
             dispatch(selectProduct(v))
-            setTimeout(()=>{
-                const tag = document.querySelector('.active-list')
-                console.log(tag);
-                dispatch(setSelectedList(tag.id))
-            },50)
+            dispatch(setSelectedList(v.id))
+            // setTimeout(()=>{
+            //     const tag = document.querySelector('.active-list')
+            //     console.log(tag);
+            //     dispatch(setSelectedList(tag.id))
+            // },50)
         }
     }
 
     console.log(selectedList)
+    console.log(isTag)
 
     if(receiveList.length > 0){
         
@@ -74,22 +89,34 @@ const Shop = () => {
         dispatch(addTax(tax))
     }
 
+    function updateClass(){
+        
+        const addClass = list[list.length-1]
+        addClass.classList.add('active-list')
+        console.log(list);
+        console.log(selectedList);
+    }
+
     const onListClickHandler=(x,e)=>{
 
         dispatch(setSelectedList(x.id))
-        const selected = document.querySelector('.active-list')
         const getList = e.target.closest('.list')
-        // console.log(getList)
-        if(selected != null ){
-            // console.log(e);
-            selected.classList.remove('active-list')
+        const tag = document.querySelector('.active-list')
+        console.log(getList);
+        console.log(tag)
+
+        if(tag != null ){
+            console.log(tag)
             setTimeout(()=>{
-                getList.classList.add('active-list')
+                tag.classList.remove('active-list')
+                
             },100)
+                getList.classList.add('active-list')
+                dispatch(setSelectedList(getList.id))
         }else{
             getList.classList.add('active-list')
+            dispatch(setSelectedList(getList.id))
         }
-        
     }
 
     const onQtyClickHandler=()=>{
@@ -119,17 +146,17 @@ const Shop = () => {
     const check =(e)=>{
         if(receiveList.length >= 1){
             if(selectedAction == 'price'){
-                if( selectedList != null){
+                // if( selectedList != null){
 
-                    const p = e.target.closest('.num-data').childNodes[0].innerText
-                    console.log(p);
-                    // dispatch(createPrice(p))
-                    const data = {price : p,id : selectedList}
-                    dispatch(updatePrice(data))
+                //     const p = e.target.closest('.num-data').childNodes[0].innerText
+                //     console.log(p);
+                //     // dispatch(createPrice(p))
+                //     const data = {price : p,id : selectedList}
+                //     dispatch(updatePrice(data))
 
-                }else{
-                    window.alert('Oops! pick up your product')
-                }
+                // }else{
+                //     window.alert('Oops! pick up your product')
+                // }
             }else{
                 const num = e.target.closest('.num-data').childNodes[0].innerText;
                 
@@ -200,7 +227,7 @@ const Shop = () => {
                 </div>
                 {/* products */}
                 {
-                    currentData?(
+                    currentData? (
                         <div className=' bg-gray-900 px-4 pt-4'>
                             <div className=' flex gap-4 flex-wrap'>
                                 {
@@ -225,10 +252,10 @@ const Shop = () => {
                     <h1 className=' font-bold text-3xl text-gray-200 pt-3 ps-5 print:my-6 print:text-gray-400 print:ps-0 print:text-center'>Receive</h1>
                     <ul >
                         {
-                            receiveList.length != 0 ? receiveList.map((value,index)=><li className={`${index == receiveList.length-1 ? 'active-list' : null} flex py-2 px-5 border-b border-gray-600 justify-between items-center list`} key={value?.id} id={value.id} onClick={(e)=>onListClickHandler(value,e)}>
+                            receiveList.length != 0 ? receiveList.map((value,index)=><li className={`${index == receiveList.length-1 && 'active-list' } flex py-2 px-5 border-b border-gray-600 justify-between items-center list`} key={value?.id} id={value.id} onClick={(e)=>onListClickHandler(value,e)}>
                             <div>
                                 <p className=' text-gray-300 font-thin '>{value.name} </p>
-                                <span className=' text-gray-400 font-medium text-sm'>{value.total_stock} / {value.unit}</span><span className=' text-gray-400 font-medium text-sm'>{value?.sale_price}</span>
+                                <span className=' text-gray-400 font-medium text-sm'>{value.total_stock} / {value.unit}</span><span className=' ps-1 text-gray-400 font-medium text-sm'>{value?.sale_price} ks</span>
                             </div>
                             <p className=' text-gray-100 font-semibold price print:text-gray-400' >{value.sale_price*value.total_stock}</p>
                         </li>):null  

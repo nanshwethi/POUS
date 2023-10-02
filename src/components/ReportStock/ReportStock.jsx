@@ -29,9 +29,9 @@ import Loading from "../Loading";
 
 export const ReportStock = () => {
   const token = Cookies.get("token");
-  // const [unit, setUnit] = useState(1);
+  const [unit, setUnit] = useState(1);
   const [chartData, setChartData] = useState(null);
-  const forStock = { token, p: 1 };
+  const forStock = { token, p: unit };
   const stock = useGetStockOverviewQuery(forStock);
   const brand = useGetBestSellerBrandQuery(token);
   const brandReport = useGetBrandReportQuery(token);
@@ -46,13 +46,13 @@ export const ReportStock = () => {
   const stockStatus = (v) => {
     if (v.total_stock == 0) {
       return (
-        <div className=" text-xs text-red-500 border mx-auto border-red-950 px-1 w-[100px] rounded-full py-2 bg-[#4c4741]">
+        <div className=" text-xs text-[#ed1f1f] border mx-auto border-red-400 px-1 w-[100px] rounded-full py-2 bg-[#423131]">
           out of stock
         </div>
       );
     } else if (v.total_stock < 10) {
       return (
-        <div className=" text-xs text-yellow-400 border mx-auto border-yellow-700 px-1 w-[80px] rounded-full py-2 bg-[#4c4741]">
+        <div className=" text-xs text-yellow-400 border mx-auto border-yellow-700 px-1 w-[80px] rounded-full py-2 bg-[#27231e]">
           low stock
         </div>
       );
@@ -110,6 +110,8 @@ export const ReportStock = () => {
     setChartData(sorted?.slice(0,4))
     console.log(sorted);
   },[brand.currentData])
+
+  console.log(chartData)
   // const toSort = stock?.currentData?.data
   // console.log(toSort)
 
@@ -467,7 +469,25 @@ export const ReportStock = () => {
         ) : (
           <Loading />
         )}
-        
+        <div className=' mt-auto justify-end flex '>
+            <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-6'>
+            <button
+            className={` px-3 py-2 ${
+              unit == 1 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(1)}>
+            1
+          </button>
+          <button
+            className={` px-3 py-2 ${
+              unit == 2 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(2)}>
+            2
+          </button>
+          
+            </div>
+        </div>
       </div>
     </div>
   );

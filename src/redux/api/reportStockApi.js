@@ -8,7 +8,15 @@ export const reportStockApi = createApi({
         
         getStockOverview : builder.query({
             query : ({token,p})=>({
-                url : `/stock_report?stock_level=instock&page=${p}`,
+                url : `/stock_report?page=${p}`,
+                headers : {authorization : `Bearer ${token}`}
+            }),
+            providesTags : ['reportStock']
+
+        }),
+        getInStock : builder.query({
+            query : ({token,p})=>({
+                url : `/stock_report?stock_level=instock`,
                 headers : {authorization : `Bearer ${token}`}
             }),
             providesTags : ['reportStock']
@@ -33,4 +41,4 @@ export const reportStockApi = createApi({
     })
 })
 
-export const {useGetStockOverviewQuery,useGetBestSellerBrandQuery,useGetBrandReportQuery} = reportStockApi
+export const {useGetStockOverviewQuery,useGetInStockQuery,useGetBestSellerBrandQuery,useGetBrandReportQuery} = reportStockApi
