@@ -113,7 +113,16 @@ export const shopSlice = createSlice({
 
             const last = state.list.find((v)=> v.id == payload.id)
 
-            if(last.total_stock == 1 || last.total_stock == 0 || last.total_stock.length == 1){
+            if(last.total_stock.length == 1){
+                let fun = []
+                state.list.forEach((v)=>{
+                    if(v.id == payload.id) v.total_stock = ''
+                    fun.push(v)
+                })
+
+                state.list = fun
+
+            }else if(last.total_stock == ''){
                 const filter = state.list.filter((v)=> v.id != payload.id)
                 state.list = [...filter]
                 if(state.list.length >= 1){
@@ -131,6 +140,7 @@ export const shopSlice = createSlice({
 
                 state.list = fun
             }
+
 
         },
         setSelectedList : (state,{payload})=>{
