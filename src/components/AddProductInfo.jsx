@@ -2,10 +2,14 @@ import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
 import Cookies from "js-cookie";
+<<<<<<< HEAD
+// import { useGetBrandsQuery } from "../redux/api/brandApi";
+=======
 // import { useGetBrandsQuery } from "../redux/api/brandApi";F
+>>>>>>> d20fac5698dffb246c3c6c53e1e432b0214e93d2
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
-import { addBrands } from "../redux/services/brandSlice";
+// import { addBrands } from "../redux/services/brandSlice";
 
 const AddProductInfo = () => {
   const {
@@ -25,7 +29,7 @@ const AddProductInfo = () => {
   // const { data } = useGetBrandsQuery(token);
 
   const dispatch = useDispatch();
-  const brands = useSelector((state) => state.brandSlice.brands);
+  const brands = useSelector((state) => state.brandSlice.data);
   // console.log("brand", data);
 
   // useEffect(() => {

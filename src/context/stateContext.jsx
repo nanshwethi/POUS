@@ -13,13 +13,13 @@ export const StateContextProvider = ({ children }) => {
   
   // for add product
 
-  const [productName, setProductName] = useState('table');
+  const [productName, setProductName] = useState('');
   const [brand, setBrand] = useState('');
-  const [unit, setUnit] = useState('single');
-  const [productInfo, setProductInfo] = useState('ddd');
-  const [stock, setStock] = useState(3);
-  const [actualPrice, setActualPrice] = useState(400);
-  const [salePrice, setSalePrice] = useState(600);
+  const [unit, setUnit] = useState('');
+  const [productInfo, setProductInfo] = useState('');
+  const [stock, setStock] = useState();
+  const [actualPrice, setActualPrice] = useState();
+  const [salePrice, setSalePrice] = useState();
   const [photo,setPhoto]=useState(null);
 
   const nextStepperHandler = () => {
