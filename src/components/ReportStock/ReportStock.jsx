@@ -199,7 +199,7 @@ export const ReportStock = () => {
                           <div className=" text-gray-300 flex items-center ">
                             <span className=" font-medium">100</span>
                             <span className=" ms-3 me-2  text-gray-300">
-                              {brandReport?.currentData?.stocks?.inStock}
+                              {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}%
                             </span>
                             <AiOutlineUp className=" text-green-400" />
                           </div>
@@ -266,7 +266,7 @@ export const ReportStock = () => {
                       <div className=" text-gray-300 flex items-center ">
                         <span className=" font-medium">100</span>
                         <span className=" ms-3 me-2  text-gray-300">
-                          {brandReport?.currentData?.stocks?.inStock}
+                          {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}%
                         </span>
                         <AiOutlineUp className=" text-green-400" />
                       </div>
@@ -408,12 +408,12 @@ export const ReportStock = () => {
                               <td className=" py-4 text-center">
                                 {stockStatus(v)}
                               </td>
-                              <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
-                                <button
+                              <td className="px-4 py-5 text-end flex justify-center gap-5 ">
+                                {/* <button
                                   className=" delete-stock block "
                                   onClick={(e) => del(v.id)}>
                                   <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
-                                </button>
+                                </button> */}
                                 <Link to={`/stock-edit/${v.id}`}>
                                   <button className=" add block text-center">
                                     <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
@@ -448,11 +448,11 @@ export const ReportStock = () => {
                               {stockStatus(v)}
                             </td>
                             <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
-                              <button
+                              {/* <button
                                 className=" delete-stock block "
                                 onClick={(e) => del(v.id)}>
                                 <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
-                              </button>
+                              </button> */}
                               <Link to={`/stock-edit/${v.id}`}>
                                 <button className=" add block text-center">
                                   <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />

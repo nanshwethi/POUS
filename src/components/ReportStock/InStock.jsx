@@ -7,6 +7,9 @@ import { MdOutlineModeEditOutline} from 'react-icons/md'
 import { useGetInStockQuery } from '../../redux/api/reportStockApi'
 import Cookies from 'js-cookie'
 import Loading from '../Loading'
+import { useDeleteStockMutation } from '../../redux/api/stockApi'
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 
 const InStock = () => {
@@ -14,8 +17,46 @@ const InStock = () => {
   const token = Cookies.get('token')
   const forInstock = {token,p : 1}
   const {currentData} = useGetInStockQuery(forInstock)
+  const [deleteStock] = useDeleteStockMutation();
+  const MySwal = withReactContent(Swal);
+  
+
   console.log(currentData);
   const nav = useNavigate()
+
+  const delStock = async (id) => {
+    console.log(id);
+    const d = { token, id };
+    const data = await deleteStock(d);
+    console.log(data);
+    if (data.data == null) {
+      MySwal.fire({
+        text: "Successfully Deleted!",
+        width: "300px",
+        padding: "10px 10px 10px",
+        color: "#ffffff",
+        background: "#393d3d",
+        iconColor: "5dfc68",
+      });
+    }
+  };
+
+  const del = (id) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      background: "#393d3d",
+      color: "#ffffff",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        delStock(id);
+      }
+    });
+  };
   
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-screen '>
@@ -56,7 +97,7 @@ const InStock = () => {
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Unit</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Sale Price</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Stock</th>
-                      <th className=' py-4 border-b text-center border-gray-600 px-1 uppercase font-medium'>Stock Level</th>
+                      <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Stock Level</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'></th>
                   </tr>
                   </thead>
@@ -69,13 +110,13 @@ const InStock = () => {
                       <td className='px-1 py-4 text-end' >{i.unit}</td>
                       <td className='px-1 py-4 text-end' >{i.sale_price}</td>
                       <td className='px-1 py-4 text-end' >{i.total_stock}</td>
-                      <td className='px-1 py-4 text-center' > <span className=' border border-green-600 text-green-400 px-3 rounded-full bg-[#3e4c38] py-2'>{i.stock_level}</span></td>
+                      <td className='px-1 py-4 text-end' > <span className=' border border-green-600 text-green-400 px-3 rounded-full bg-[#3e4c38] py-2'>{i.stock_level}</span></td>
                       <td className=' pe-5 py-4'>
                           <div className=' flex items-center justify-end gap-3'>
 
-                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(i.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                              {/* <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(i.id)} ><BsTrash3 className=' text-gray-200'/></button> */}
                               
-                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product/${i.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/stock-edit/${i.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
                               
                               <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${i.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
                             
