@@ -17,16 +17,31 @@ export const shopSlice = createSlice({
             console.log(state.list)
         },
         changeQty :(state,{payload})=>{
-            let fun = [] ;
-            state.list.forEach((value)=>{
-                console.log(value)
-               if(value.id == payload.id) value.total_stock += payload.qty
-                fun.push(value)
-            })
-            console.log(fun);
-            state.list = fun
-            console.log(state.list);
-
+            
+            const last = state.list.find((v)=> v.id == payload.id)
+            if(last.total_stock == 1){
+                let fun = [] ;
+                state.list.forEach((value)=>{
+                    console.log(value)
+                if(value.id == payload.id) value.total_stock = payload.qty
+                    fun.push(value)
+                })
+                console.log(fun);
+                state.list = fun
+                console.log(state.list);
+            }else{
+                let fun = [] ;
+                state.list.forEach((value)=>{
+                    console.log(value)
+                if(value.id == payload.id) value.total_stock += payload.qty
+                    fun.push(value)
+                })
+                console.log(fun);
+                state.list = fun
+                console.log(state.list);
+            }
+            
+            
         },
         addTotal : (state,{payload})=>{
             state.total = payload
@@ -97,9 +112,8 @@ export const shopSlice = createSlice({
         deleteQty :(state,{payload})=>{
 
             const last = state.list.find((v)=> v.id == payload.id)
-            console.log(last);
 
-            if(last.total_stock == 1 || last.total_stock == 0){
+            if(last.total_stock == 1 || last.total_stock == 0 || last.total_stock.length == 1){
                 const filter = state.list.filter((v)=> v.id != payload.id)
                 state.list = [...filter]
                 if(state.list.length >= 1){
@@ -108,15 +122,14 @@ export const shopSlice = createSlice({
                 }
                 console.log(state.list);
                 console.log(state.selectedList);
-
             }else{
                 let fun = []
                 state.list.forEach((v)=>{
-                if(v.id == payload.id) v.total_stock = (v.total_stock).slice(`-${v.total_stock.length}`,'-1')
-                fun.push(v)
-            })
+                    if(v.id == payload.id) v.total_stock = (v.total_stock).slice(`-${v.total_stock.length}`,'-1')
+                    fun.push(v)
+                })
 
-            state.list = fun
+                state.list = fun
             }
 
         },
