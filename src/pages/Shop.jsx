@@ -9,7 +9,7 @@ import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import Cookies from 'js-cookie'
-import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty, addCost} from '../redux/services/shopSlice'
+import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 import { Link } from 'react-router-dom'
@@ -82,10 +82,10 @@ const Shop = () => {
         
         const unit = receiveList.map((value)=> value.sale_price*value.total_stock)
         cost = unit.reduce((pv,cv)=>Number(pv)+Number(cv),[0])
-        tax =((total/100)*5).toFixed(2)
+        tax =((cost/100)*5).toFixed(2)
         console.log(tax);
-        all=(total+ Number(tax))
-        console.log(total);
+        all=(cost+ Number(tax))
+        console.log(cost);
         dispatch(addTotal(all))
         dispatch(addTax(tax))
         
@@ -266,17 +266,17 @@ const Shop = () => {
                 </div>
                 {/* Keypad */}
                 <div className=' mt-auto '>
-                    <div className=' text-end pe-5 mt-3'>
-                        <span className=' uppercase text-gray-300 me-3'>Cost - </span>
-                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[160px] print:text-gray-600'>{cost}</span>
+                    <div className=' text-end pe-5 mt-12'>
+                        <span className=' uppercase text-gray-300 me-3 font-medium text-sm '>Cost - </span>
+                        <span className=' text-gray-200 text-sm font-semibold inline-block w-[160px] print:text-gray-600'>{cost}</span>
                     </div>
                     <div className=' text-end pe-5 mt-3 mb-2'>
-                        <span className=' uppercase text-gray-300 me-3'>tax - </span>
-                        <span className=' text-gray-200 text-xl font-bold inline-block w-[160px] print:text-gray-600'> -{tax}</span>
+                        <span className=' uppercase text-gray-300 me-3 text-sm' >tax - </span>
+                        <span className=' text-gray-200 text-sm font-semibold inline-block w-[160px] print:text-gray-600'> {tax}</span>
                     </div>
-                    <div className=' text-end pe-5 mt-3 mb-2'>
-                        <span className=' uppercase text-gray-300 me-3'>Total - </span>
-                        <span className=' text-gray-200 text-xl font-bold inline-block w-[160px] print:text-gray-600'> -{all}</span>
+                    <div className=' text-end pe-5 my-4'>
+                        <span className=' uppercase text-gray-300 me-3 text-xl'>Total - </span>
+                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[160px] print:text-gray-600'> {all}</span>
                     </div>
                      <div className=' flex flex-col keypad print:hidden'>
                         {/* <div className='flex '>
