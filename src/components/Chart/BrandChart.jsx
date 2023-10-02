@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactEcharts from "echarts-for-react"; 
 
 const BrandChart = ({Data}) => {
@@ -46,6 +45,7 @@ const BrandChart = ({Data}) => {
     };
 
   return (
+    // <></>
      <ReactEcharts option={option} style={{width : '100%'}}  />
   )
 }

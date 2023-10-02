@@ -15,7 +15,7 @@ export const StateContextProvider = ({ children }) => {
 
   const [productName, setProductName] = useState('');
   const [brand, setBrand] = useState('');
-  const [unit, setUnit] = useState('');
+  const [unit, setUnit] = useState('single');
   const [productInfo, setProductInfo] = useState('');
   const [stock, setStock] = useState();
   const [actualPrice, setActualPrice] = useState();
