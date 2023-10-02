@@ -9,7 +9,7 @@ import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import Cookies from 'js-cookie'
-import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
+import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty, addCost} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 import { Link } from 'react-router-dom'
@@ -37,6 +37,7 @@ const Shop = () => {
     const products = []
     let all=0;
     let tax ;
+    let cost;
 
     const addPro = ()=>{
         const notZero = currentData?.data?.filter(i => i.total_stock != 0)
@@ -80,13 +81,14 @@ const Shop = () => {
     if(receiveList.length > 0){
         
         const unit = receiveList.map((value)=> value.sale_price*value.total_stock)
-        const total = unit.reduce((pv,cv)=>Number(pv)+Number(cv),[0])
+        cost = unit.reduce((pv,cv)=>Number(pv)+Number(cv),[0])
         tax =((total/100)*5).toFixed(2)
         console.log(tax);
         all=(total+ Number(tax))
         console.log(total);
         dispatch(addTotal(all))
         dispatch(addTax(tax))
+        
     }
 
     function updateClass(){
@@ -265,15 +267,19 @@ const Shop = () => {
                 {/* Keypad */}
                 <div className=' mt-auto '>
                     <div className=' text-end pe-5 mt-3'>
-                        <span className=' uppercase text-gray-300 me-3'>total - </span>
-                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[160px] print:text-gray-600'>{all}</span>
+                        <span className=' uppercase text-gray-300 me-3'>Cost - </span>
+                        <span className=' text-gray-200 text-2xl font-bold inline-block w-[160px] print:text-gray-600'>{cost}</span>
                     </div>
                     <div className=' text-end pe-5 mt-3 mb-2'>
                         <span className=' uppercase text-gray-300 me-3'>tax - </span>
                         <span className=' text-gray-200 text-xl font-bold inline-block w-[160px] print:text-gray-600'> -{tax}</span>
                     </div>
+                    <div className=' text-end pe-5 mt-3 mb-2'>
+                        <span className=' uppercase text-gray-300 me-3'>Total - </span>
+                        <span className=' text-gray-200 text-xl font-bold inline-block w-[160px] print:text-gray-600'> -{all}</span>
+                    </div>
                      <div className=' flex flex-col keypad print:hidden'>
-                        <div className='flex '>
+                        {/* <div className='flex '>
                             <button className='flex justify-center w-[50%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600'>
                                 <span className=' block text-gray-300 text-center'>Note</span>
                             </button>
@@ -281,7 +287,7 @@ const Shop = () => {
                                 <span className=' block text-gray-300 text-center'>Tax</span>
                             </button>
                             
-                        </div>
+                        </div> */}
                         <div className='flex w-full' >
                             <div onClick={(e)=>check(e)} className=' w-[75%] flex'>
                                 <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600' >

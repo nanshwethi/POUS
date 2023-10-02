@@ -8,7 +8,8 @@ export const shopSlice = createSlice({
         total : null,
         tax : null,
         recent : [],
-        selectedList : null
+        selectedList : null,
+        cost : null
     },
     reducers :{
         selectProduct :(state,{payload})=>{
@@ -31,14 +32,14 @@ export const shopSlice = createSlice({
                 console.log(state.list);
             }else{
                 let fun = [] ;
-                state.list.forEach((value)=>{
-                    console.log(value)
-                if(value.id == payload.id) value.total_stock += payload.qty
-                    fun.push(value)
-                })
-                console.log(fun);
-                state.list = fun
-                console.log(state.list);
+            state.list.forEach((value)=>{
+                console.log(value)
+            if(value.id == payload.id) value.total_stock += payload.qty
+                fun.push(value)
+            })
+            console.log(fun);
+            state.list = fun
+            console.log(state.list);
             }
             
             
@@ -145,7 +146,8 @@ export const shopSlice = createSlice({
         },
         setSelectedList : (state,{payload})=>{
             state.selectedList = payload
-        }
+        },
+        
     }
 })
 
