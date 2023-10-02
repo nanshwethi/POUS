@@ -141,6 +141,7 @@ export const shopSlice = createSlice({
                 state.list = fun
             }
 
+
         },
         setSelectedList : (state,{payload})=>{
             state.selectedList = payload
