@@ -11,6 +11,7 @@ import { addOldData, updateActualPrice, updateBrandId, updateMoreInfo, updateNam
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useGetPhotoQuery } from '../redux/api/mediaApi';
+import Loading from './Loading';
 
 
 const ProductEdit = () => {
@@ -100,26 +101,35 @@ const ProductEdit = () => {
     }
 
   return (
-    <div className=' flex-1 bg-[#202124] p-5 px-6 h-pEdit flex flex-col relative '>
+    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[110vh] flex flex-col relative '>
         
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
                 <div className=" flex flex-wrap w-full gap-5 justify-start items-center ">
                     {/* Upload img start */}
-                    <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
+                    {/* <div className=' border border-dashed w-[160px] h-[150px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
                         <div className=' text-gray-200 text-lg text-center my-[40px]'>
                             <FiUploadCloud className=' inline text-4xl'/>
                             <p className=' mt-2'>Upload Image</p>
                         </div>
                         <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 ' onChange={(e)=>selectFromLocal(e)} />
                             Upload img end
-                    </div>
+                    </div> */}
                     {
-                        getPhoto?.currentData?.data.map((i)=>(<div key={i.id}>
+                        getPhoto?.currentData?(getPhoto.currentData.data.map((i)=>(<div key={i.id}>
                             <div className={`w-[160px] h-[150px] ${ selectfoto?.id == i.id ? 'border border-gray-700 p-1' : null} rounded-lg overflow-hidden`} onClick={()=> setSelectfoto(i)}>
                                 <img src={`${i.url}`} className="w-full h-full object-cover object-center rounded-lg" alt="" />
                             </div>
                         </div>))
+                        ):(
+                            <div className=' flex w-full min-h-[150px] justify-center items-center'>
+                                <div className=' relative'>
+                                    <div className=' w-[50px] h-[50px] rounded-full z-0  bg-[#4381b4] loading'></div>
+                                    <div className=' w-[45px] h-[45px] absolute right-[0.15rem] top-[0.173rem] bg-[#202124] rounded-full z-50'>
+                                    </div>
+                                </div>
+                            </div>
+                        )
                     }
                 </div>
                 <Group className=' w-full'>
@@ -224,7 +234,7 @@ const ProductEdit = () => {
                     <button className=' px-4 py-2 text-gray-200 bg-blue-900 rounded ' onClick={()=>submit()}>Submit</button>
                 </div>
             </div>
-        </div>:null
+        </div>:<Loading/>
         }
         
     </div>

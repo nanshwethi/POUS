@@ -2,7 +2,11 @@ import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
 import Cookies from "js-cookie";
+<<<<<<< HEAD
 // import { useGetBrandsQuery } from "../redux/api/brandApi";
+=======
+// import { useGetBrandsQuery } from "../redux/api/brandApi";F
+>>>>>>> d20fac5698dffb246c3c6c53e1e432b0214e93d2
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 // import { addBrands } from "../redux/services/brandSlice";

@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactEcharts from "echarts-for-react"; 
 
-const BrandChart = () => {
+const BrandChart = ({Data}) => {
+  console.log(Data);
 
    const option = {
         tooltip: {
@@ -34,10 +35,10 @@ const BrandChart = () => {
             right : '-25px',
             
             data: [
-              { value: 1048, name: 'Search Engine',itemStyle :{color : '#8ab4f8'},emphasis :{disabled : true},},
-              { value: 735, name: 'Direct',itemStyle :{color : '#6a88b8'},emphasis :{disabled : true}  },
-              { value: 580, name: 'Email',itemStyle :{color : '#404d64'},emphasis :{disabled : true}  },
-              { value: 484, name: 'Union Ads',itemStyle :{color : '#e8eaed'},emphasis :{disabled : true}  },
+              { value: Data[0].total_brand_sale, name: Data[0].brand_name ,itemStyle :{color : '#8ab4f8'},emphasis :{disabled : true},},
+              { value: Data[1].total_brand_sale, name: Data[1].brand_name,itemStyle :{color : '#6a88b8'},emphasis :{disabled : true}  },
+              { value: Data[2].total_brand_sale, name: Data[2].brand_name,itemStyle :{color : '#404d64'},emphasis :{disabled : true}  },
+              { value: Data[3].total_brand_sale, name: Data[3].brand_name,itemStyle :{color : '#e8eaed'},emphasis :{disabled : true}  },
               
             ]
           }

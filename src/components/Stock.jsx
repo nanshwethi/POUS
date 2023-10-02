@@ -9,14 +9,17 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Loading from "./Loading.jsx";
+import { useGetStockOverviewQuery } from "../redux/api/reportStockApi.js";
 
 
 const Stock = () => {
 
   const token = Cookies.get("token");
-  const [unit, setUnit] = useState(1);
+  const [unit, setUnit] = useState(2);
   const path = { token: token, p: unit };
   const stock  = useGetUnitStockQuery(path);
+  // const stock  = useGetStockOverviewQuery(path);
   console.log(stock)
   const [pid, setPid] = useState();
   const nav = useNavigate()
@@ -78,7 +81,7 @@ const Stock = () => {
   console.log(pid)
 
   return (
-    <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-screen flex flex-col relative overflow-hidden">
+    <div className=" flex-1 bg-[#202124] p-5 px-6 min-h-[110vh] flex flex-col relative overflow-hidden">
       <div className="">
         <div>
           <h1 className=" text-2xl font-medium text-white">Stock Control</h1>
@@ -120,7 +123,9 @@ const Stock = () => {
           </div>
         </div>
         {/* table */}
-        <div className=" mt-[50px]">
+        {
+          stock?.currentData?(
+            <div className=" mt-[50px]">
           <table className=" w-full text-gray-300 border border-gray-700 text-sm ">
             <thead>
               <tr className=" border-b border-b-gray-700">
@@ -141,28 +146,34 @@ const Stock = () => {
               </tr>
             </thead>
             <tbody className=" text-gray-100">
-              {stock?.currentData?.data.map((v) => (
-                <tr
-                  className=" border-b border-b-gray-700 "
-                  key={v.id}
-                  >
-                  <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
-                  <td className="px-1 text-start py-4 ">{v.user_name}</td>
-                  <td className="px-1 py-4 text-end">{v.total_stock}</td>
-                  <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
-                  <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
-                    <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
-                    <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
-                    </button>
-                    <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
-                      <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {
+                stock?.currentData?.data.map((v) => (
+                  <tr
+                    className=" border-b border-b-gray-700 "
+                    key={v.id}
+                    >
+                    <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
+                    <td className="px-1 text-start py-4 ">{v.user_name}</td>
+                    <td className="px-1 py-4 text-end">{v.total_stock}</td>
+                    <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
+                    <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
+                      <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
+                      <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
+                      </button>
+                      <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
+                        <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              
+              }
             </tbody>
           </table>
         </div>
+          ):(<Loading/>)
+        }
+        
       </div>
       {/* pagination */}
       <div className=" mt-auto justify-end flex ">
@@ -171,22 +182,16 @@ const Stock = () => {
             className={` px-3 py-2 ${
               unit == 1 ? "text-gray-50" : "text-gray-500"
             }`}
-            onClick={() => setUnit(1)}>
+            onClick={() => setUnit(2)}>
             1
           </button>
-          <button
-            className={` px-3 py-2 ${
-              unit == 2 ? "text-gray-50" : "text-gray-500"
-            }`}
-            onClick={() => setUnit(2)}>
-            2
-          </button>
+          
           <button
             className={` px-3 py-2 ${
               unit == 3 ? "text-gray-50" : "text-gray-500"
             }`}
             onClick={() => setUnit(3)}>
-            3
+            2
           </button>
           <button
             className={` px-3 py-2 ${
