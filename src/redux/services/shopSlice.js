@@ -20,28 +20,16 @@ export const shopSlice = createSlice({
         changeQty :(state,{payload})=>{
             
             const last = state.list.find((v)=> v.id == payload.id)
-            if(last.total_stock == 1){
+            
                 let fun = [] ;
                 state.list.forEach((value)=>{
-                    console.log(value)
-                if(value.id == payload.id) value.total_stock = payload.qty
+                console.log(value)
+                if(value.id == payload.id) value.total_stock += payload.qty
                     fun.push(value)
                 })
                 console.log(fun);
                 state.list = fun
                 console.log(state.list);
-            }else{
-                let fun = [] ;
-            state.list.forEach((value)=>{
-                console.log(value)
-            if(value.id == payload.id) value.total_stock += payload.qty
-                fun.push(value)
-            })
-            console.log(fun);
-            state.list = fun
-            console.log(state.list);
-            }
-            
             
         },
         addTotal : (state,{payload})=>{
