@@ -9,7 +9,7 @@ export const shopSlice = createSlice({
         tax : null,
         recent : [],
         selectedList : null,
-        cost : null
+        
     },
     reducers :{
         selectProduct :(state,{payload})=>{
