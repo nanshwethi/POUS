@@ -2,13 +2,11 @@ import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
 import Cookies from "js-cookie";
-<<<<<<< HEAD
-// import { useGetBrandsQuery } from "../redux/api/brandApi";
-=======
-// import { useGetBrandsQuery } from "../redux/api/brandApi";F
->>>>>>> d20fac5698dffb246c3c6c53e1e432b0214e93d2
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
+import { useGetBrandQuery } from "../redux/api/branApi";
+import { addBrands } from "../redux/services/brandSlice";
 // import { addBrands } from "../redux/services/brandSlice";
 
 const AddProductInfo = () => {
@@ -26,24 +24,22 @@ const AddProductInfo = () => {
     nextStepperHandler,
   } = useContextCustom();
   const token = Cookies.get("token");
-  // const { data } = useGetBrandsQuery(token);
-
+  const [p,setP] = useState(1)
+  const forBrand = {token,p}
+  const {currentData} = useGetBrandQuery(forBrand)
   const dispatch = useDispatch();
-  const brands = useSelector((state) => state.brandSlice.data);
-  // console.log("brand", data);
+  const content = useSelector((state)=> state.brandSlice.brands)
+  console.log("currentData", currentData);
+  console.log("content", content);
 
-  // useEffect(() => {
-  //   dispatch(addBrands({ brands: data?.data }));
-  // }, [data]);
+  useEffect(() => {
+    dispatch(addBrands({ brands: currentData?.data }));
+  }, [currentData]);
 
   const nextHandler = () => {
     // const ppp=dispatch(addProduct)
     nextStepperHandler();
   };
-
-  // useMemo(() => {
-  //   console.log("first", brand);
-  // }, [brand]);
 
   return (
     <div className=" ">
@@ -64,7 +60,6 @@ const AddProductInfo = () => {
               type="text"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
-              placeholder="Product Name"
               className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />{" "}
           </div>
@@ -81,7 +76,7 @@ const AddProductInfo = () => {
               onChange={(e) => setBrand(e.target.value)}
               className="brand-dropdown brand-select "
             >
-              {brands?.map((brand) => {
+              {content?.map((brand) => {
                 return (
                   <option
                     key={brand?.id}
