@@ -12,14 +12,15 @@ export const shopSlice = createSlice({
     },
     reducers :{
         selectProduct :(state,{payload})=>{
-            state.list = [...state.list,payload]
-            // console.log(state.list)
+            
+            state.list = [...state.list,{...payload,total_stock : 1}]
+            console.log(state.list)
         },
         changeQty :(state,{payload})=>{
             let fun = [] ;
             state.list.forEach((value)=>{
                 console.log(value)
-               if(value.id == payload.id) value.total_stock = Number(payload.qty)
+               if(value.id == payload.id) value.total_stock += payload.qty
                 fun.push(value)
             })
             console.log(fun);
@@ -111,7 +112,7 @@ export const shopSlice = createSlice({
             }else{
                 let fun = []
                 state.list.forEach((v)=>{
-                if(v.id == payload.id) v.total_stock -= 1
+                if(v.id == payload.id) v.total_stock = (v.total_stock).slice(`-${v.total_stock.length}`,'-1')
                 fun.push(v)
             })
 

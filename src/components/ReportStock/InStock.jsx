@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
 import {AiOutlinePlus,AiOutlineArrowRight,AiFillDelete} from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {BsListUl,BsSearch,BsTrash3} from 'react-icons/bs'
 import {BiGridAlt} from 'react-icons/bi'
 import { MdOutlineModeEditOutline} from 'react-icons/md'
+import { useGetInStockQuery } from '../../redux/api/reportStockApi'
+import Cookies from 'js-cookie'
+import Loading from '../Loading'
 
 
 const InStock = () => {
 
-  const [unit, setUnit] = useState(1);
+  const token = Cookies.get('token')
+  const forInstock = {token,p : 1}
+  const {currentData} = useGetInStockQuery(forInstock)
+  console.log(currentData);
+  const nav = useNavigate()
   
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-screen '>
@@ -38,7 +45,9 @@ const InStock = () => {
                     
                 </div>
             </div>
-            <div className=' mt-[50px] selected'>
+            {
+              currentData ? (
+                <div className=' mt-[50px]'>
               <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
                   <thead>
                   <tr className=''>
@@ -47,52 +56,42 @@ const InStock = () => {
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Unit</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Sale Price</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Stock</th>
+                      <th className=' py-4 border-b text-center border-gray-600 px-1 uppercase font-medium'>Stock Level</th>
                       <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'></th>
                   </tr>
                   </thead>
                   <tbody>
-                    <tr className=' border-b border-gray-700 ' >
-                        <td className='px-1 text-start py-4 ps-6' ></td>
-                        <td className='px-1 text-start py-4' ></td>
-                        <td className='px-1 py-4 text-end' ></td>
-                        <td className='px-1 py-4 text-end' ></td>
-                        <td className='px-1 py-4 text-end' ></td>
-                        <td className=' pe-5 py-4'>
-                            <div className=' flex items-center justify-end gap-3'>
+                    {
+                      
+                       currentData.data?.map(i=>(<tr className=' border-b border-gray-700 ' key={i.id} >
+                      <td className='px-1 text-start py-4 ps-6' >{i.name}</td>
+                      <td className='px-1 text-start py-4' >{i.brand}</td>
+                      <td className='px-1 py-4 text-end' >{i.unit}</td>
+                      <td className='px-1 py-4 text-end' >{i.sale_price}</td>
+                      <td className='px-1 py-4 text-end' >{i.total_stock}</td>
+                      <td className='px-1 py-4 text-center' > <span className=' border border-green-600 text-green-400 px-3 rounded-full bg-[#3e4c38] py-2'>{i.stock_level}</span></td>
+                      <td className=' pe-5 py-4'>
+                          <div className=' flex items-center justify-end gap-3'>
 
-                                <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
-                                
-                                <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
-                                
-                                <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
-                                
-                            </div>
-                        </td>
-                    </tr>
+                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(i.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                              
+                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product/${i.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                              
+                              <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${i.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
+                            
+                          </div>
+                      </td>
+                  </tr>))
+                    }
                 </tbody>
               </table>
             </div>
+              ):(<Loading/>)
+            }
+            
         </div>
       </div>
-      <div className=' mt-auto justify-end flex '>
-        <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-6'>
-            <button
-            className={` px-3 py-2 ${
-              unit == 1 ? "text-gray-50" : "text-gray-500"
-            }`}
-            onClick={() => setUnit(1)}>
-            1
-          </button>
-          <button
-            className={` px-3 py-2 ${
-              unit == 2 ? "text-gray-50" : "text-gray-500"
-            }`}
-            onClick={() => setUnit(2)}>
-            2
-          </button>
-          
-        </div>
-      </div>
+      
     </div>
     
         
