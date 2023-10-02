@@ -8,7 +8,8 @@ export const shopSlice = createSlice({
         total : null,
         tax : null,
         recent : [],
-        selectedList : null
+        selectedList : null,
+        cost : null
     },
     reducers :{
         selectProduct :(state,{payload})=>{
@@ -145,7 +146,8 @@ export const shopSlice = createSlice({
         },
         setSelectedList : (state,{payload})=>{
             state.selectedList = payload
-        }
+        },
+        
     }
 })
 
