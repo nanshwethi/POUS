@@ -338,10 +338,13 @@ const ProfileEdit = () => {
           </div>
         </div>
         <div className=' border border-b-0 border-t border-[#404044] myfooter w-full'>
-            <div className=' flex bg-[#121212] ps-24 py-4'>
-                <button className=' px-5 py-2 font-semibold text-[#7f8189] border me-4 text-xs uppercase border-[#646569] rounded'>Cancel</button>
-                <button className=' px-5 py-2 font-semibold text-[#292929] bg-[#8ab4f8] text-xs uppercase  rounded' onClick={()=>save()}>Save</button>
-            </div>
+            {/* <div className=' flex bg-[#121212] ps-24 py-4'>
+                {/* <button className=' px-5 py-2 font-semibold text-[#7f8189] border me-4 text-xs uppercase border-[#646569] rounded'>Cancel</button> */}
+                {/* <button className=' px-5 py-2 font-semibold text-[#292929] bg-[#8ab4f8] text-xs uppercase  rounded' onClick={()=>save()}>Save</button> */}
+            {/* </div> */}
+           <div className=' bg-[#121212] ps-6 py-4'>
+              <button className=' px-5 py-2 font-semibold text-[#292929] bg-[#8ab4f8] text-xs uppercase  rounded' onClick={()=>save()}>Save</button>
+           </div>
         </div>
             </div>
           ):(<Loading/>)

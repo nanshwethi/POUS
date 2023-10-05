@@ -19,7 +19,7 @@ const BrandEdit = () => {
     const {id} = useParams()
     const token = Cookies.get('token')
     const forBrand = {id,token}
-    const {currentData} = useGetSingleBrandQuery(forBrand)
+    const {currentData,isFetching} = useGetSingleBrandQuery(forBrand)
     const [updateBrand] = useUpdateBrandMutation()
     const oldData = useSelector((state)=>state.brandSlice.oldData)
     const updateData = useSelector((state)=>state.brandSlice.updateData)
@@ -121,7 +121,8 @@ const BrandEdit = () => {
             </div>
         </div>
         {
-            oldData ? <div className=' mt-12'>
+            isFetching?(<Loading/>):(<div>{
+                oldData ? <div className=' mt-12'>
                 <div className="p-6 w-[60%] bg-[#171717] rounded  ">
                     <div className=' flex py-4 text-gray-200 items-center font-medium'>
                         <div className=' w-48 font-semibold text-gray-400'>Name</div>
@@ -163,6 +164,9 @@ const BrandEdit = () => {
                 </div>
             
         </div>:<Loading/>
+                }
+                </div>)
+            
         }
         
     </div>

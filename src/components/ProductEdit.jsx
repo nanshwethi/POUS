@@ -7,12 +7,13 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { useGetSingleProductQuery, useUpdateProductMutation } from '../redux/api/productApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOldData, updateActualPrice, updateBrandId, updateMoreInfo, updateName, updateSalePrice, updateUnit, updateStock, updatePhoto } from '../redux/services/productSlice';
+import { updateActualPrice, updateBrandId, updateMoreInfo, updateName, updateSalePrice, updateUnit, updateStock, updatePhoto, addContent } from '../redux/services/productSlice';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useGetPhotoQuery } from '../redux/api/mediaApi';
 import Loading from './Loading';
 
+let dt;
 
 const ProductEdit = () => {
 
@@ -22,24 +23,22 @@ const ProductEdit = () => {
     const [ui,setUi] = useState(true)
     const [opened, { open, close }] = useDisclosure(false);
     const data = {token,id}
-    const {currentData} = useGetSingleProductQuery(data)
+    const {currentData,isFetching} = useGetSingleProductQuery(data)
     const getPhoto = useGetPhotoQuery(token)
     console.log(currentData)
-    const [success,setSuccess] = useState(false)
     const [selectfoto,setSelectfoto] = useState()
     const dispatch = useDispatch()
     const nav = useNavigate()
     const content = useSelector((state)=>state.productSlice.data)
-    const oldData = useSelector((state)=>state.productSlice.oldData)
+
     console.log(content)
-    console.log(oldData)
     console.log(getPhoto)
     const [update] = useUpdateProductMutation()
 
     const MySwal = withReactContent(Swal)
 
     useEffect(()=>{
-        dispatch(addOldData(currentData?.data))
+        dispatch(addContent(currentData?.data))  
         dispatch(updateName(currentData?.data.name))
         dispatch(updateBrandId(6))
         dispatch(updateStock(currentData?.data.total_stock))
@@ -52,40 +51,36 @@ const ProductEdit = () => {
    
     const submit = async()=>{
         const d = {content,id,token}
-        const dt = await update(d)
+         dt = await update(d)
         console.log(dt);
         console.log(d);
-        dispatch(addOldData(dt?.data?.data))
-        console.log(oldData);
+        console.log(content);
         if( dt?.data){
+            
+            const Toast = MySwal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                padding : '10px 10px 10px',
+                color : '#ffffff',
+                background : '#393d3d',
+                timer: 3000,
+                customClass : {
+                    timerProgressBar : 'progress-bar'
+                },
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: ' updated product'
+              })
 
-            MySwal.fire({
-            didOpen: () => {
-                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-                const Toast = MySwal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    padding : '10px 10px 10px',
-                    color : '#ffffff',
-                    background : '#393d3d',
-                    timer: 3000,
-                    customClass : {
-                        timerProgressBar : 'progress-bar'
-                    },
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.addEventListener('mouseenter', Swal.stopTimer)
-                      toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                  })
-                  
-                  Toast.fire({
-                    icon: 'success',
-                    title: ' updated product'
-                  })
-            },
-            })
+            setTimeout(()=> nav(`/product-detail/${id}`),3500)
            
         }
             
@@ -100,8 +95,10 @@ const ProductEdit = () => {
         dispatch(updatePhoto(e.target.value))
     }
 
+    
+
   return (
-    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[110vh] flex flex-col relative '>
+    <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[120vh] flex flex-col relative '>
         
         <Modal opened={opened} className=' myModal-inner' onClose={close} id='modal-brand' title={'Select an image '}  size="xl" >
             <div className="w-full h-full flex flex-col justify-center items-center gap-10 p-5 bg-gray-900">
@@ -147,45 +144,46 @@ const ProductEdit = () => {
                     <h1 className=' text-2xl font-medium text-white'>Products</h1>
                     <p className=' text-gray-400 mt-1 font-medium text-xs'>Inventory / products / edit product</p>
                 </div>
-                <div>
-                    <Link to={'/product'}>
+                <div >
+                    <Link to={'/product'} >
                     <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium '>Product list</button>
                     </Link>
                 </div>
             </div>
         </div>
         {
-            oldData ? <div className=' mt-12 flex h-[500px]'>
+            isFetching?<Loading/>:
+            currentData?.data? <div className=' mt-12 flex h-[500px]'>
             {
                 active == 'one' ?(<div className="p-6 w-[60%] bg-[#171717] rounded h-[500px]">
                 <div className=' flex py-4 text-gray-200 items-center font-medium'>
                 <div className=' w-48 font-semibold text-gray-400'>Name</div>
                 <div className=' flex-1'>
-                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${oldData.name}`} onChange={(e)=>dispatch(updateName(e.target.value))}  />
+                    <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${content.name}`} onChange={(e)=>dispatch(updateName(e.target.value))}  />
                 </div>
                 </div>
                 {/* <div className=' flex py-4 text-gray-200 items-center font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Brand</div> 
                     <div className=' flex-1'>
-                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${oldData.sale_price}`}  onChange={(e)=>dispatch(updateSalePrice(e.target.value))}/>
+                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${content.sale_price}`}  onChange={(e)=>dispatch(updateSalePrice(e.target.value))}/>
                     </div>
                 </div> */}
                 <div className=' flex py-4 text-gray-200 items-center font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Stock</div> 
                     <div className=' flex-1'>
-                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${oldData.total_stock}`}  onChange={(e)=>dispatch(updateStock(e.target.valueAsNumber))}/>
+                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${content.total_stock}`}  onChange={(e)=>dispatch(updateStock(e.target.valueAsNumber))}/>
                     </div>
                 </div>
                 <div className=' flex py-4 text-gray-200 items-center font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Unit</div> 
                     <div className=' flex-1'>
-                        <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${oldData.unit}`}  onChange={(e)=>dispatch(updateUnit(e.target.value))}/>
+                        <input type="text" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${content.unit}`}  onChange={(e)=>dispatch(updateUnit(e.target.value))}/>
                     </div>
                 </div>
                 <div className=' flex py-4 text-gray-200 items-start font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>More</div> 
                     <div className=' flex-1'>
-                        <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-full py-1 px-3 h-[150px]' placeholder={`${oldData.more_information}`} onChange={(e)=>dispatch(updateMoreInfo(e.target.value))} />
+                        <textarea className=' bg-[#202124] border-2 resize-none border-[#313337] rounded text-slate-400 outline-none w-full py-1 px-3 h-[150px]' placeholder={`${content.more_information}`} onChange={(e)=>dispatch(updateMoreInfo(e.target.value))} />
 
                     </div>
                 </div>
@@ -195,13 +193,13 @@ const ProductEdit = () => {
                     <div className=' flex py-4 text-gray-200 items-center font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Actual Price</div> 
                     <div className=' flex-1'>
-                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${oldData.actual_price}`} onChange={(e)=>dispatch(updateActualPrice(e.target.value))}/>
+                        <input type="number" className=' bg-[#202124] border-2 border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3' placeholder={`${content.actual_price}`} onChange={(e)=>dispatch(updateActualPrice(e.target.value))}/>
                     </div>
                 </div>
                 <div className=' flex py-4 text-gray-200 items-start font-medium'>
                     <div className=' w-48 font-semibold text-gray-400'>Sale Price</div> 
                     <div className=' flex-1'>
-                    <input type='number' className=' bg-[#202124] border-2  border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 ' placeholder={`${oldData.sale_price}`} onChange={(e)=>dispatch(updateSalePrice(e.target.value))} />
+                    <input type='number' className=' bg-[#202124] border-2  border-[#313337] rounded text-slate-400 outline-none w-full py-2 px-3 ' placeholder={`${content.sale_price}`} onChange={(e)=>dispatch(updateSalePrice(e.target.value))} />
 
                     </div>
                 </div>

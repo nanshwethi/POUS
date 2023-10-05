@@ -17,7 +17,7 @@ const UserProfile = () => {
 
     const token = Cookies.get('token')
     const d = { token : token , id : 2}
-    const {currentData} = useGetSingleUserQuery(d)
+    const {currentData,isFetching} = useGetSingleUserQuery(d)
     console.log(currentData);
     const dispatch = useDispatch()
 
@@ -41,30 +41,36 @@ const UserProfile = () => {
             </div>
         </div>
         <div className=' mt-[100px] bg-[#171717]'>
-            {user ?( <div className=' flex justify-between items-center px-6 '>
-                <div className=' flex gap-5 items-center  ps-14 '>
-                    <div className='relative'>
-                      <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden bg-slate-300 z-0 mt-[-50px]'>
-                          <img src={user.photo} alt="" className=' w-full h-full object-cover z-10'  /> :null
+            {
+              isFetching?<Loading/> : (<div>
+                {
+                  user ?( <div className=' flex justify-between items-center px-6 '>
+                  <div className=' flex gap-5 items-center  ps-14 '>
+                      <div className='relative'>
+                        <div style={{width : '180px',height:'180px'}} className=' rounded-full overflow-hidden bg-slate-300 z-0 mt-[-50px]'>
+                            <img src={user.photo} alt="" className=' w-full h-full object-cover z-10'  /> :null
+                        </div>
+                        <RLink to={`/profile-edit/${d.id}`}>
+                            <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
+                        </RLink>
+                    </div>
+                    <div>
+                        <h1 className=' text-gray-200 text-2xl font-semibold'>{user.name}</h1>
+                        <span className=' text-gray-400 text-xs'>Sale Executive/<PiDotFill className=' inline text-3xl text-[#9ec1f9]'/>Active in 1 hour</span>
+                    </div>
+                  </div>
+                  <div className=' flex text-white gap-2 items-center'>
+                      <div className=' bg-gray-800 p-2 rounded-full'>
+                          <AiOutlineMail/>
                       </div>
-                      <RLink to={`/profile-edit/${d.id}`}>
-                          <button className=' edit text-2xl m-0 rounded-full'><FiEdit/></button>
-                      </RLink>
+                      <div className=' bg-gray-800 p-2 rounded-full'>
+                          <FiPhoneCall/>
+                      </div>
                   </div>
-                  <div>
-                      <h1 className=' text-gray-200 text-2xl font-semibold'>{user.name}</h1>
-                      <span className=' text-gray-400 text-xs'>Sale Executive/<PiDotFill className=' inline text-3xl text-[#9ec1f9]'/>Active in 1 hour</span>
-                  </div>
-                </div>
-                <div className=' flex text-white gap-2 items-center'>
-                    <div className=' bg-gray-800 p-2 rounded-full'>
-                        <AiOutlineMail/>
-                    </div>
-                    <div className=' bg-gray-800 p-2 rounded-full'>
-                        <FiPhoneCall/>
-                    </div>
-                </div>
-            </div>) : <Loading/>
+              </div>) : <Loading/>
+                }
+              </div>)
+            
             }
             <div className=' mt-2'>
             {
