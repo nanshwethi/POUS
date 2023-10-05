@@ -10,14 +10,18 @@ export const stockApi = createApi({
                 url : `/stock/${id}`,
                 headers : {authorization : `Bearer ${token}`}
             }),
-            providesTags : ['stock']
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
         }),
         getUnitStock : builder.query({
             query : ({token,p})=>({
                 url : `/stock?page=${p}`,
                 headers : {authorization : `Bearer ${token}`}
             }),
-            providesTags : ['stock']
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
         }),
         updateStock : builder.mutation({
             query : ({token,content})=>({

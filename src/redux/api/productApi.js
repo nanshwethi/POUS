@@ -14,7 +14,9 @@ export const productApi = createApi({
         url: `/product?page=${p}`,
         headers: { authorization: `Bearer ${token}` },
       }),
-      providesTags: ["product"],
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
     }),
 
     getSingleProduct: builder.query({
@@ -22,7 +24,10 @@ export const productApi = createApi({
         url: `/product/${id}`,
         headers: { authorization: `Bearer ${token}`},
       }),
-      providesTags: ["product"],
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+
     }),
 
     addProduct: builder.mutation({

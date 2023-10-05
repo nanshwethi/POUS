@@ -16,11 +16,12 @@ import { useGetStockOverviewQuery } from "../redux/api/reportStockApi.js";
 const Stock = () => {
 
   const token = Cookies.get("token");
-  const [unit, setUnit] = useState(2);
+  const [unit, setUnit] = useState(1);
+  const [sort, setSort] = useState('high');
   const path = { token: token, p: unit };
-  const stock  = useGetUnitStockQuery(path);
+  const {currentData,isFetching}  = useGetUnitStockQuery(path);
   // const stock  = useGetStockOverviewQuery(path);
-  console.log(stock)
+  console.log(currentData)
   const [pid, setPid] = useState();
   const nav = useNavigate()
   const [deleteStock] = useDeleteStockMutation()
@@ -89,7 +90,7 @@ const Stock = () => {
             Inventory / Stock control
           </p>
         </div>
-        <div className=" mt-[40px] flex justify-between items-center">
+        <div className=" mt-[40px] flex justify-between items-end">
           <div>
             <p className=" text-gray-100 font-semibold text-xl">
               Products Overview
@@ -108,7 +109,7 @@ const Stock = () => {
           <div className=" flex items-baseline">
             <p className=" text-sm text-gray-400 me-2">Sort : </p>
             <Select
-              defaultValue={"last"}
+              defaultValue={sort}
               className=" custom-select"
               rightSection={
                 <FaAngleDown size="1rem" color="rgb(209 213 219)" />
@@ -116,62 +117,82 @@ const Stock = () => {
               rightSectionWidth={30}
               unstyled
               data={[
-                { value: "last", label: "last" },
-                { value: "first", label: "first" },
+                { value: "high", label: "last" },
+                { value: "low", label: "first" },
               ]}
+              onChange={(value)=>setSort(value)}
             />
           </div>
         </div>
         {/* table */}
         {
-          stock?.currentData?(
-            <div className=" mt-[50px]">
-          <table className=" w-full text-gray-300 border border-gray-700 text-sm ">
-            <thead>
-              <tr className=" border-b border-b-gray-700">
-                
-                <th className=" py-4 text-start px-1 ps-7 uppercase font-medium">
-                  Product Name
-                </th>
-                <th className=" py-4 text-start px-1 uppercase font-medium">
-                  User Name
-                </th>
-                <th className=" py-4 text-end px-1 uppercase font-medium">
-                  Added quantity
-                </th>
-                <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
-                  Created At
-                </th>
-                <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
-              </tr>
-            </thead>
-            <tbody className=" text-gray-100">
-              {
-                stock?.currentData?.data.map((v) => (
-                  <tr
-                    className=" border-b border-b-gray-700 "
-                    key={v.id}
-                    >
-                    <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
-                    <td className="px-1 text-start py-4 ">{v.user_name}</td>
-                    <td className="px-1 py-4 text-end">{v.total_stock}</td>
-                    <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
-                    <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
-                      <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
-                      <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
-                      </button>
-                      <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
-                        <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
-                      </button>
-                    </td>
+          isFetching?(<Loading/>
+          ):(<div>
+            {
+              currentData?(<div className=" mt-[50px]">
+              <table className=" w-full text-gray-300 border border-gray-700 text-sm ">
+                <thead>
+                  <tr className=" border-b border-b-gray-700">
+                    <th className=" py-4 text-start px-1 ps-7 uppercase font-medium">
+                      Product Name
+                    </th>
+                    <th className=" py-4 text-start px-1 uppercase font-medium">
+                      User Name
+                    </th>
+                    <th className=" py-4 text-end px-1 uppercase font-medium">
+                      Added quantity
+                    </th>
+                    <th className=" py-4 pe-4 text-end px-1 uppercase font-medium">
+                      Created At
+                    </th>
+                    <th className=" py-4 pe-4 text-end px-1 uppercase font-medium"></th>
                   </tr>
-                ))
-              
-              }
-            </tbody>
-          </table>
-        </div>
-          ):(<Loading/>)
+                </thead>
+                <tbody className=" text-gray-100">
+                  {
+                    sort == 'high' ?[...currentData?.data].sort((a,b)=>b.total_stock-a.total_stock).map((v) => (
+                      <tr
+                        className=" border-b border-b-gray-700 "
+                        key={v.id}
+                        >
+                        <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
+                        <td className="px-1 text-start py-4 ">{v.user_name}</td>
+                        <td className="px-1 py-4 text-end">{v.total_stock}</td>
+                        <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
+                        <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
+                          <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
+                          <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
+                          </button>
+                          <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
+                            <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
+                          </button>
+                        </td>
+                      </tr>
+                      )):[...currentData?.data].sort((a,b)=>a.total_stock-b.total_stock).map((v) => (
+                        <tr
+                          className=" border-b border-b-gray-700 "
+                          key={v.id}
+                          >
+                          <td className="px-1 text-start py-4 ps-7">{v.product_name}</td>
+                          <td className="px-1 text-start py-4 ">{v.user_name}</td>
+                          <td className="px-1 py-4 text-end">{v.total_stock}</td>
+                          <td className="px-1 pe-4 py-4 text-end">{v.created_at}</td>
+                          <td className="px-1 pe-4 py-4 text-end flex justify-center gap-5 ">
+                            <button className=" delete-stock block " onClick={(e)=> del(v.id)}>
+                            <AiOutlineDelete className=" text-lg text-gray-200 mx-auto " />
+                            </button>
+                            <button className=" add block text-center" onClick={(e) => addStockQty(e,v.id)}>
+                              <AiOutlinePlusCircle className=" text-xl text-gray-100 block mx-auto " />
+                            </button>
+                          </td>
+                        </tr>
+                        ))
+                  }
+                </tbody>
+              </table>
+            </div>):(<Loading/>)
+            }
+            </div>)
         }
         
       </div>
@@ -182,8 +203,15 @@ const Stock = () => {
             className={` px-3 py-2 ${
               unit == 1 ? "text-gray-50" : "text-gray-500"
             }`}
-            onClick={() => setUnit(2)}>
+            onClick={() => setUnit(1)}>
             1
+          </button>
+          <button
+            className={` px-3 py-2 ${
+              unit == 2 ? "text-gray-50" : "text-gray-500"
+            }`}
+            onClick={() => setUnit(2)}>
+            2
           </button>
           
           <button
@@ -191,7 +219,7 @@ const Stock = () => {
               unit == 3 ? "text-gray-50" : "text-gray-500"
             }`}
             onClick={() => setUnit(3)}>
-            2
+            3
           </button>
           <button
             className={` px-3 py-2 ${

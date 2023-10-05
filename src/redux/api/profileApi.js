@@ -28,7 +28,9 @@ export const profileApi = createApi({
                 url : `/user/${id}`,
                 headers : {authorization : `Bearer ${token}`}
             }),
-            providesTags : ['profileApi']
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
 
         })
     })

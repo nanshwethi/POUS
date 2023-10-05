@@ -30,12 +30,13 @@ const Brand = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const [p,setP] = useState(1)
     const forBrand = {token,p}
-    const {currentData} = useGetBrandQuery(forBrand)
+    const {currentData,isFetching} = useGetBrandQuery(forBrand)
     const getPhoto = useGetPhotoQuery(token)
     const [create] = useCreateBrandMutation()
     const [deleteBrand] = useDeleteBrandMutation()
     const [upload,setUpload] = useState(true)
     const [selectfoto,setSelectfoto] = useState()
+    const [sort,setSort] = useState('first')
     const dispatch = useDispatch()
     const nav = useNavigate()
     const content = useSelector((state)=> state.brandSlice.data)
@@ -241,7 +242,7 @@ const Brand = () => {
                         <button className=' px-5 py-2 bg-[#8ab4f8] rounded font-medium ' onClick={()=>setOffcanvas(!offcanvas)}> <AiOutlinePlus className=' inline'/> Add Brand</button>
                     </div>
                 </div>
-                <div className=' mt-[40px] flex justify-between items-center'>
+                <div className=' mt-[40px] flex justify-between items-end'>
                     <div>
                         <p className=' text-gray-100 font-semibold text-xl'>Products Overview</p>
                         <div className=' mt-3'>
@@ -254,7 +255,7 @@ const Brand = () => {
                     <div className=' flex items-baseline'>
                         <p className=' text-sm text-gray-400 me-2'>Sort : </p>
                         <Select
-                            defaultValue={'last'}
+                            defaultValue={sort}
                             className=' custom-select'
                             rightSection={<FaAngleDown size="1rem" color='rgb(209 213 219)'/>}
                             rightSectionWidth={30}
@@ -264,43 +265,55 @@ const Brand = () => {
                                 { value: 'first', label: 'first' },
                                 
                             ]}
+                            onChange={(value)=>setSort(value)}
                         />
                     </div>
                 </div>
                 {/* table */}
                 {
-                    currentData?(
+                    isFetching?(<Loading/>):currentData?(
                         <div className=' mt-[50px] selected'>
-                    <table className=' w-full text-gray-200 border border-gray-700 text-sm '>
-                        <thead>
-                        <tr className=' border-b border-b-gray-700'>
-                            <th className=' py-4 text-start px-1 ps-6 uppercase font-medium'>Brand Name</th>
-                            <th className=' py-4 text-start px-1 uppercase font-medium'>Company Name</th>
-                            <th className=' py-4  px-1 uppercase font-medium'>Agent</th>
-                            <th className=' py-4 pe-4 text-end px-1 uppercase font-medium'>Phone No</th>
-                            <th className=' py-4 pe-4 text-end px-1 uppercase font-medium'>
-                            
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody className=' text-gray-100'>
-                            {
-                                currentData?.data?.map((v)=>(<tr className=' border-b border-b-gray-700 ' key={v.id}>
-                                <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
-                                <td className='px-1 text-start py-4' >{v.company}</td>
-                                <td className='px-1 py-4 text-center' >{v.agent}</td>
-                                <td className='px-1 pe-4 py-4 text-end' >{v.phone_no}</td>
-                                <td className='px-1 pe-4 py-4 text-center' >
-                                    <div className=' flex items-center justify-center gap-3'>
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/brand-edit/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
-                                    </div>
-                                </td>
-                            </tr>))
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            <table className=' w-full  border border-gray-700 text-sm '>
+                            <thead className='text-gray-100'>
+                            <tr className=' border-b border-b-gray-700'>
+                                <th className=' py-4 font-bold text-start px-1 ps-6 uppercase '>Brand Name</th>
+                                <th className=' py-4 font-bold text-start px-1 uppercase '>Company Name</th>
+                                <th className=' py-4 font-bold  px-1 uppercase '>Agent</th>
+                                <th className=' py-4 font-bold pe-4 text-end px-1 uppercase '>Phone No</th>
+                                <th className=' py-4 font-bold pe-4 text-end px-1 uppercase '>
+                                
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody className=' text-gray-300'>
+                                {
+                                    sort == 'first' ?[...currentData?.data].sort((a,b)=>a.name.localeCompare(b.name)).map((v)=>(<tr className=' border-b border-b-gray-700 ' key={v.id}>
+                                    <td className=' font-light px-1 text-start py-4 ps-6' >{v.name}</td>
+                                    <td className=' font-light px-1 text-start py-4' >{v.company}</td>
+                                    <td className=' font-light px-1 py-4 text-center' >{v.agent}</td>
+                                    <td className=' font-light px-1 pe-4 py-4 text-end' >{v.phone_no}</td>
+                                    <td className=' font-light px-1 pe-4 py-4 text-center' >
+                                        <div className=' flex items-center justify-center gap-3'>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/brand-edit/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                        </div>
+                                    </td>
+                                </tr>)) :[...currentData?.data].sort((a,b)=>b.name.localeCompare(a.name)).map((v)=>(<tr className=' border-b border-b-gray-700 ' key={v.id}>
+                                    <td className=' font-light px-1 text-start py-4 ps-6' >{v.name}</td>
+                                    <td className=' font-light px-1 text-start py-4' >{v.company}</td>
+                                    <td className=' font-light px-1 py-4 text-center' >{v.agent}</td>
+                                    <td className=' font-light px-1 pe-4 py-4 text-end' >{v.phone_no}</td>
+                                    <td className=' font-light px-1 pe-4 py-4 text-center' >
+                                        <div className=' flex items-center justify-center gap-3'>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/brand-edit/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                        </div>
+                                    </td>
+                                </tr>))
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     ):(<Loading/>)
                 } 
             </div>

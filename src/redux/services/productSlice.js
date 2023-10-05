@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const initialState = {
   products: null,
-  oldData : null,
+  oldData :null,
   data : {
     name : null,
     brand_id : null,
@@ -24,11 +24,6 @@ export const productSlice = createSlice({
       addProducts: (state, { payload }) => {
         (state.products = payload.products),
           Cookies.set("products", JSON.stringify(state.products));
-      },
-      addOldData : (state,{payload})=>{
-
-        state.oldData = payload
-
       },
       updateName : (state,{payload})=>{
         
@@ -62,11 +57,15 @@ export const productSlice = createSlice({
         
         state.data.photo = payload
       },
+      addContent : (state,{payload})=>{
+        
+        state.oldData = payload
+      }
 
     },
     
 
 });
 
-export const { addProducts,addOldData , updateName,updatePhoto,updateStock,updateBrandId,updateActualPrice,updateSalePrice,updateMoreInfo,updateUnit} = productSlice.actions;
+export const { addProducts,addContent , updateName,updatePhoto,updateStock,updateBrandId,updateActualPrice,updateSalePrice,updateMoreInfo,updateUnit} = productSlice.actions;
 export default productSlice.reducer;

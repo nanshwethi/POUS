@@ -4,7 +4,8 @@ import {BiGridAlt} from 'react-icons/bi'
 import {BsListUl,BsSearch,BsTrash3} from 'react-icons/bs'
 import {MdOutlineModeEditOutline} from 'react-icons/md'
 import {TfiClose} from 'react-icons/tfi'
-import {FaAngleRight} from 'react-icons/fa'
+import {FaAngleDown, FaAngleRight} from 'react-icons/fa'
+import { Select } from "@mantine/core";
 import pro1 from '../img/pro1.jpg'
 import pro2 from '../img/pro2.jpg'
 import pro3 from '../img/pro3.jpg'
@@ -14,7 +15,7 @@ import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { useDeleteProductMutation, useGetProductsQuery } from '../redux/api/productApi'
+import { useDeleteProductMutation, useGetProductsQuery, useGetSingleProductQuery } from '../redux/api/productApi'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -26,20 +27,26 @@ const Product = () => {
     const token = Cookies.get('token')
     const [unit,setUnit] = useState(1)
     const d = {p : unit,token}
-    const {currentData} = useGetProductsQuery(d)
+    const {currentData,isFetching} = useGetProductsQuery(d)
     const [deleteProduct] = useDeleteProductMutation()
     const oldData = useSelector((state)=>state.productSlice.oldData)
+    const updatedData = useSelector((state)=>state.productSlice.data)
     const [products,setProducts] = useState()
+    const [sort,setSort] = useState('high')
     const nav = useNavigate()
     console.log(currentData)
+    console.log(updatedData)
+    console.log(oldData)
+
+     
 
     useEffect(()=>{
         setProducts(currentData?.data)
-        console.log(oldData)
         console.log(products)
         
     },[currentData,oldData])
 
+    
     const changeGridUi =()=>{
         const data = document.querySelector('.selected')
         data != null && setUi(false)
@@ -76,27 +83,23 @@ const Product = () => {
 
     const del = (id)=>{
         MySwal.fire({
-            title: <p>Hello World</p>,
-            didOpen: () => {
-                // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-                MySwal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    background : '#393d3d',
-                    color : '#ffffff',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        deleteP(id)
-                    }
-                })
-            },
-            })
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            background : '#393d3d',
+            color : '#ffffff',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteP(id)
+            }
+        })
 
     }
+
+    console.log(sort);
 
   return (
     <div className=' flex-1 bg-[#202124] p-5 px-6 min-h-[117vh] flex flex-col'>
@@ -122,76 +125,122 @@ const Product = () => {
                         <BsSearch className=" inline text-gray-400 me-3"/>
                         <input type="text" placeholder='search' className=' w-[250px] outline-none bg-transparent text-gray-300 text-sm font-semibold' />
                     </div>
-                    <div className=' flex items-center border border-gray-500 rounded border-collapse'>
-                        <button className=' border-e border-gray-500 px-1' onClick={()=>changeListUi()}>
-                        <BsListUl className={`inline  ${ui ? 'text-blue-400':' text-gray-400'}`}  />
-                        </button>
-                        <button className=' px-1' onClick={()=>changeGridUi()}>
-                        <BiGridAlt className={`inline ${ui ? ' text-gray-400': 'text-blue-400'}`}/>
-                        </button>
+                    <div className=' flex items-center '>
+                        <div className=" flex items-baseline">
+                            <p className=" text-sm text-gray-400 me-2 ">Sort : </p>
+                            <Select
+                            defaultValue= 'high'
+                            className=" custom-select select-product"
+                            style={{marginRight : '20px'}}
+                            rightSection={
+                                <FaAngleDown size="1rem" color="rgb(209 213 219)" />
+                            }
+                            rightSectionWidth={30}
+                            unstyled
+                            data={[
+                                { value: "high", label: "high" },
+                                { value: "low", label: "low" },
+                            ]}
+                            onChange={(value) => setSort(value)}
+                            size="100px"
+                            />
+                        </div>
+                        <div className=' flex items-center border border-gray-500 rounded border-collapse'>
+                            <button className=' border-e border-gray-500 px-1' onClick={()=>changeListUi()}>
+                            <BsListUl className={`inline  ${ui ? 'text-blue-400':' text-gray-400'}`}  />
+                            </button>
+                            <button className=' px-1' onClick={()=>changeGridUi()}>
+                            <BiGridAlt className={`inline ${ui ? ' text-gray-400': 'text-blue-400'}`}/>
+                            </button>
+                        </div>
                     </div>
-                    
                 </div>
             </div>
             
         </div>
-        {
-                products ? (
-                    ui ? (<div className=' mt-[50px] selected'>
-                
-                     <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
-                    <thead>
-                    <tr className=''>
-                        <th className=' py-4 border-b ps-6 text-start border-gray-600 px-1 uppercase font-medium'>Name</th>
-                        <th className=' py-4 border-b text-start border-gray-600 px-1 uppercase font-medium'>Brand</th>
-                        <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Unit</th>
-                        <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Sale Price</th>
-                        <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'>Stock</th>
-                        <th className=' py-4 border-b text-end border-gray-600 px-1 uppercase font-medium'></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {
+        {   
+            isFetching ? (<Loading/>):( <div>
+                {
+                    currentData?.data ? (
+                        ui ? (<div className=' mt-[50px] selected'>
+                    
+                         <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
+                        <thead>
+                        <tr className=''>
+                            <th className=' py-4 font-bold text-gray-50 border-b ps-6 text-start border-gray-600 px-1 uppercase '>Name</th>
+                            <th className=' py-4 font-bold text-gray-50 border-b text-start border-gray-600 px-1 uppercase '>Brand</th>
+                            <th className=' py-4 font-bold text-gray-50 border-b text-end border-gray-600 px-1 uppercase '>Unit</th>
+                            <th className=' py-4 font-bold text-gray-50 border-b text-end border-gray-600 px-1 uppercase '>Sale Price</th>
+                            <th className=' py-4 font-bold text-gray-50 border-b text-end border-gray-600 px-1 uppercase '>Stock</th>
+                            <th className=' py-4 font-bold text-gray-50 border-b text-end border-gray-600 px-1 uppercase '></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                sort == 'high' && products ? [...currentData?.data].sort((a,b)=> b.sale_price - a.sale_price).map((v)=>(<tr className=' border-b border-gray-700 ' key={v.id}>
+                                    <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
+                                    <td className='px-1 text-start py-4' >{v.brand_name}</td>
+                                    <td className='px-1 py-4 text-end' >{v.unit}</td>
+                                    <td className='px-1 py-4 text-end' >{v.sale_price}</td>
+                                    <td className='px-1 py-4 text-end' >{v.total_stock}</td>
+                                    <td className=' py-4 text-center'>
+                                        <div className=' flex items-center justify-center gap-3'>
+    
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                                            
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/product/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                            
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
+                                            
+                                        </div>
+                                    </td>
+                                </tr>)):[...currentData?.data].sort((a,b)=> a.sale_price- b.sale_price).map((v)=>(<tr className=' border-b border-gray-700 ' key={v.id}>
+                                    <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
+                                    <td className='px-1 text-start py-4' >{v.brand_name}</td>
+                                    <td className='px-1 py-4 text-end' >{v.unit}</td>
+                                    <td className='px-1 py-4 text-end' >{v.sale_price}</td>
+                                    <td className='px-1 py-4 text-end' >{v.total_stock}</td>
+                                    <td className=' py-4 text-center'>
+                                        <div className=' flex items-center justify-center gap-3'>
+    
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
+                                            
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/product/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                            
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
+                                            
+                                        </div>
+                                    </td>
+                                </tr>))                       
+                            }
                             
-                            products?.map((v)=>(<tr className=' border-b border-gray-700 ' key={v.id}>
-                                <td className='px-1 text-start py-4 ps-6' >{v.name}</td>
-                                <td className='px-1 text-start py-4' >{v.brand_name}</td>
-                                <td className='px-1 py-4 text-end' >{v.unit}</td>
-                                <td className='px-1 py-4 text-end' >{v.sale_price}</td>
-                                <td className='px-1 py-4 text-end' >{v.total_stock}</td>
-                                <td className=' pe-5 py-4'>
-                                    <div className=' flex items-center justify-end gap-3'>
-
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
-                                        
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product/${v.id}`)}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
-                                        
-                                        <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
-                                        
-                                    </div>
-                                </td>
-                            </tr>))                           
+                        </tbody>
+                    </table>
+                    
+                </div>):(<div className=' mt-[50px]'>
+                    <div className=' flex gap-4 flex-wrap'>
+                        {
+                            sort == 'high' && products ? [...currentData?.data].sort((a,b)=> b.sale_price - a.sale_price).map((v)=>(<div className=' border border-gray-700 rounded overflow-hidden' key={v.id}>
+                            <img src={v.photo} alt="" className=' w-[180px] h-[160px] object-cover' />
+                            <div className=' text-gray-400 p-3 text-end'>
+                                <p>{v.name}</p>
+                                <p className=' font-bold'>{v.sale_price}</p>
+                            </div>
+                        </div>)):[...currentData?.data].sort((a,b)=> a.sale_price - b.sale_price).map((v)=>(<div className=' border border-gray-700 rounded overflow-hidden' key={v.id}>
+                            <img src={v.photo} alt="" className=' w-[180px] h-[160px] object-cover' />
+                            <div className=' text-gray-400 p-3 text-end'>
+                                <p>{v.name}</p>
+                                <p className=' font-bold'>{v.sale_price}</p>
+                            </div>
+                        </div>))
                         }
                         
-                    </tbody>
-                </table>
-                
-            </div>):(<div className=' mt-[50px]'>
-                <div className=' flex gap-4 flex-wrap'>
-                    {
-                        products?.map((v)=>(<div className=' border border-gray-700 rounded overflow-hidden' key={v.id}>
-                        <img src={v.photo} alt="" className=' w-[180px] h-[160px] object-cover' />
-                        <div className=' text-gray-400 p-3 text-end'>
-                            <p>{v.name}</p>
-                            <p className=' font-bold'>{v.sale_price}</p>
-                        </div>
-                    </div>))
-                    }
-                    
+                    </div>
+                </div>)
+                ):<Loading/>
+                }
                 </div>
-            </div>)
-            ):(<Loading/>)
-                
+            )
             }
         <div className=' mt-auto justify-end flex '>
             <div className=' text-gray-500 border flex items-center border-gray-700 px-4 mt-6'>

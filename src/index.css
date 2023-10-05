@@ -33,7 +33,7 @@ body {
   font-weight: 300;
   line-height: 24px;
   font-family: var(--base-font);
-  padding: 0;
+  padding: 0 !important;
 }
 .sidebar-height {
   height: calc(100vh - 45px);
@@ -494,6 +494,16 @@ button[data-active="true"] .mlb {
 
 .mantine-Modal-inner .mantine-Modal-content .mantine-Modal-body {
   padding: 0;
+}
+
+.mantine-Input-wrapper{
+  justify-content: space-between !important;
+  width: 75px !important;
+}
+
+.custom-select .mantine-Select-wrapper .mantine-Select-input{
+  width:  55px !important;
+  padding-left: 8px;
 }
 
 .keypad button:not(.selected):hover{

@@ -12,14 +12,18 @@ export const branApi = createApi({
                 url : `/brand?page=${p}`,
                 headers : {authorization : `Bearer ${token}`}
             }),
-            providesTags : ['bran']
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
         }),
         getSingleBrand: builder.query({
             query: ({token,id}) => ({
             url: `/brand/${id}`,
             headers: { authorization: `Bearer ${token}` },
             }),
-            providesTags: ["brand"],
+            forceRefetch({ currentArg, previousArg }) {
+                return currentArg !== previousArg
+            },
         }),
         createBrand : builder.mutation({
             query : ({token,content})=>({
