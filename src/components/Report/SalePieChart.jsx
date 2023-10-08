@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell } from "recharts";
 import PropTypes from "prop-types";
 
-const COLORS = ["#8AB4F8", "#6a88b8", "#404d64", "#e8eaed", "#2a58b8"];
+const COLORS = ["#8AB4F8", "#6a88b8", "#404d64", "#e8eaed", "#6a88b8"];
 
 const SalePieChart = ({ bdata }) => {
   SalePieChart.propTypes = {
