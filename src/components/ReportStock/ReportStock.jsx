@@ -199,7 +199,7 @@ export const ReportStock = () => {
                           <div className=" text-gray-300 flex items-center ">
                             <span className=" font-medium">100</span>
                             <span className=" ms-3 me-2  text-gray-300">
-                              {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}%
+                              {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}
                             </span>
                             <AiOutlineUp className=" text-green-400" />
                           </div>
@@ -218,7 +218,7 @@ export const ReportStock = () => {
                                 0,
                                 2
                               )}
-                              %
+                              
                             </span>
                             <AiOutlineUp className=" text-green-400" />
                           </div>
@@ -234,7 +234,7 @@ export const ReportStock = () => {
                             <span className=" font-medium">100</span>
                             <span className=" ms-3 me-2  text-gray-300">
                               {brandReport?.currentData?.stocks?.outOfStock?.substring(0,2)}
-                              %
+                              
                             </span>
                             <AiOutlineUp className=" text-green-400" />
                           </div>
@@ -266,7 +266,7 @@ export const ReportStock = () => {
                       <div className=" text-gray-300 flex items-center ">
                         <span className=" font-medium">100</span>
                         <span className=" ms-3 me-2  text-gray-300">
-                          {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}%
+                          {brandReport?.currentData?.stocks?.inStock?.substring(0,2)}
                         </span>
                         <AiOutlineUp className=" text-green-400" />
                       </div>
@@ -283,7 +283,7 @@ export const ReportStock = () => {
                             0,
                             2
                           )}
-                          %
+                          
                         </span>
                         <AiOutlineUp className=" text-green-400" />
                       </div>
@@ -300,7 +300,7 @@ export const ReportStock = () => {
                             0,
                             2
                           )}
-                          %
+                          
                         </span>
                         <AiOutlineUp className=" text-green-400" />
                       </div>

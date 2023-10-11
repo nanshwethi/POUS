@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import Cookies from "js-cookie";
 
-// const token=Cookies.get("token");
 export const userApi=createApi({
 	reducerPath:"userApi",
 	baseQuery:fetchBaseQuery({
@@ -20,11 +18,11 @@ export const userApi=createApi({
 			providesTags:["user"],
 		}),
 		addUser: builder.mutation({
-			query: ({ user, token }) => ({
+			query: ({ content, token }) => ({
 			  url: `/user`,
 			  method: "POST",
 			  headers: { authorization: `Bearer ${token}` },
-			  body: user,
+			  body: content,
 			}),
 			invalidatesTags: ["user"],
 		  }),
