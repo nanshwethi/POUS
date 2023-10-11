@@ -1,22 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 
 const initialState = {
-  user: [],
+  user: {
+    name : '',
+    date_of_birth : '',
+    gender : null,
+    photo : null,
+    email : '',
+    phone_number : '',
+    password : null,
+    address : '',
+    role : '',
+  }
 };
 
 export const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
-    createUser: (state, { payload }) => {
-      (state.user = payload.user),
-        Cookies.set("user", JSON.stringify(state.user));
+    createName : (state,{payload})=>{
+      state.user.name = payload
     },
+    createGender : (state,{payload})=>{
+      state.user.gender = payload
+    },
+    createDateOfBirth : (state,{payload})=>{
+      state.user.date_of_birth = payload
+    },
+    addUserEmail : (state,{payload})=>{
+      state.user.email = payload
+    },
+    createPhoto : (state,{payload})=>{
+      state.user.photo = payload
+    },
+    createPhone : (state,{payload})=>{
+      state.user.phone_number = payload
+    },
+    createPassword : (state,{payload})=>{
+      state.user.password = payload
+    },
+    createAddress : (state,{payload})=>{
+      state.user.address = payload
+    },
+    createRole: (state,{payload})=>{
+      state.user.role = payload
+    },
+
   },
 });
 
-export const { createUser } = userSlice.actions;
+export const { createName,createAddress,createDateOfBirth,addUserEmail,createGender,createPassword,createPhone,createPhoto,createRole } = userSlice.actions;
 export default userSlice.reducer;
 
 

@@ -372,11 +372,11 @@ button[data-active="true"] .mlb {
 }
 
 .male:checked ~ span {
-  background-color: rgb(73, 73, 73);
+  background-color: rgb(173, 170, 170);
 }
 
 .female:checked ~ span {
-  background-color: rgb(73, 73, 73);
+  background-color: rgb(173, 170, 170);
 }
 
 .custom-offcanvas {
@@ -496,9 +496,22 @@ button[data-active="true"] .mlb {
   padding: 0;
 }
 
-.mantine-Input-wrapper{
+.select-product .mantine-Input-wrapper{
   justify-content: space-between !important;
   width: 75px !important;
+}
+
+                            
+.myModal-user>.mantine-UnstyledButton-root:hover{
+  background-color: none !important;
+}
+
+.date>input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(219, 214, 214, 0);
+  opacity: 0;
+  /* background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat; */
+  width: 100% !important  ;
+  height: 100%;
 }
 
 .custom-select .mantine-Select-wrapper .mantine-Select-input{
