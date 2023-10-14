@@ -96,7 +96,7 @@ const Monthly = () => {
         </p>
         <div className=" flex items-baseline gap-4">
           <div className=" flex justify-start items-baseline gap-2">
-            <select
+            {/* <select
               name="sort"
               value={sortValue}
               onChange={(e) => setSortValue(e.target.value)}
@@ -114,7 +114,7 @@ const Monthly = () => {
               <option value="copy" className="recent-dropdown">
                 Copy
               </option>
-            </select>
+            </select> */}
           </div>
 
           <div className=" flex justify-start items-baseline gap-2">

@@ -96,7 +96,7 @@ const Custom = () => {
           Sale Overview
         </p>
         <div className=" flex items-baseline gap-4">
-          <select
+          {/* <select
             placeholder="Export"
             name="sort"
             value={sortValue}
@@ -115,7 +115,7 @@ const Custom = () => {
             <option value="copy" className="recent-dropdown">
               Copy
             </option>
-          </select>
+          </select> */}
           <div className=" flex justify-start items-baseline gap-2">
             <DateInput
               valueFormat="YYYY-MM-DD"
@@ -249,7 +249,7 @@ const Custom = () => {
         {/* total calculate end*/}
 
         {/* pagination start*/}
-        <div>
+        <div className=" ms-auto">
           <Button.Group className=" pt-10 flex justify-end">
             <Button
               onClick={prev}

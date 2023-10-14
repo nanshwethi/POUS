@@ -59,7 +59,7 @@ const TodaySaleOverview = () => {
         <p className="breadcrumb-title	">Today Sale Overview</p>
 
         <div className=" flex items-baseline gap-4">
-          <select
+          {/* <select
             name="sort"
             value={sortValue}
             onChange={(e) => setSortValue(e.target.value)}
@@ -77,7 +77,7 @@ const TodaySaleOverview = () => {
             <option value="copy" className="recent-dropdown">
               Copy
             </option>
-          </select>
+          </select> */}
 
           <button
             onClick={() => setShowModal(true)}
