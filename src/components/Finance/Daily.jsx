@@ -63,7 +63,7 @@ const Daily = () => {
           {dateTag ? dateTag : "Today"} Sale Overview
         </p>
         <div className=" flex items-baseline gap-4">
-          <select
+          {/* <select
             placeholder="Export"
             name="sort"
             // value={sortValue}
@@ -82,7 +82,7 @@ const Daily = () => {
             <option value="copy" className="recent-dropdown">
               Copy
             </option>
-          </select>
+          </select> */}
 
           <div>
             <DateInput

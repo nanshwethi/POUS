@@ -1,12 +1,13 @@
 import { useContextCustom } from "../context/stateContext";
-import { Link } from "react-router-dom";
 import { FiFolderPlus } from "react-icons/fi";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ModalSaleClose = () => {
   const { liHandler, setShowModal, setCloseDate } = useContextCustom();
   const token = Cookies.get("token");
+const nav=useNavigate()
 
   const fetchData = async () => {
     const data = await axios({
@@ -21,6 +22,7 @@ const ModalSaleClose = () => {
     setShowModal(false);
     liHandler("daily");
     console.log("data", data);
+    nav("/finance-daily")
     // console.log("closeSale", closeSale);
   };
 
@@ -41,14 +43,12 @@ const ModalSaleClose = () => {
         >
           Cancel
         </button>
-        <Link to={"/finance-daily"}>
           <button
             onClick={fetchData}
             className="w-[150px] h-[40px] font-medium text-[14px] bg-[var(--secondary-color)] text-[var(--base-color)] border-[1px] border-[var(--border-color)] rounded-[5px]"
           >
             Sale Close
           </button>
-        </Link>
       </div>
     </div>
   );

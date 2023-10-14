@@ -48,14 +48,7 @@ const SalePieChart = ({ bdata }) => {
           );
         })}
 
-        {/* <span className=" w-3 h-3 rounded-full bg-[#8AB4F8]"></span>
-        <span className=" text-[var(--gray-color)]">Melo</span>
-        <span className=" w-3 h-3 rounded-full bg-[#6a88b8]"></span>
-        <span className=" text-[var(--gray-color)]">City</span>
-        <span className=" w-3 h-3 rounded-full bg-[#404d64]"></span>
-        <span className=" text-[var(--gray-color)]">Pro</span>
-        <span className=" w-3 h-3 rounded-full bg-[#e8eaed]"></span>
-        <span className=" text-[var(--gray-color)]">Dutch</span> */}
+       
       </div>
     </div>
   );
