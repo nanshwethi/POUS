@@ -1,7 +1,6 @@
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,13 +10,13 @@ import {
 } from "recharts";
 import PropTypes from "prop-types";
 
-const SaleTinyBarChart = ({ wdata,tag }) => {
+const SaleTinyBarChart = ({ wdata, tag }) => {
   SaleTinyBarChart.propTypes = {
     wdata: PropTypes.array,
-    tag:PropTypes.string
+    tag: PropTypes.string,
   };
   const data = wdata;
-  // console.log("wdata", wdata);
+  //console.log("wdata", wdata);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -33,20 +32,24 @@ const SaleTinyBarChart = ({ wdata,tag }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        {tag==="weekely"?
-        <>
-        <XAxis dataKey="dayName"/>
-        <YAxis dataKey="total" /></>:''}
+        {tag === "weekly" || tag === "yearly" ? (
+          <>
+            <XAxis dataKey="sale_date" />
+            <YAxis dataKey="total" />
+          </>
+        ) : (
+          ""
+        )}
 
-        {tag==="monthly"?
-        <>
-        <XAxis dataKey="month"/>
-        <YAxis dataKey="total" /></>:''}
+        {tag === "monthly" ? (
+          <>
+            <XAxis />
+            <YAxis dataKey="total" />
+          </>
+        ) : (
+          ""
+        )}
 
-        {tag==="yearly"?
-        <>
-        <XAxis dataKey="year"/>
-        <YAxis dataKey="total" /></>:''}
         <Tooltip />
         <Legend />
         <Bar dataKey="total" fill="#8AB4F8" />

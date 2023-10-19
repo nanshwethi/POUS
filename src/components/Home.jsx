@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useGetPhotoQuery } from "../redux/api/mediaApi";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addPhotos } from "../redux/services/mediaSlice";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsShop } from "react-icons/bs";
@@ -17,17 +17,19 @@ import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import TodaySaleOverview from "./TodaySaleOverview";
 import { useGetOverviewQuery } from "../redux/api/overviewApi";
-import { addOverview } from "../redux/services/overviewSlice";
+import { addORecords, addOverview } from "../redux/services/overviewSlice";
 
 const Home = () => {
+  const [show, setShow] = useState("month");
   const { liHandler } = useContextCustom();
   const token = Cookies.get("token");
-  const {data:overviewData}=useGetOverviewQuery(token);
-  const {data} = useGetPhotoQuery(token);
-  const oData = useSelector((state)=> state?.overviewSlice.oData);
+  const { data: overviewData, refetch } = useGetOverviewQuery({ token, show });
+  const { data } = useGetPhotoQuery(token);
+  const oData = useSelector((state) => state?.overviewSlice.oData);
+  const oRecords = useSelector((state) => state?.overviewSlice.oRecords);
 
-  console.log('photos',data)
-  console.log('overviewData',overviewData)
+  // console.log("photos", data);
+  // console.log("overviewData", overviewData);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,8 +37,13 @@ const Home = () => {
   }, [data]);
 
   useEffect(() => {
+    refetch();
+  }, [show]);
+
+  useEffect(() => {
     dispatch(addOverview({ oData: overviewData }));
-    console.log('oData',oData)
+    dispatch(addORecords( overviewData?.total_sales));
+    console.log("{oRecords?.total_sales", oRecords);
   }, [overviewData]);
 
   return (
@@ -64,7 +71,7 @@ const Home = () => {
             </div>
             <div>
               <p className=" font-semibold text-[26px] text-[var(--secondary-color)] mb-3">
-                {oData?.total_stocks} k
+                {oData?.totalStock} k
               </p>
               <p className=" font-medium text-[14px] text-[var(--secondary-color)]">
                 Total Stocks
@@ -82,7 +89,7 @@ const Home = () => {
             </div>
             <div>
               <p className=" font-semibold text-[26px] text-[var(--secondary-color)] mb-3">
-              {oData?.total_staff}
+                {oData?.totalStaff}
               </p>
               <p className=" font-medium text-[14px] text-[var(--secondary-color)]">
                 Total Staffs
@@ -112,7 +119,7 @@ const Home = () => {
                     stock update
                   </p>
                 </div>
-              </div>{" "}
+              </div>
             </Link>
             <Link to={"/cashier"}>
               <div className="basis-3/5 border-[1px] border-[var(--border-color)] flex items-center gap-5 p-5 rounded-[3px]">
@@ -141,28 +148,44 @@ const Home = () => {
       </section>
       {/* overview section end */}
       <section className=" flex items-stretch gap-5 p-5 border-[1px] border-[var(--border-color)]">
-        <div className=" basis-2/3 ">
+        <div className=" basis-9/12 ">
           {/* Breadcrumb start */}
           <div className="flex justify-between items-center  mb-10 rounded-[3px]">
-            <p className="breadcrumb-title w-fit">Monthly Sales</p>
+            <p className="breadcrumb-title w-fit">{show.toUpperCase()} Sales</p>
 
             {/* btn group start */}
-            <Button.Group className="w-[50%] border-[--border-color] flex justify-end basis-1/3">
+
+            <Button.Group className=" border-[--border-color] flex justify-end basis-1/3">
               <Button
+                onClick={() => setShow("year")}
                 variant="default"
-                className=" text-[var(--font-color)] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
+                className={`${
+                  show === "year"
+                    ? " text-[--font-color]"
+                    : " text-[--secondary-color]"
+                } hover:text-[--font-color] hover:bg-transparent rounded-[5px]`}
               >
                 Year
               </Button>
               <Button
+                onClick={() => setShow("month")}
                 variant="default"
-                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
+                className={`${
+                  show === "month"
+                    ? " text-[--font-color]"
+                    : " text-[--secondary-color]"
+                } hover:text-[--font-color] hover:bg-transparent rounded-[5px]`}
               >
                 Month
               </Button>
               <Button
+                onClick={() => setShow("week")}
                 variant="default"
-                className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]"
+                className={`${
+                  show === "week"
+                    ? " text-[--font-color]"
+                    : " text-[--secondary-color]"
+                }  text-[--font-color] hover:text-[--font-color] hover:bg-transparent rounded-[5px]`}
               >
                 week
               </Button>
@@ -170,12 +193,11 @@ const Home = () => {
             {/* btn group end */}
           </div>
           {/* Breadcrumgbend */}
-
-          <SaleLineChart oData={oData}/>
+          <SaleLineChart show={show}/>
         </div>
-        <div className=" basis-1/3 px-5">
+        <div className=" basis-3/12 px-5">
           <p className=" text-[24px] text-[var(--secondary-color)] mb-3">
-            982.85 k
+            {oData?.total ? Math.round(oData?.total) : ""}{" "}
           </p>
           <p className=" text-[14px] text-[var(--gray-color)] mb-5">kyats</p>
           <div className="flex items-center gap-5 mb-4">
@@ -185,10 +207,10 @@ const Home = () => {
             />
             <div>
               <p className="font-normal text-[16px] text-[var(--secondary-color)]">
-                45,675,20{" "}
+                {oData?.total_profit ? Math.round(oData?.total_profit) : ""}{" "}
               </p>
               <p className="font-normal text-[12px] text-[var(--gray-color)]">
-                Total Profit{" "}
+                Total Profit
               </p>
             </div>
           </div>
@@ -199,10 +221,10 @@ const Home = () => {
             />
             <div>
               <p className="font-normal text-[16px] text-[var(--secondary-color)]">
-                42,456,20{" "}
+                {oData?.total_income ? Math.round(oData?.total_income) : ""}{" "}
               </p>
               <p className="font-normal text-[12px] text-[var(--gray-color)]">
-                Total Income{" "}
+                Total Income
               </p>
             </div>
           </div>
@@ -214,13 +236,14 @@ const Home = () => {
             />
             <div>
               <p className="font-normal text-[16px] text-[var(--secondary-color)]">
-                5,675,20
+                {oData?.total_expense ? Math.round(oData?.total_expense) : ""}{" "}
               </p>
               <p className="font-normal text-[12px] text-[var(--gray-color)]">
                 Total Expense
               </p>
             </div>
           </div>
+
           <Link to={"/report-sale"}>
             <button
               onClick={() => liHandler("sale")}
@@ -231,7 +254,7 @@ const Home = () => {
           </Link>
         </div>
       </section>
-      <TodaySaleOverview/>
+      <TodaySaleOverview />
     </div>
   );
 };

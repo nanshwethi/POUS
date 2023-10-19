@@ -17,23 +17,25 @@ const Daily = () => {
   const [dRecords, setDRecords] = useState(null);
   const [date, setDate] = useState(null);
   const [dateTag, setDateTag] = useState(null);
+  // const [exportValue, setExportValue] = useState();
 
   useEffect(() => {
-    const a = date?.toISOString().slice(0, 10);
+    const a = date?.toLocaleDateString("es-CL");
+    //console.log('date',date.toLocaleDateString("es-CL"))
     setDateTag(a);
   }, [date]);
 
   const fetchData = async () => {
-    const data = await axios({
+    const {data} = await axios({
       method: "get",
       url: `https://h.mmsdev.site/api/v1/daily_sale_records?date=${dateTag}&page=${page}`,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance-daily",
     });
-    const dData = await JSON.parse(data?.data);
+    const dData = await JSON.parse(data);
     setDRecords(dData);
     setDate(null);
-    // console.log("data", data);
+    //console.log("data", data);
     console.log("dd", dData);
   };
 
@@ -66,27 +68,27 @@ const Daily = () => {
           {/* <select
             placeholder="Export"
             name="sort"
-            // value={sortValue}
-            // onChange={(e) => setSortValue(e.target.value)}
+            value={exportValue}
+            onChange={(e) => setExportValue(e.target.value)}
             className="recent-dropdown "
           >
             <option value="" className="recent-dropdown hidden">
               Export
             </option>
-            <option value="last" className="recent-dropdown">
+            <option value="PDF" className="recent-dropdown">
               PDF
             </option>
-            <option value="first" className="recent-dropdown">
+            <option value="print" className="recent-dropdown">
               Print
             </option>
-            <option value="copy" className="recent-dropdown">
-              Copy
+            <option value="Excel" className="recent-dropdown">
+              Excel
             </option>
           </select> */}
 
           <div>
             <DateInput
-              valueFormat="YYYY-MM-DD"
+              valueFormat="DD-MM-YYYY"
               label="choose Date"
               placeholder="Date"
               value={date}
@@ -140,15 +142,19 @@ const Daily = () => {
               </td>
             </tr>
           ) : (
-            <tr>
-              <td className="px-1 text-center  py-4">{1}</td>
-              <td className="px-1 text-end py-4">{dRecords?.voucher}</td>
-              <td className="px-1 text-end py-4">{dRecords?.cash}</td>
-              <td className="px-1 py-4 text-end">{dRecords?.tax}</td>
-              <td className="px-1 py-4 text-end">{dRecords?.total}</td>
-              <td className="px-1 py-4 text-end">{dateTag}</td>
-              <td className=" px-1 py-4 text-end">{dRecords?.time}</td>
-            </tr>
+            dRecords?.data?.map((dRecord, index) => {
+              return (
+                <tr key={dRecord?.id}>
+                  <td className="px-1 text-center  py-4">{index+1}</td>
+                  <td className="px-1 text-end py-4">{dRecord?.voucher_number}</td>
+                  <td className="px-1 text-end py-4">{dRecord?.cash}</td>
+                  <td className="px-1 py-4 text-end">{dRecord?.tax}</td>
+                  <td className="px-1 py-4 text-end">{dRecord?.total}</td>
+                  <td className="px-1 py-4 text-end">{dRecord?.created_at}</td>
+                  <td className=" px-1 py-4 text-end">{dRecord?.time}</td>
+                </tr>
+              );
+            })
           )}
         </tbody>
       </table>
@@ -164,7 +170,7 @@ const Daily = () => {
               Total Voucher
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {dRecords?.total_vouchers == 0 ? 0 : dRecords?.total_vouchers}
+              {dRecords?.data? dRecords.data.length: ''}
             </p>
           </div>
 
@@ -175,7 +181,7 @@ const Daily = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {dRecords?.total_cash}
+              {dRecords?.total?.total_cash}
             </p>
           </div>
           <div
@@ -185,7 +191,7 @@ const Daily = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {dRecords?.total_tax}
+              {dRecords?.total?.total_tax}
             </p>
           </div>
           <div
@@ -195,43 +201,48 @@ const Daily = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {dRecords?.total}
+              {dRecords?.total?.total}
             </p>
           </div>
         </div>
         {/* total calculate end*/}
 
         {/* pagination start*/}
-      <div>
-        <Button.Group className=" pt-10 flex justify-end">
-          <Button
-            onClick={() => setPage(page>1?page - 1:page)}
-            variant="default"
-            className={`
+        <div>
+          <Button.Group className=" pt-10 flex justify-end">
+            <Button
+              onClick={() => setPage(page > 1 ? page - 1 : page)}
+              variant="default"
+              className={`
                  text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-          >
-            <MdArrowBackIosNew />
-          </Button>
-          <Button
-            variant="default"
-            className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-          >
-             page {dRecords?.daily_sale_records?.current_page} / {dRecords?.daily_sale_records?.last_page}
-          </Button>
+            >
+              <MdArrowBackIosNew />
+            </Button>
+            <Button
+              variant="default"
+              className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              page {dRecords?.meta?.current_page} /{" "}
+              {dRecords?.meta?.last_page}
+            </Button>
 
-          <Button
-            onClick={() =>
-              setPage(page < dRecords?.daily_sale_records?.last_page? page + 1 : page)
-            }
-            variant="default"
-            className={`
+            <Button
+              onClick={() =>
+                setPage(
+                  page < dRecords?.daily_sale_records?.last_page
+                    ? page + 1
+                    : page
+                )
+              }
+              variant="default"
+              className={`
                  text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-          >
-            <MdArrowForwardIos />
-          </Button>
-        </Button.Group>
-      </div>
-      {/* pagination end*/}
+            >
+              <MdArrowForwardIos />
+            </Button>
+          </Button.Group>
+        </div>
+        {/* pagination end*/}
       </div>
     </div>
   );
