@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
-import { Button } from "@mantine/core";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useEffect } from "react";
@@ -12,13 +9,11 @@ import { useEffect } from "react";
 const Yearly = () => {
   const token = Cookies.get("token");
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
   const [year, setYear] = useState(null);
   const [allYear, setAllYear] = useState();
-  // const [year, setYear] = useState(new Date().getFullYear());
   const [yRecords, setYRecords] = useState();
   const [yearTag, setYearTag] = useState(null);
-
+  
   useEffect(() => {
     fetchYearData();
   }, []);
@@ -32,7 +27,7 @@ const Yearly = () => {
     });
     const ydata = JSON.parse(data);
     setYRecords(ydata);
-    setYearTag(ydata.yearly_sale_overviews[0].year);
+    setYearTag(year);
   };
 
   const fetchYearData = async () => {
@@ -46,29 +41,7 @@ const Yearly = () => {
     setAllYear(ydata);
   };
 
-  const pageChange = async(link) => {
-    const { data } = await axios({
-      method: "get",
-      url: link,
-      headers: { authorization: `Bearer ${token}` },
-      responseType: "finance",
-    });
-    // const dd=await data.json();
-    const ydata = JSON.parse(data);
-    setYRecords(ydata);
-    setYearTag(ydata.yearly_sale_overviews[0].year);
-  };
-
-  const next=()=>{
-    if(yRecords?.next_page_url){
-      pageChange(yRecords?.next_page_url)
-    }
-  }
-  const prev=()=>{
-    if(yRecords?.prev_page_url){
-      pageChange(yRecords?.prev_page_url)
-    }
-  }
+  console.log('ydata',yRecords)
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -96,27 +69,7 @@ const Yearly = () => {
           {yearTag ? yearTag : "Yearly"} Sale Overview
         </p>
         <div className=" flex items-baseline gap-4">
-          <div className=" flex justify-start items-baseline gap-2">
-            {/* <select
-              name="sort"
-              value={sortValue}
-              onChange={(e) => setSortValue(e.target.value)}
-              className="recent-dropdown "
-            >
-              <option value="" className="recent-dropdown hidden">
-                Export
-              </option>
-              <option value="last" className="recent-dropdown">
-                PDF
-              </option>
-              <option value="first" className="recent-dropdown">
-                Print
-              </option>
-              <option value="copy" className="recent-dropdown">
-                Copy
-              </option>
-            </select> */}
-          </div>
+        
           <div className=" flex justify-start items-baseline gap-2">
             <select
               name="sort"
@@ -139,15 +92,17 @@ const Yearly = () => {
           </div>
 
           <button
-            onClick={()=>fetchData(year)}
+            onClick={() => fetchData(year)}
             className="w-[40px] h-[30px] font-semibold text-[16px] myBlueBtn flex justify-center items-center"
           >
             <BsSearch className=" text-[var(--sidebar-color)]" />
           </button>
         </div>
       </div>
-      {/* showList start */}
-      <table className="w-full text-gray-300 border border-gray-700 text-sm mb-20">
+
+      <table
+        className="pdf_container w-full text-gray-300 border border-gray-700 text-sm mb-20 daily-table"
+      >
         <thead>
           <tr className="">
             <th className=" py-4 border-b text-center border-gray-600 px-1 uppercase font-medium">
@@ -175,13 +130,13 @@ const Yearly = () => {
         </thead>
 
         <tbody>
-          {yRecords?.yearly_sale_overviews?.data.length > 0 ? (
-            yRecords?.yearly_sale_overviews?.data?.map((record, index) => {
+          {yRecords?.data?.length > 0 ? (
+            yRecords?.data?.map((record, index) => {
               return (
                 <tr key={record?.id} className=" ">
                   <td className="px-1 text-center  py-4">{index + 1}</td>
                   <td className="px-1 text-end py-4">
-                    {record?.total_vouchers}
+                    {record?.vouchers}
                   </td>
                   <td className="px-1 text-end py-4">{record?.total_cash}</td>
                   <td className="px-1 py-4 text-end">{record?.total_tax}</td>
@@ -199,6 +154,7 @@ const Yearly = () => {
             </tr>
           )}
         </tbody>
+      
       </table>
       {/* showList end */}
 
@@ -212,7 +168,7 @@ const Yearly = () => {
               Total Months
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_month}
+              {yRecords?.data?.length}
             </p>
           </div>
           <div
@@ -222,7 +178,7 @@ const Yearly = () => {
               Total Voucher
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_vouchers}
+              {yRecords?.total?.total_voucher}
             </p>
           </div>
 
@@ -233,7 +189,7 @@ const Yearly = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_cash}
+              {yRecords?.total?.total_cash}
             </p>
           </div>
           <div
@@ -243,7 +199,9 @@ const Yearly = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_tax}
+              {yRecords?.total?.total_tax
+                ? Math.round(yRecords?.total?.total_tax)
+                : null}
             </p>
           </div>
           <div
@@ -253,42 +211,12 @@ const Yearly = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total}
+              {yRecords?.total?Math.round(yRecords?.total?.total):""}
             </p>
           </div>
         </div>
         {/* total calculate end*/}
 
-        {/* pagination start*/}
-        <div>
-          <Button.Group className=" pt-10 flex justify-end">
-            <Button
-              onClick={prev}
-              variant="default"
-              className={`
-                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-            >
-              <MdArrowBackIosNew />
-            </Button>
-            <Button
-              variant="default"
-              className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-            >
-              page {yRecords?.yearly_sale_overviews?.current_page} / {yRecords?.yearly_sale_overviews?.last_page}
-            </Button>
-
-            <Button
-              onClick={next
-            }
-              variant="default"
-              className={`
-                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
-            >
-              <MdArrowForwardIos />
-            </Button>
-          </Button.Group>
-        </div>
-        {/* pagination end*/}
       </div>
     </div>
   );

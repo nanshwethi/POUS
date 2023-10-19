@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Monthly = () => {
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
+  // const [sortValue, setSortValue] = useState();
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
   const [monthContainer, setMonthContainer] = useState([
@@ -30,43 +30,61 @@ const Monthly = () => {
   const token = Cookies.get("token");
   const [monthTag, setMonthTag] = useState(null);
   const [mRecords, setMRecords] = useState(null);
+  const [allYear, setAllYear] = useState();
+  // const [exportValue, setExportValue] = useState();
+
+  useEffect(() => {
+    fetchYearData();
+  }, []);
+
+  const fetchYearData = async () => {
+    const { data } = await axios({
+      method: "get",
+      url: `https://h.mmsdev.site/api/v1/year`,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "getYear",
+    });
+    const ydata = JSON.parse(data);
+    setAllYear(ydata);
+  };
 
   const fetchData = async () => {
-    const { data } = await axios({
+    const {data} = await axios({
       method: "get",
       url: `https://h.mmsdev.site/api/v1/monthly_sale_record?month=${month}&year=${year}&page=1`,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance",
     });
     const mdata = JSON.parse(data);
-    setMRecords(mdata?.data);
-    setMonthTag(mdata?.data.monthly_sale_overview[0]?.date);
-    // console.log("data", data);
+    console.log("mdata", mdata);
+    setMRecords(mdata);
+    setMonthTag(monthContainer[month-1]);
     // console.log("monthTag", monthTag.slice(3, monthTag.length));
   };
 
-  const pageChange = async(link) => {
-    const { data } = await axios({
+  const pageChange = async (link) => {
+    const {data} = await axios({
       method: "get",
       url: link,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance",
     });
     const mdata = JSON.parse(data);
-    setMRecords(mdata?.data);
+    // console.log('mdata')
+    setMRecords(mdata);
     // setMonthTag(mdata?.data.monthly_sale_overview[0]?.date);
   };
 
-  const next=()=>{
-    if(mRecords?.next_page_url){
-      pageChange(mRecords?.next_page_url)
+  const next = () => {
+    if (mRecords?.links?.next) {
+      pageChange(mRecords?.links?.next);
     }
-  }
-  const prev=()=>{
-    if(mRecords?.prev_page_url){
-      pageChange(mRecords?.prev_page_url)
+  };
+  const prev = () => {
+    if (mRecords?.links?.prev) {
+      pageChange(mRecords?.links?.prev);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -91,29 +109,29 @@ const Monthly = () => {
 
       <div className=" flex justify-between items-center py-5">
         <p className="breadcrumb-title	">
-          {monthTag ? monthTag.slice(3, monthTag.length) : "Monthly"} Sale
+          {monthTag ? monthTag : "Monthly"} Sale
           Overview
         </p>
         <div className=" flex items-baseline gap-4">
           <div className=" flex justify-start items-baseline gap-2">
             {/* <select
               name="sort"
-              value={sortValue}
-              onChange={(e) => setSortValue(e.target.value)}
+              value={exportValue}
+            onChange={(e) => setExportValue(e.target.value)}
               className="recent-dropdown "
             >
               <option value="" className="recent-dropdown hidden">
-                Export
-              </option>
-              <option value="last" className="recent-dropdown">
-                PDF
-              </option>
-              <option value="first" className="recent-dropdown">
-                Print
-              </option>
-              <option value="copy" className="recent-dropdown">
-                Copy
-              </option>
+              Export
+            </option>
+            <option value="PDF" className="recent-dropdown">
+              PDF
+            </option>
+            <option value="print" className="recent-dropdown">
+              Print
+            </option>
+            <option value="Excel" className="recent-dropdown">
+              Excel
+            </option>
             </select> */}
           </div>
 
@@ -137,26 +155,23 @@ const Monthly = () => {
                 </option>
               ))}
             </select>
-            {/* </div>
-            <div className=" flex justify-start items-baseline gap-2"> */}
             <select
               name="sort"
               value={year}
               onChange={(e) => setYear(e.target.value)}
               className="recent-dropdown "
             >
-              <option value="" className="recent-dropdown hidden">
+              <option value="null" className="recent-dropdown hidden">
                 Year
               </option>
-              {/* <option value={2021} className="recent-dropdown">
-                2021
-              </option>
-              <option value={2022} className="recent-dropdown">
-                2022
-              </option> */}
-              <option value={2023} className="recent-dropdown">
-                2023
-              </option>
+
+              {allYear?.map((y) => {
+                return (
+                  <option key={y} value={y} className="recent-dropdown">
+                    {y}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
@@ -193,8 +208,8 @@ const Monthly = () => {
           </tr>
         </thead>
         <tbody>
-          {mRecords?.monthly_sale_overview.length > 0 ? (
-            mRecords?.monthly_sale_overview.map((record, index) => {
+          {mRecords?.data?.length > 0 ? (
+            mRecords?.data.map((record, index) => {
               return (
                 <tr key={record?.id} className=" ">
                   <td className="px-1 text-center  py-4">{index + 1}</td>
@@ -227,7 +242,7 @@ const Monthly = () => {
               Total Days
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_days}
+              {mRecords?.data.length}
             </p>
           </div>
           <div
@@ -237,7 +252,7 @@ const Monthly = () => {
               Total Vouchers
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_vouchers}
+              {mRecords?.total?.total_voucher}
             </p>
           </div>
 
@@ -248,7 +263,7 @@ const Monthly = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_cash}
+              {mRecords?.total?Math.round(mRecords?.total?.total_cash):''}
             </p>
           </div>
           <div
@@ -258,7 +273,7 @@ const Monthly = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_tax}
+              {mRecords?.total?Math.round(mRecords?.total?.total_tax):null}
             </p>
           </div>
           <div
@@ -268,7 +283,7 @@ const Monthly = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total}
+              {mRecords?.total?Math.round(mRecords?.total?.total):null}
             </p>
           </div>
         </div>
@@ -289,12 +304,11 @@ const Monthly = () => {
               variant="default"
               className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
             >
-              page {mRecords?.current_page} / {mRecords?.last_page}
+              page {mRecords?.meta?.current_page} / {mRecords?.meta?.last_page}
             </Button>
 
             <Button
-              onClick={next
-            }
+              onClick={next}
               variant="default"
               className={`
                  text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}

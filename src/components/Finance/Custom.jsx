@@ -12,32 +12,30 @@ import Cookies from "js-cookie";
 const Custom = () => {
   const token = Cookies.get("token");
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
   const [startDate, setStartDate] = useState();
   const [startDateTag, setStartDateTag] = useState(null);
   const [endDateTag, setEndDateTag] = useState(null);
   const [endDate, setEndDate] = useState();
   const [cRecords, setCRecords] = useState();
-  const [cPage, setCPage] = useState();
+  // const [exportValue, setExportValue] = useState();
 
   useEffect(() => {
-    const a = startDate?.toISOString().slice(0, 10);
-    const b = endDate?.toISOString().slice(0, 10);
+    const a = startDate?.toLocaleDateString("es-CL");
+    const b = endDate?.toLocaleDateString("es-CL");
     setStartDateTag(a);
     setEndDateTag(b);
     //console.log("start", startDateTag, endDateTag);
   }, [startDate, endDate]);
 
   const fetchData = async () => {
-    const data = await axios({
+    const {data} = await axios({
       method: "get",
       url: `https://h.mmsdev.site/api/v1/custom_sale_records?start_date=${startDateTag}&end_date=${endDateTag}&page=1`,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance",
     });
-    const cdata = await JSON.parse(data?.data);
-    setCRecords(cdata?.data);
-    setCPage(cdata);
+    const cdata = await JSON.parse(data);
+    setCRecords(cdata);
     // setStartDate(null);
     // setEndDate(null);
     // console.log("data", cdata);
@@ -52,18 +50,17 @@ const Custom = () => {
       responseType: "finance",
     });
     const cdata = await JSON.parse(data);
-    setCRecords(cdata?.data);
-    setCPage(cdata);
+    setCRecords(cdata);
   };
 
   const next=()=>{
-    if(cPage?.links?.next){
-      pageChange(cPage?.links?.next)
+    if(cRecords?.links?.next){
+      pageChange(cRecords?.links?.next)
     }
   }
   const prev=()=>{
-    if(cPage?.links?.prev){
-      pageChange(cPage?.links?.prev)
+    if(cRecords?.links?.prev){
+      pageChange(cRecords?.links?.prev)
     }
   }
 
@@ -99,26 +96,26 @@ const Custom = () => {
           {/* <select
             placeholder="Export"
             name="sort"
-            value={sortValue}
-            onChange={(e) => setSortValue(e.target.value)}
+            value={exportValue}
+            onChange={(e) => setExportValue(e.target.value)}
             className="recent-dropdown "
           >
             <option value="" className="recent-dropdown hidden">
               Export
             </option>
-            <option value="last" className="recent-dropdown">
+            <option value="PDF" className="recent-dropdown">
               PDF
             </option>
-            <option value="first" className="recent-dropdown">
+            <option value="print" className="recent-dropdown">
               Print
             </option>
-            <option value="copy" className="recent-dropdown">
-              Copy
+            <option value="Excel" className="recent-dropdown">
+              Excel
             </option>
           </select> */}
           <div className=" flex justify-start items-baseline gap-2">
             <DateInput
-              valueFormat="YYYY-MM-DD"
+              valueFormat="DD-MM-YYYY"
               label="choose Date"
               placeholder="Date"
               value={startDate}
@@ -128,8 +125,8 @@ const Custom = () => {
               className="w-[120px] border-[var(--border-color)] text-[var(--secondary-color)] mx-0"
             />
             <DateInput
-              valueFormat="YYYY-MM-DD"
-              label="ch0ose Date"
+              valueFormat="DD-MM-YYYY"
+              label="choose Date"
               placeholder="Date"
               value={endDate}
               onChange={setEndDate}
@@ -175,16 +172,16 @@ const Custom = () => {
           </tr>
         </thead>
         <tbody>
-          {cRecords?.length > 0 ? (
-            cRecords?.map((record, index) => {
+          {cRecords?.data?.length > 0 ? (
+            cRecords?.data?.map((record, index) => {
               return (
                 <tr key={record?.id} className=" ">
                   <td className="px-1 text-center  py-4">{index + 1}</td>
-                  <td className="px-1 text-end py-4">{record?.voucher}</td>
+                  <td className="px-1 text-end py-4">{record?.voucher_number}</td>
                   <td className="px-1 text-end py-4">{record?.cash}</td>
                   <td className="px-1 py-4 text-end">{record?.tax}</td>
                   <td className="px-1 py-4 text-end">{record?.total}</td>
-                  <td className="px-1 py-4 text-end"></td>
+                  <td className="px-1 py-4 text-end">{record?.created_at}</td>
                   <td className=" px-1 py-4 text-end">{record?.time}</td>
               
                 </tr>
@@ -203,7 +200,7 @@ const Custom = () => {
 
       <div className="w-full flex justify-between items-end h-[60px] gap-5">
         {/* total calculate start*/}
-        {/* <div className=" flex justify-start items-center basis-2/3">
+        <div className=" flex justify-start items-center basis-2/3">
           <div
             className={`text-[var(--secondary-color)] btn-border-table-grid px-5 py-3 flex flex-col justify-end basis-1/4`}
           >
@@ -211,7 +208,7 @@ const Custom = () => {
               Total Voucher
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              20
+              {cRecords?.data?cRecords?.data.length:''}
             </p>
           </div>
 
@@ -222,7 +219,7 @@ const Custom = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              3,000,000
+            {cRecords?.total?cRecords?.total?.total_cash:''}
             </p>
           </div>
           <div
@@ -232,7 +229,7 @@ const Custom = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              100,000
+            {cRecords?.total?cRecords?.total?.total_tax:''}
             </p>
           </div>
           <div
@@ -242,14 +239,16 @@ const Custom = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              3,100,000
+            {cRecords?.total?cRecords?.total?.total:''}
             </p>
           </div>
-        </div> */}
+        </div>
         {/* total calculate end*/}
 
         {/* pagination start*/}
-        <div className=" ms-auto">
+        <div className="ms-auto"
+
+        >
           <Button.Group className=" pt-10 flex justify-end">
             <Button
               onClick={prev}
@@ -263,7 +262,7 @@ const Custom = () => {
               variant="default"
               className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
             >
-              page {cPage?.meta?.current_page} / {cPage?.meta?.last_page}
+              page {cRecords?.meta?.current_page} / {cRecords?.meta?.last_page}
             </Button>
 
             <Button

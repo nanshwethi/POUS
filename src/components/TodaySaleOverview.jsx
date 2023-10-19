@@ -12,7 +12,7 @@ import axios from "axios";
 const TodaySaleOverview = () => {
   const token = Cookies.get("token");
   const { showModal, setShowModal, sidebarActived } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
+  // const [sortValue, setSortValue] = useState();
   const [vouchers, setVouchers] = useState();
 
   useEffect(() => {
