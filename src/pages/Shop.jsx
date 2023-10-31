@@ -1,20 +1,3 @@
-
-import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
-import {BsSearch} from 'react-icons/bs'
-import {FiDelete} from 'react-icons/fi'
-import pro1 from '../img/pro1.jpg'
-import pro2 from '../img/pro2.jpg'
-import pro3 from '../img/pro3.jpg'
-import pro4 from '../img/pro4.jpg'
-import pro6 from '../img/pro6.jpg'
-import pro7 from '../img/pro7.jpg'
-import Cookies from 'js-cookie'
-import { selectProduct,setSelectedList,changeQty,clearList,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
-import { Link } from 'react-router-dom'
-import Loading from '../components/Loading'
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { BsSearch } from "react-icons/bs";
