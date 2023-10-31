@@ -6,27 +6,30 @@ import AddProductInfoPreview from "./AddProductInfoPreview";
 import Modal from "./Modal";
 import AddProductSelectImg from "./AddProductSelectImg";
 import { useContextCustom } from "../context/stateContext";
-import { useGetProductsQuery } from "../redux/api/productApi";
-import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { addProducts } from "../redux/services/productSlice";
 
 const AddProduct = () => {
-  const { showModal, current, liHandler } = useContextCustom();
-  const token = Cookies.get("token");
-  const { data } = useGetProductsQuery(token);
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.productSlice.products);
-  // console.log('ddd',data?.data);
-  // console.log("cu", current);
-  // console.log('products',products);
-
-  useEffect(() => {
-    dispatch(addProducts({ products: data?.data }));
-  }, [data]);
+  const { showModal, current, liHandler ,setProductName,setCurrent,
+    setPhoto,
+    setBrand,
+    setUnit,
+    setProductInfo,
+    setActualPrice,
+    setSalePrice,
+    setStock} = useContextCustom();
+  
+  useEffect(()=>{
+    setProductName()
+    setPhoto()
+    setBrand()
+    setUnit()
+    setProductInfo()
+    setActualPrice()
+    setSalePrice()
+    setStock()
+    setCurrent(1);
+  },[])
 
   return (
     <div className=" container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -36,7 +39,7 @@ const AddProduct = () => {
           <p className="breadcrumb-title	">Add Product</p>
           <p className=" text-[14px] text-white opacity-70  select-none">
             Inventory / Add Product
-          </p>{" "}
+          </p>
         </div>
         <Link to={"/product"}>
           <button

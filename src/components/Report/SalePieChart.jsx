@@ -1,15 +1,16 @@
 import { PieChart, Pie, Cell } from "recharts";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-const COLORS = ["#8AB4F8", "#6a88b8", "#404d64", "#e8eaed", "#2a58b8"];
+const COLORS = ["#8AB4F8", "#56CA00", "#aa4d64", "#e8eaed", "#6a88b8"];
 
 const SalePieChart = ({ bdata }) => {
   SalePieChart.propTypes = {
     bdata: PropTypes.object,
   };
   const data = bdata?.brandsInfo;
-  console.log("bdata", bdata?.brandsInfo);
-
+  const[colors,setColors]=useState(['bg-[#8AB4F8]', 'bg-[#56CA00]', 'bg-[#aa4d64]', 'bg-[#e8eaed]','bg-[#6a88b8]'])
+  
   return (
     <div>
       <div className="flex justify-center items-center ">
@@ -28,7 +29,7 @@ const SalePieChart = ({ bdata }) => {
             {data?.map((entry, index) => (
               <Cell
                 key={`cell-${entry?.brand_sales}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={COLORS[index]}
                 className="bg-blue-300"
               />
             ))}
@@ -40,7 +41,7 @@ const SalePieChart = ({ bdata }) => {
           return (
             <span key={index}>
               <span
-                className={`inline-block mr-2 w-3 h-3 rounded-full bg-[${COLORS[index]}] `}
+                className={`${colors[index]} inline-block mr-2 w-3 h-3 rounded-full`}
               >
               </span>
               <span className=" text-[var(--gray-color)]">{bdata?.name}</span>
@@ -48,14 +49,7 @@ const SalePieChart = ({ bdata }) => {
           );
         })}
 
-        {/* <span className=" w-3 h-3 rounded-full bg-[#8AB4F8]"></span>
-        <span className=" text-[var(--gray-color)]">Melo</span>
-        <span className=" w-3 h-3 rounded-full bg-[#6a88b8]"></span>
-        <span className=" text-[var(--gray-color)]">City</span>
-        <span className=" w-3 h-3 rounded-full bg-[#404d64]"></span>
-        <span className=" text-[var(--gray-color)]">Pro</span>
-        <span className=" w-3 h-3 rounded-full bg-[#e8eaed]"></span>
-        <span className=" text-[var(--gray-color)]">Dutch</span> */}
+       
       </div>
     </div>
   );

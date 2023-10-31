@@ -31,8 +31,9 @@ export const StateContextProvider = ({ children }) => {
     //   setCurrent(1);
     // }
   };
-  // for sidebar
 
+  const[saleClose,setSaleClose]=useState(false);
+  // for sidebar
   const [sidebarActived,setSidebarActived]=useState();
   const liHandler = (liname) => {
     setSidebarActived(liname);
@@ -42,7 +43,7 @@ export const StateContextProvider = ({ children }) => {
   const [closeDate, setCloseDate] = useState(false);
 
 
-  const data = {
+  const data = {saleClose,setSaleClose,
     productName,
     setProductName,
     brand,

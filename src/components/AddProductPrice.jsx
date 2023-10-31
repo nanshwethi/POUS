@@ -26,7 +26,6 @@ const AddProductPrice = () => {
               type="text"
               value={actualPrice}
               onChange={(e) => setActualPrice(e.target.value)}
-              placeholder=""
               className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />
           </div>
@@ -41,7 +40,6 @@ const AddProductPrice = () => {
               type="text"
               value={salePrice}
               onChange={(e) => setSalePrice(e.target.value)}
-              placeholder="100000"
               className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
             />
           </div>
@@ -50,7 +48,7 @@ const AddProductPrice = () => {
       <div className="w-[150px] h-[460px] flex flex-col justify-between items-center">
         <AddProductStepper />
         <button
-          onClick={nextStepperHandler}
+          onClick={()=>nextStepperHandler(4)}
           className="w-[110px] h-[40px] myBlueBtn font-medium text-[14px] flex justify-center items-center gap-2"
         >
           Next <BsArrowRightShort size={"1.5rem"} />

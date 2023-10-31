@@ -10,7 +10,7 @@ import { grey } from "@mui/material/colors";
 import Checkbox from "@mui/material/Checkbox";
 import { BiSquare } from "react-icons/bi";
 import { BiSolidSquare } from "react-icons/bi";
-import LoginImg from "/public/login.svg";
+import LoginImg from "/login.svg";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -85,7 +85,7 @@ const Login = () => {
               {...form.getInputProps("email")}
               withAsterisk
               placeholder="Enter your Email..."
-              className=" text-[var(--secondary-color)] bg-[var(--base-color)] border-2 rounded-[5px] border-[var(--border-color)]"
+              className="w-full text-[var(--secondary-color)] bg-[var(--base-color)] border-2 rounded-[5px] border-[var(--border-color)]"
             />
             <label htmlFor="" className=" text-[16px] text-white font-medium">
               Password
@@ -95,7 +95,7 @@ const Login = () => {
               {...form.getInputProps("password")}
               withAsterisk
               placeholder="Enter your Password..."
-              className=" text-[var(--secondary-color)] bg-[var(--base-color)] border-2 rounded-[5px] border-[var(--border-color)]"
+              className="w-full text-[var(--secondary-color)] bg-[var(--base-color)] border-2 rounded-[5px] border-[var(--border-color)]"
             />
             <div className=" flex gap-4 items-center">
               <div className=" flex justify-start items-center gap-2">

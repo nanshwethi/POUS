@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
@@ -6,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
-import { BsArrowRight } from "react-icons/bs";
 import { DateInput } from "@mantine/dates";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -14,38 +12,60 @@ import Cookies from "js-cookie";
 const Custom = () => {
   const token = Cookies.get("token");
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
   const [startDate, setStartDate] = useState();
   const [startDateTag, setStartDateTag] = useState(null);
   const [endDateTag, setEndDateTag] = useState(null);
   const [endDate, setEndDate] = useState();
   const [cRecords, setCRecords] = useState();
+  // const [exportValue, setExportValue] = useState();
 
   useEffect(() => {
-    const a = startDate?.toISOString().slice(0, 10);
-    const b = endDate?.toISOString().slice(0, 10);
+    const a = startDate?.toLocaleDateString("es-CL");
+    const b = endDate?.toLocaleDateString("es-CL");
     setStartDateTag(a);
     setEndDateTag(b);
-    console.log("start", startDateTag, endDateTag);
+    //console.log("start", startDateTag, endDateTag);
   }, [startDate, endDate]);
 
   const fetchData = async () => {
-    const data = await axios({
+    const {data} = await axios({
       method: "get",
-      url: `https://h.mmsdev.site/api/v1/custom_sale_records?start_date=${startDateTag}&end_date=${endDateTag}`,
+      url: `https://h.mmsdev.site/api/v1/custom_sale_records?start_date=${startDateTag}&end_date=${endDateTag}&page=1`,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance",
     });
-    const cData = await JSON.parse(data?.data);
-    setCRecords(cData?.data);
-    setStartDate(null);
-    setEndDate(null);
-    console.log("data", cData);
-    console.log("dd", cRecords);
+    const cdata = await JSON.parse(data);
+    setCRecords(cdata);
+    // setStartDate(null);
+    // setEndDate(null);
+    // console.log("data", cdata);
+    // console.log("dd", cRecords);
   };
 
+  const pageChange = async(link) => {
+    const { data } = await axios({
+      method: "get",
+      url: `${link}`,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "finance",
+    });
+    const cdata = await JSON.parse(data);
+    setCRecords(cdata);
+  };
+
+  const next=()=>{
+    if(cRecords?.links?.next){
+      pageChange(cRecords?.links?.next)
+    }
+  }
+  const prev=()=>{
+    if(cRecords?.links?.prev){
+      pageChange(cRecords?.links?.prev)
+    }
+  }
+
   return (
-    <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20 ">
+    <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
       {/* Breadcrumg start */}
       <div className=" flex justify-between items-center mb-10">
         <div>
@@ -73,29 +93,29 @@ const Custom = () => {
           Sale Overview
         </p>
         <div className=" flex items-baseline gap-4">
-          <select
+          {/* <select
             placeholder="Export"
             name="sort"
-            value={sortValue}
-            onChange={(e) => setSortValue(e.target.value)}
+            value={exportValue}
+            onChange={(e) => setExportValue(e.target.value)}
             className="recent-dropdown "
           >
             <option value="" className="recent-dropdown hidden">
               Export
             </option>
-            <option value="last" className="recent-dropdown">
+            <option value="PDF" className="recent-dropdown">
               PDF
             </option>
-            <option value="first" className="recent-dropdown">
+            <option value="print" className="recent-dropdown">
               Print
             </option>
-            <option value="copy" className="recent-dropdown">
-              Copy
+            <option value="Excel" className="recent-dropdown">
+              Excel
             </option>
-          </select>
+          </select> */}
           <div className=" flex justify-start items-baseline gap-2">
             <DateInput
-              valueFormat="YYYY-MM-DD"
+              valueFormat="DD-MM-YYYY"
               label="choose Date"
               placeholder="Date"
               value={startDate}
@@ -105,8 +125,8 @@ const Custom = () => {
               className="w-[120px] border-[var(--border-color)] text-[var(--secondary-color)] mx-0"
             />
             <DateInput
-              valueFormat="YYYY-MM-DD"
-              label="ch0ose Date"
+              valueFormat="DD-MM-YYYY"
+              label="choose Date"
               placeholder="Date"
               value={endDate}
               onChange={setEndDate}
@@ -149,38 +169,38 @@ const Custom = () => {
             <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
               TIME
             </th>
-            <th className=" "></th>
           </tr>
         </thead>
         <tbody>
-          {cRecords?.map((record, index) => {
-            return (
-              <tr key={record?.id} className=" ">
-                <td className="px-1 text-center  py-4">{index+1}</td>
-                <td className="px-1 text-end py-4">{record?.voucher}</td>
-                <td className="px-1 text-end py-4">{record?.cash}</td>
-                <td className="px-1 py-4 text-end">{record?.tax}</td>
-                <td className="px-1 py-4 text-end">{record?.total}</td>
-                <td className="px-1 py-4 text-end"></td>
-                <td className=" px-1 py-4 text-end">{record?.time}</td>
-                <td className=" pe-5 py-4 text-end">
-                  <span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
-                    <BsArrowRight
-                      size={"1rem"}
-                      className="text-[var(--secondary-color)]"
-                    />
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+          {cRecords?.data?.length > 0 ? (
+            cRecords?.data?.map((record, index) => {
+              return (
+                <tr key={record?.id} className=" ">
+                  <td className="px-1 text-center  py-4">{index + 1}</td>
+                  <td className="px-1 text-end py-4">{record?.voucher_number}</td>
+                  <td className="px-1 text-end py-4">{record?.cash}</td>
+                  <td className="px-1 py-4 text-end">{record?.tax}</td>
+                  <td className="px-1 py-4 text-end">{record?.total}</td>
+                  <td className="px-1 py-4 text-end">{record?.created_at}</td>
+                  <td className=" px-1 py-4 text-end">{record?.time}</td>
+              
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td className="px-1 text-center py-4 " colSpan={7}>
+                There is no data now.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       {/* showList end */}
 
       <div className="w-full flex justify-between items-end h-[60px] gap-5">
         {/* total calculate start*/}
-        {/* <div className=" flex justify-start items-center basis-2/3">
+        <div className=" flex justify-start items-center basis-2/3">
           <div
             className={`text-[var(--secondary-color)] btn-border-table-grid px-5 py-3 flex flex-col justify-end basis-1/4`}
           >
@@ -188,7 +208,7 @@ const Custom = () => {
               Total Voucher
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              20
+              {cRecords?.data?cRecords?.data.length:''}
             </p>
           </div>
 
@@ -199,7 +219,7 @@ const Custom = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              3,000,000
+            {cRecords?.total?cRecords?.total?.total_cash:''}
             </p>
           </div>
           <div
@@ -209,7 +229,7 @@ const Custom = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              100,000
+            {cRecords?.total?cRecords?.total?.total_tax:''}
             </p>
           </div>
           <div
@@ -219,46 +239,44 @@ const Custom = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              3,100,000
+            {cRecords?.total?cRecords?.total?.total:''}
             </p>
           </div>
-        </div> */}
+        </div>
         {/* total calculate end*/}
 
-        {/* pagination start */}
-        <Button.Group className=" border-[--border-color] flex justify-end basis-1/3">
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowBackIosNew />
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            1
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            2
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            3
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowForwardIos />
-          </Button>
-        </Button.Group>
-        {/* pagination end */}
+        {/* pagination start*/}
+        <div className="ms-auto"
+
+        >
+          <Button.Group className=" pt-10 flex justify-end">
+            <Button
+              onClick={prev}
+              variant="default"
+              className={`
+                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              <MdArrowBackIosNew />
+            </Button>
+            <Button
+              variant="default"
+              className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              page {cRecords?.meta?.current_page} / {cRecords?.meta?.last_page}
+            </Button>
+
+            <Button
+              onClick={next
+            }
+              variant="default"
+              className={`
+                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              <MdArrowForwardIos />
+            </Button>
+          </Button.Group>
+        </div>
+        {/* pagination end*/}
       </div>
     </div>
   );

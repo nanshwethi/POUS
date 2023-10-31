@@ -2,12 +2,11 @@ import { useContextCustom } from "../context/stateContext";
 import AddProductStepper from "./AddProductStepper";
 import { BsArrowRightShort } from "react-icons/bs";
 import Cookies from "js-cookie";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
-import { useGetBrandQuery } from "../redux/api/branApi";
+import { useEffect } from "react";
 import { addBrands } from "../redux/services/brandSlice";
-// import { addBrands } from "../redux/services/brandSlice";
+import { useState } from "react";
+import { useGetBrandQuery } from "../redux/api/branApi";
 
 const AddProductInfo = () => {
   const {
@@ -23,24 +22,21 @@ const AddProductInfo = () => {
     setStock,
     nextStepperHandler,
   } = useContextCustom();
+  const [page, setPage] = useState(1);
   const token = Cookies.get("token");
-  const [p,setP] = useState(1)
-  const forBrand = {token,p}
-  const {currentData} = useGetBrandQuery(forBrand)
+  const { data } = useGetBrandQuery({ token, p: 1 });
+
   const dispatch = useDispatch();
-  const content = useSelector((state)=> state.brandSlice.brands)
-  console.log("currentData", currentData);
-  console.log("content", content);
+  const brands = useSelector((state) => state.brandSlice.brands);
 
   useEffect(() => {
-    dispatch(addBrands({ brands: currentData?.data }));
-  }, [currentData]);
+    dispatch(addBrands({ brands: data?.data }));
+  }, [data]);
 
   const nextHandler = () => {
-    // const ppp=dispatch(addProduct)
-    nextStepperHandler();
+    nextStepperHandler(4);
   };
-
+  console.log("branddata", data);
   return (
     <div className=" ">
       <form
@@ -61,7 +57,7 @@ const AddProductInfo = () => {
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
               className="w-[380px] h-[50px] px-5 py-1 border-2 rounded-[5px] border-[var(--border-color)] bg-[var(--base-color)] text-[var(--secondary-color)]"
-            />{" "}
+            />
           </div>
           <div className=" flex justify-start items-start">
             <label
@@ -76,7 +72,8 @@ const AddProductInfo = () => {
               onChange={(e) => setBrand(e.target.value)}
               className="brand-dropdown brand-select "
             >
-              {content?.map((brand) => {
+              <option className="hidden">choose brand </option>
+              {brands?.map((brand) => {
                 return (
                   <option
                     key={brand?.id}
@@ -113,7 +110,7 @@ const AddProductInfo = () => {
             </label>
             <select
               name="unit"
-              value={unit}
+              value={unit ? unit : setUnit("single")}
               onChange={(e) => setUnit(e.target.value)}
               className="brand-dropdown "
             >

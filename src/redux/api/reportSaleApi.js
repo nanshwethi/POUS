@@ -22,9 +22,23 @@ export const reportSaleApi = createApi({
       }),
       providesTags: ["reportSale"],
     }),
-    getWeekelySaleReport: builder.query({
+    getWeeklySaleReport: builder.query({
       query: (token) => ({
         url: `/weekely-sale-report`,
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["reportSale"],
+    }),
+    getMonthlySaleReport: builder.query({
+      query: (token) => ({
+        url: `/monthly-sale-report?month`,
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags: ["reportSale"],
+    }),
+    getYearlySaleReport: builder.query({
+      query: (token) => ({
+        url: `/yearly-sale-report?year`,
         headers: { authorization: `Bearer ${token}` },
       }),
       providesTags: ["reportSale"],
@@ -39,4 +53,4 @@ export const reportSaleApi = createApi({
   }),
 });
 
-export const { useGetProductSaleReportQuery,useGetBrandSaleReportQuery,useGetWeekelySaleReportQuery,useGetTodaySaleReportQuery} = reportSaleApi;
+export const { useGetProductSaleReportQuery,useGetBrandSaleReportQuery,useGetWeeklySaleReportQuery,useGetMonthlySaleReportQuery,useGetYearlySaleReportQuery,useGetTodaySaleReportQuery} = reportSaleApi;

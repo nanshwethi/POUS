@@ -4,7 +4,6 @@ import TodaySaleOverview from "./TodaySaleOverview";
 
 const Recent = () => {
   return (
-    // <SaleCloseGuard>
       <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
         {/* Breadcrumg start */}
         <div className=" flex justify-between items-center ">
@@ -26,7 +25,6 @@ const Recent = () => {
         {/* Breadcrumg end */}
         <TodaySaleOverview />
       </div>
-    // </SaleCloseGuard>
   );
 };
 

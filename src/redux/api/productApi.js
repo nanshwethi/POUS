@@ -30,7 +30,7 @@ export const productApi = createApi({
 
     }),
 
-    addProduct: builder.mutation({
+    createProduct: builder.mutation({
       query: ({ product, token }) => ({
         url: `/product`,
         method: "POST",
@@ -66,4 +66,4 @@ export const productApi = createApi({
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery,useGetSingleProductQuery ,useUpdateProductMutation,useDeleteProductMutation} = productApi;
+export const { useCreateProductMutation, useGetProductsQuery,useGetSingleProductQuery ,useUpdateProductMutation,useDeleteProductMutation} = productApi;

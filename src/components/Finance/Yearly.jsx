@@ -1,35 +1,47 @@
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
-import {  useState } from "react";
-import { Button } from "@mantine/core";
-import { MdArrowBackIosNew } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
-import { BsArrowRight } from "react-icons/bs";
+import { useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useEffect } from "react";
 
 const Yearly = () => {
   const token = Cookies.get("token");
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
   const [year, setYear] = useState(null);
+  const [allYear, setAllYear] = useState();
   const [yRecords, setYRecords] = useState();
   const [yearTag, setYearTag] = useState(null);
+  
+  useEffect(() => {
+    fetchYearData();
+  }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (year) => {
     const { data } = await axios({
       method: "get",
-      url: `https://h.mmsdev.site/api/v1/yearly_sale_record?year=${year}`,
+      url: `https://h.mmsdev.site/api/v1/yearly_sale_record?year=${year}&page=1`,
       headers: { authorization: `Bearer ${token}` },
-      responseType: "finance",
+      responseType: "financeData",
     });
     const ydata = JSON.parse(data);
     setYRecords(ydata);
-    setYear(null);
-    setYearTag(ydata.yearly_sale_overviews[0].year);
-    console.log("dd", ydata);
+    setYearTag(year);
   };
+
+  const fetchYearData = async () => {
+    const { data } = await axios({
+      method: "get",
+      url: `https://h.mmsdev.site/api/v1/year`,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "getYear",
+    });
+    const ydata = JSON.parse(data);
+    setAllYear(ydata);
+  };
+
+  console.log('ydata',yRecords)
 
   return (
     <div className="container mx-auto py-4 px-5 bg-[--base-color] pb-20">
@@ -39,7 +51,7 @@ const Yearly = () => {
           <p className="breadcrumb-title	">Yearly</p>
           <p className=" text-[14px] text-white opacity-70  select-none">
             Finance / Yearly
-          </p>{" "}
+          </p>
         </div>
         <Link to={"/cashier"}>
           <button
@@ -57,27 +69,7 @@ const Yearly = () => {
           {yearTag ? yearTag : "Yearly"} Sale Overview
         </p>
         <div className=" flex items-baseline gap-4">
-          <div className=" flex justify-start items-baseline gap-2">
-            <select
-              name="sort"
-              value={sortValue}
-              onChange={(e) => setSortValue(e.target.value)}
-              className="recent-dropdown "
-            >
-              <option value="" className="recent-dropdown hidden">
-                Export
-              </option>
-              <option value="last" className="recent-dropdown">
-                PDF
-              </option>
-              <option value="first" className="recent-dropdown">
-                Print
-              </option>
-              <option value="copy" className="recent-dropdown">
-                Copy
-              </option>
-            </select>
-          </div>
+        
           <div className=" flex justify-start items-baseline gap-2">
             <select
               name="sort"
@@ -85,31 +77,32 @@ const Yearly = () => {
               onChange={(e) => setYear(e.target.value)}
               className="recent-dropdown "
             >
-              <option value="" className="recent-dropdown hidden">
+              <option value="null" className="recent-dropdown hidden">
                 Year
               </option>
-              <option value={2021} className="recent-dropdown">
-                2021
-              </option>
-              <option value={2022} className="recent-dropdown">
-                2022
-              </option>
-              <option value={2023} className="recent-dropdown">
-                2023
-              </option>
+
+              {allYear?.map((y) => {
+                return (
+                  <option key={y} value={y} className="recent-dropdown">
+                    {y}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
           <button
-            onClick={fetchData}
+            onClick={() => fetchData(year)}
             className="w-[40px] h-[30px] font-semibold text-[16px] myBlueBtn flex justify-center items-center"
           >
             <BsSearch className=" text-[var(--sidebar-color)]" />
           </button>
         </div>
       </div>
-      {/* showList start */}
-      <table className="w-full text-gray-300 border border-gray-700 text-sm mb-20">
+
+      <table
+        className="pdf_container w-full text-gray-300 border border-gray-700 text-sm mb-20 daily-table"
+      >
         <thead>
           <tr className="">
             <th className=" py-4 border-b text-center border-gray-600 px-1 uppercase font-medium">
@@ -133,33 +126,35 @@ const Yearly = () => {
             <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
               Year
             </th>
-            <th className=" "></th>
           </tr>
         </thead>
 
         <tbody>
-          {yRecords?.yearly_sale_overviews?.map((record, index) => {
-            return (
-              <tr key={record?.id} className=" ">
-                <td className="px-1 text-center  py-4">{index + 1}</td>
-                <td className="px-1 text-end py-4">{record?.total_vouchers}</td>
-                <td className="px-1 text-end py-4">{record?.total_cash}</td>
-                <td className="px-1 py-4 text-end">{record?.total_tax}</td>
-                <td className="px-1 py-4 text-end">{record?.total}</td>
-                <td className="px-1 py-4 text-end">{record?.month}</td>
-                <td className=" px-1 py-4 text-end">{record?.year}</td>
-                <td className=" pe-5 py-4 text-end">
-                  <span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
-                    <BsArrowRight
-                      size={"1rem"}
-                      className="text-[var(--secondary-color)]"
-                    />
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+          {yRecords?.data?.length > 0 ? (
+            yRecords?.data?.map((record, index) => {
+              return (
+                <tr key={record?.id} className=" ">
+                  <td className="px-1 text-center  py-4">{index + 1}</td>
+                  <td className="px-1 text-end py-4">
+                    {record?.vouchers}
+                  </td>
+                  <td className="px-1 text-end py-4">{record?.total_cash}</td>
+                  <td className="px-1 py-4 text-end">{record?.total_tax}</td>
+                  <td className="px-1 py-4 text-end">{record?.total}</td>
+                  <td className="px-1 py-4 text-end">{record?.month}</td>
+                  <td className=" px-1 py-4 text-end">{record?.year}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td className="px-1 text-center py-4 " colSpan={8}>
+                There is no data now.
+              </td>
+            </tr>
+          )}
         </tbody>
+      
       </table>
       {/* showList end */}
 
@@ -173,7 +168,7 @@ const Yearly = () => {
               Total Months
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_month}
+              {yRecords?.data?.length}
             </p>
           </div>
           <div
@@ -183,7 +178,7 @@ const Yearly = () => {
               Total Voucher
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_vouchers}
+              {yRecords?.total?.total_voucher}
             </p>
           </div>
 
@@ -194,7 +189,7 @@ const Yearly = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_cash}
+              {yRecords?.total?.total_cash}
             </p>
           </div>
           <div
@@ -204,7 +199,9 @@ const Yearly = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total_tax}
+              {yRecords?.total?.total_tax
+                ? Math.round(yRecords?.total?.total_tax)
+                : null}
             </p>
           </div>
           <div
@@ -214,46 +211,12 @@ const Yearly = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {yRecords?.yearly_total_sale_overview?.total}
+              {yRecords?.total?Math.round(yRecords?.total?.total):""}
             </p>
           </div>
         </div>
         {/* total calculate end*/}
 
-        {/* pagination start */}
-        <Button.Group className=" border-[--border-color] flex justify-end basis-1/3">
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowBackIosNew />
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            1
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            2
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            3
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowForwardIos />
-          </Button>
-        </Button.Group>
-        {/* pagination end */}
       </div>
     </div>
   );

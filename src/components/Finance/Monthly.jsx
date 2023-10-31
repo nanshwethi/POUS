@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import { useContextCustom } from "../../context/stateContext";
 import { BsSearch } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
-import { BsArrowRight } from "react-icons/bs";
 import Cookies from "js-cookie";
 import axios from "axios";
 
 const Monthly = () => {
   const { liHandler } = useContextCustom();
-  const [sortValue, setSortValue] = useState();
+  // const [sortValue, setSortValue] = useState();
   const [month, setMonth] = useState(null);
   const [year, setYear] = useState(null);
   const [monthContainer, setMonthContainer] = useState([
@@ -31,23 +30,60 @@ const Monthly = () => {
   const token = Cookies.get("token");
   const [monthTag, setMonthTag] = useState(null);
   const [mRecords, setMRecords] = useState(null);
+  const [allYear, setAllYear] = useState();
+  // const [exportValue, setExportValue] = useState();
 
-  const fetchData = async () => {
+  useEffect(() => {
+    fetchYearData();
+  }, []);
+
+  const fetchYearData = async () => {
     const { data } = await axios({
       method: "get",
-      url: `https://h.mmsdev.site/api/v1/monthly_sale_record?month=${month}&year=${year}`,
+      url: `https://h.mmsdev.site/api/v1/year`,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "getYear",
+    });
+    const ydata = JSON.parse(data);
+    setAllYear(ydata);
+  };
+
+  const fetchData = async () => {
+    const {data} = await axios({
+      method: "get",
+      url: `https://h.mmsdev.site/api/v1/monthly_sale_record?month=${month}&year=${year}&page=1`,
       headers: { authorization: `Bearer ${token}` },
       responseType: "finance",
     });
-    // const dd=await data.json();
     const mdata = JSON.parse(data);
-    setMRecords(mdata.data);
-    setMonth(null);
-    setYear(null);
-    setMonthTag(mdata.data.monthly_sale_overview[0].date);
     console.log("mdata", mdata);
-    console.log("data", data);
-    console.log("monthTag", monthTag.slice(3, monthTag.length));
+    setMRecords(mdata);
+    setMonthTag(monthContainer[month-1]);
+    // console.log("monthTag", monthTag.slice(3, monthTag.length));
+  };
+
+  const pageChange = async (link) => {
+    const {data} = await axios({
+      method: "get",
+      url: link,
+      headers: { authorization: `Bearer ${token}` },
+      responseType: "finance",
+    });
+    const mdata = JSON.parse(data);
+    // console.log('mdata')
+    setMRecords(mdata);
+    // setMonthTag(mdata?.data.monthly_sale_overview[0]?.date);
+  };
+
+  const next = () => {
+    if (mRecords?.links?.next) {
+      pageChange(mRecords?.links?.next);
+    }
+  };
+  const prev = () => {
+    if (mRecords?.links?.prev) {
+      pageChange(mRecords?.links?.prev);
+    }
   };
 
   return (
@@ -73,30 +109,30 @@ const Monthly = () => {
 
       <div className=" flex justify-between items-center py-5">
         <p className="breadcrumb-title	">
-          {monthTag ? monthTag.slice(3, monthTag.length) : "Monthly"} Sale
+          {monthTag ? monthTag : "Monthly"} Sale
           Overview
         </p>
         <div className=" flex items-baseline gap-4">
           <div className=" flex justify-start items-baseline gap-2">
-            <select
+            {/* <select
               name="sort"
-              value={sortValue}
-              onChange={(e) => setSortValue(e.target.value)}
+              value={exportValue}
+            onChange={(e) => setExportValue(e.target.value)}
               className="recent-dropdown "
             >
               <option value="" className="recent-dropdown hidden">
-                Export
-              </option>
-              <option value="last" className="recent-dropdown">
-                PDF
-              </option>
-              <option value="first" className="recent-dropdown">
-                Print
-              </option>
-              <option value="copy" className="recent-dropdown">
-                Copy
-              </option>
-            </select>
+              Export
+            </option>
+            <option value="PDF" className="recent-dropdown">
+              PDF
+            </option>
+            <option value="print" className="recent-dropdown">
+              Print
+            </option>
+            <option value="Excel" className="recent-dropdown">
+              Excel
+            </option>
+            </select> */}
           </div>
 
           <div className=" flex justify-start items-baseline gap-2">
@@ -119,26 +155,23 @@ const Monthly = () => {
                 </option>
               ))}
             </select>
-            {/* </div>
-            <div className=" flex justify-start items-baseline gap-2"> */}
             <select
               name="sort"
               value={year}
               onChange={(e) => setYear(e.target.value)}
               className="recent-dropdown "
             >
-              <option value="" className="recent-dropdown hidden">
+              <option value="null" className="recent-dropdown hidden">
                 Year
               </option>
-              <option value={2021} className="recent-dropdown">
-                2021
-              </option>
-              <option value={2022} className="recent-dropdown">
-                2022
-              </option>
-              <option value={2023} className="recent-dropdown">
-                2023
-              </option>
+
+              {allYear?.map((y) => {
+                return (
+                  <option key={y} value={y} className="recent-dropdown">
+                    {y}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
@@ -172,34 +205,29 @@ const Monthly = () => {
             <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
               DATE
             </th>
-            {/* <th className=" py-4 border-b text-end border-gray-600 px-1 uppercase font-medium">
-              TIME
-            </th> */}
-            <th className=" "></th>
           </tr>
         </thead>
         <tbody>
-          {mRecords?.monthly_sale_overview.map((record, index) => {
-            return (
-              <tr key={record?.id} className=" ">
-                <td className="px-1 text-center  py-4">{index + 1}</td>
-                <td className="px-1 text-end py-4">{record?.vouchers}</td>
-                <td className="px-1 text-end py-4">{record?.cash}</td>
-                <td className="px-1 py-4 text-end">{record?.tax}</td>
-                <td className="px-1 py-4 text-end">{record?.total}</td>
-                <td className="px-1 py-4 text-end">{record?.date}</td>
-                {/* <td className=" px-1 py-4 text-end">{record?.}</td> */}
-                <td className=" pe-5 py-4 text-end">
-                  <span className="inline-block bg-gray-700 w-8 h-8 p-2 rounded-full cursor-pointer">
-                    <BsArrowRight
-                      size={"1rem"}
-                      className="text-[var(--secondary-color)]"
-                    />
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+          {mRecords?.data?.length > 0 ? (
+            mRecords?.data.map((record, index) => {
+              return (
+                <tr key={record?.id} className=" ">
+                  <td className="px-1 text-center  py-4">{index + 1}</td>
+                  <td className="px-1 text-end py-4">{record?.vouchers}</td>
+                  <td className="px-1 text-end py-4">{record?.cash}</td>
+                  <td className="px-1 py-4 text-end">{record?.tax}</td>
+                  <td className="px-1 py-4 text-end">{record?.total}</td>
+                  <td className="px-1 py-4 text-end">{record?.date}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td className="px-1 text-center py-4 " colSpan={6}>
+                There is no data now.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       {/* showList end */}
@@ -214,7 +242,7 @@ const Monthly = () => {
               Total Days
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_days}
+              {mRecords?.data.length}
             </p>
           </div>
           <div
@@ -224,7 +252,7 @@ const Monthly = () => {
               Total Vouchers
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_vouchers}
+              {mRecords?.total?.total_voucher}
             </p>
           </div>
 
@@ -235,7 +263,7 @@ const Monthly = () => {
               Total Cash
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_cash}
+              {mRecords?.total?Math.round(mRecords?.total?.total_cash):''}
             </p>
           </div>
           <div
@@ -245,7 +273,7 @@ const Monthly = () => {
               Total Tax
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total_tax}
+              {mRecords?.total?Math.round(mRecords?.total?.total_tax):null}
             </p>
           </div>
           <div
@@ -255,46 +283,41 @@ const Monthly = () => {
               Total
             </p>
             <p className=" text-[var(--secondary-color)] text-end text-[22px] font-semibold">
-              {mRecords?.total}
+              {mRecords?.total?Math.round(mRecords?.total?.total):null}
             </p>
           </div>
         </div>
         {/* total calculate end*/}
 
-        {/* pagination start */}
-        <Button.Group className=" border-[--border-color] flex justify-end basis-1/3">
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowBackIosNew />
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            1
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            2
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            3
-          </Button>
-          <Button
-            variant="default"
-            className=" text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent"
-          >
-            <MdArrowForwardIos />
-          </Button>
-        </Button.Group>
-        {/* pagination end */}
+        {/* pagination start*/}
+        <div>
+          <Button.Group className=" pt-10 flex justify-end">
+            <Button
+              onClick={prev}
+              variant="default"
+              className={`
+                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              <MdArrowBackIosNew />
+            </Button>
+            <Button
+              variant="default"
+              className={`text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              page {mRecords?.meta?.current_page} / {mRecords?.meta?.last_page}
+            </Button>
+
+            <Button
+              onClick={next}
+              variant="default"
+              className={`
+                 text-[--secondary-color] hover:text-[--font-color] hover:bg-transparent`}
+            >
+              <MdArrowForwardIos />
+            </Button>
+          </Button.Group>
+        </div>
+        {/* pagination end*/}
       </div>
     </div>
   );

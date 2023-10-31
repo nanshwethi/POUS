@@ -8,18 +8,30 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-const SaleLineChart = ({oData}) => {
-  SaleLineChart.propTypes = {
-    oData: PropTypes.object,
-  };
-  
-  console.log('saleline',oData?.monthly_sales);
-  const data=oData?.monthly_sales;
+const SaleLineChart = ({ show }) => {
+  const [tag, setTag] = useState(show);
+  const oRecords = useSelector((state) => state?.overviewSlice.oRecords);
+
+  const [data, setData] = useState();
+  useEffect(() => {
+    setData(oRecords);
+  }, []);
+  //console.log("oRecords", oRecords);
+
+  useEffect(() => {
+    setData(oRecords);
+  }, [oRecords]);
+
+  useEffect(() => {
+    setTag(show);
+  }, [show]);
+  console.log("show", tag);
 
   return (
     <div style={{ width: "100%" }} className=" w-full">
-
       <ResponsiveContainer width="100%" height={200}>
         <LineChart
           width={500}
@@ -34,10 +46,17 @@ const SaleLineChart = ({oData}) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
+     
+          {tag === "year" || tag==='week' ? <XAxis dataKey="sale_date" /> : <XAxis />}
+
+          <YAxis dataKey="total" />
           <Tooltip />
-          <Line type="monotone" dataKey="total" stroke="#8884d8" fill="#8884d8" />
+          <Line
+            type="monotone"
+            dataKey="total"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
