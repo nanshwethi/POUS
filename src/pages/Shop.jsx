@@ -213,7 +213,7 @@ const Shop = () => {
 
 
   return (
-    <SaleCloseGuard>
+
       <div className="">
         <div className=" print:hidden">
           <Navbar />
@@ -429,8 +429,8 @@ const Shop = () => {
             </div>
           </div>
         </div>
-      </div>
-    </SaleCloseGuard>
+     
+
   );
 };
 
