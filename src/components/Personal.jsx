@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {createAddress, createDateOfBirth, createGender, createName} from '../redux/services/userSlice'
 import { BsCalendarCheck } from 'react-icons/bs'
+import Tooltip from '@mui/material/Tooltip';
 
 const Personal = () => {
     const [date,setDate] = useState('yyy / mmm / ddd')
@@ -14,7 +15,9 @@ const Personal = () => {
         <div className=' flex py-4 w-full text-gray-200 items-center font-medium'>
         <label className=' w-48 font-medium text-gray-200'>Name</label>
             <div className=' flex-1'>
+            <Tooltip title="minimum 3 characters required " arrow={true} disableHoverListener={true} disableInteractive={true}>
                 <input type="name" className=' bg-[#202124] border-2 border-[#313337] focus:border-gray-500 rounded text-slate-200 outline-none w-full py-2 px-3'  required defaultValue={content.name} onChange={(e)=>dispatch(createName(e.target.value))}  />
+            </Tooltip>
             </div>
         </div>
         <div className=' flex py-4 text-gray-200 items-center font-medium'>

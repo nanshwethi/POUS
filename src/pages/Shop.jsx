@@ -9,7 +9,7 @@ import pro4 from '../img/pro4.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
 import Cookies from 'js-cookie'
-import { selectProduct,setSelectedList,changeQty,updatePrice,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
+import { selectProduct,setSelectedList,changeQty,clearList,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
 import { Link } from 'react-router-dom'
@@ -92,11 +92,13 @@ const Shop = () => {
     }
 
     function updateClass(){
+        if (list.length >= 1){
+            const addClass = list[list.length-1]
+            addClass.classList.add('active-list')
+            console.log(list);
+            console.log(selectedList);
+        }
         
-        const addClass = list[list.length-1]
-        addClass.classList.add('active-list')
-        console.log(list);
-        console.log(selectedList);
     }
 
     const onListClickHandler=(x,e)=>{
@@ -199,10 +201,13 @@ const Shop = () => {
         const d = await voucher(data)
         console.log(d);
         console.log(data);
-        if(d?.data?.data) dispatch(addRecent(d.data.data))
+        if(d?.data?.data){
+            dispatch(addRecent(d.data.data))
+            dispatch(clearList())
+        } 
+        
     }
         
-
     // console.log(addNum);
     console.log(receiveList);
 
@@ -353,7 +358,7 @@ const Shop = () => {
                     </div>
                     <Link to={'/voucher'}>
                     {/* onClick={()=> pay()} */}
-                        <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=>pay()}> 
+                        <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=>{ if(products.length >=1) pay()}}> 
                             <span className=' text-gray-300 font-semibold'>Payment</span>
                         </div>
                     </Link>

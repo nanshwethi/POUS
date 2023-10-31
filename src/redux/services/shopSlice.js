@@ -135,9 +135,12 @@ export const shopSlice = createSlice({
         setSelectedList : (state,{payload})=>{
             state.selectedList = payload
         },
+        clearList :(state,{payload})=>{
+            state.list =[]
+        }
         
     }
 })
 
 export default shopSlice.reducer;
-export const {selectProduct,setSelectedList,deleteQty,addRecent,changeQty,addTax,addTotal,updatePrice,editPrice,createPrice} = shopSlice.actions
+export const {selectProduct,clearList,setSelectedList,deleteQty,addRecent,changeQty,addTax,addTotal,updatePrice,editPrice,createPrice} = shopSlice.actions

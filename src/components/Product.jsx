@@ -13,6 +13,7 @@ import pro4 from '../img/pro4.jpg'
 import pro5 from '../img/pro5.jpg'
 import pro6 from '../img/pro6.jpg'
 import pro7 from '../img/pro7.jpg'
+import loti from '../img/loti.gif'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useDeleteProductMutation, useGetProductsQuery, useGetSingleProductQuery } from '../redux/api/productApi'
@@ -161,7 +162,7 @@ const Product = () => {
         {   
             isFetching ? (<Loading/>):( <div>
                 {
-                    currentData?.data ? (
+                    currentData?.data.length>=1 ? (
                         ui ? (<div className=' mt-[50px] selected'>
                     
                          <table className=' w-full text-gray-300 border border-gray-700 text-sm '>
@@ -237,7 +238,9 @@ const Product = () => {
                         
                     </div>
                 </div>)
-                ):<Loading/>
+                ):<div className=' min-h-[400px] flex items-center justify-center'>
+                    <img src={loti} alt="" />
+                </div>
                 }
                 </div>
             )
