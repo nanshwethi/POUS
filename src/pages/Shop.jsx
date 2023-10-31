@@ -1,3 +1,20 @@
+
+import React, { useEffect, useState } from 'react'
+import Navbar from '../components/Navbar'
+import {BsSearch} from 'react-icons/bs'
+import {FiDelete} from 'react-icons/fi'
+import pro1 from '../img/pro1.jpg'
+import pro2 from '../img/pro2.jpg'
+import pro3 from '../img/pro3.jpg'
+import pro4 from '../img/pro4.jpg'
+import pro6 from '../img/pro6.jpg'
+import pro7 from '../img/pro7.jpg'
+import Cookies from 'js-cookie'
+import { selectProduct,setSelectedList,changeQty,clearList,editPrice,createPrice, addTotal, addTax, addRecent, deleteQty} from '../redux/services/shopSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useGetProductsQuery, useVoucherMutation } from '../redux/api/shopApi'
+import { Link } from 'react-router-dom'
+import Loading from '../components/Loading'
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { BsSearch } from "react-icons/bs";
@@ -82,6 +99,16 @@ const Shop = () => {
     }
   };
 
+    function updateClass(){
+        if (list.length >= 1){
+            const addClass = list[list.length-1]
+            addClass.classList.add('active-list')
+            console.log(list);
+            console.log(selectedList);
+        }
+        
+    }
+
   console.log(selectedList);
   console.log(isTag);
 
@@ -98,12 +125,7 @@ const Shop = () => {
     dispatch(addTax(tax));
   }
 
-  function updateClass() {
-    const addClass = list[list.length - 1];
-    addClass.classList.add("active-list");
-    console.log(list);
-    console.log(selectedList);
-  }
+ 
 
   const onListClickHandler = (x, e) => {
     dispatch(setSelectedList(x.id));
@@ -193,14 +215,25 @@ const Shop = () => {
       stData,
     };
 
-    const d = await voucher(data);
-    console.log(d);
-    console.log(data);
-    if (d?.data?.data) dispatch(addRecent(d.data.data));
-  };
 
-  // console.log(addNum);
-  console.log(receiveList);
+        const data = {
+            token,
+            stData
+        }
+        
+        const d = await voucher(data)
+        console.log(d);
+        console.log(data);
+        if(d?.data?.data){
+            dispatch(addRecent(d.data.data))
+            dispatch(clearList())
+        } 
+        
+    }
+        
+    // console.log(addNum);
+    console.log(receiveList);
+
 
   return (
     <SaleCloseGuard>
@@ -344,119 +377,78 @@ const Shop = () => {
                             </button>
                             
                         </div> */}
-                <div className="flex w-full">
-                  <div onClick={(e) => check(e)} className=" w-[75%] flex">
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600">
-                      <span className=" block text-gray-300 text-center ">
-                        1
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        2
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        3
-                      </span>
-                    </button>
-                  </div>
-                  <button
-                    className={`  flex justify-center w-[25%] items-center ${
-                      selectedAction == "qty"
-                        ? "bg-gray-300 selected"
-                        : "bg-gray-800"
-                    } px-12 py-3 border border-e-0 border-gray-600`}
-                    onClick={() => onQtyClickHandler()}
-                  >
-                    <span className=" block text-gray-300 text-center font-semibold">
-                      QTY
-                    </span>
-                  </button>
-                </div>
-                <div className="flex " onClick={(e) => check(e)}>
-                  <button className="flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600">
-                    <span className=" block text-gray-300 text-center ">4</span>
-                  </button>
-                  <button className="flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                    <span className=" block text-gray-300 text-center ">5</span>
-                  </button>
-                  <button className="flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                    <span className=" block text-gray-300 text-center ">6</span>
-                  </button>
-                  <button className="flex justify-center w-[25%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                    <span className=" block text-gray-600 text-center font-semibold">
-                      DISC
-                    </span>
-                  </button>
-                </div>
-                <div className="flex ">
-                  <div onClick={(e) => check(e)} className=" w-[75%] flex">
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600">
-                      <span className=" block text-gray-300 text-center ">
-                        7
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        8
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        9
-                      </span>
-                    </button>
-                  </div>
-                  <button
-                    className={` flex-1 flex justify-center w-[25%] items-center ${
-                      selectedAction == "price"
-                        ? "bg-gray-300 selected"
-                        : "bg-gray-800"
-                    } px-12 py-3 border border-e-0 border-gray-600`}
-                    onClick={() => onPriceChangeHandler()}
-                  >
-                    <span className=" block text-gray-300 text-center font-semibold">
-                      Price
-                    </span>
-                  </button>
-                </div>
-                <div className="flex ">
-                  <div onClick={(e) => check(e)} className=" flex-1 flex">
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600">
-                      <span className=" block text-gray-300 text-center ">
-                        +/-
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        0
-                      </span>
-                    </button>
-                    <button className="flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 ">
-                      <span className=" block text-gray-300 text-center ">
-                        .
-                      </span>
-                    </button>
-                  </div>
-                  <button
-                    className={` flex justify-center w-[25%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600`}
-                    onClick={() => onDeleteHandler()}
-                  >
-                    <FiDelete className=" block text-gray-300 text-center font-semibold" />
-                  </button>
-                </div>
-              </div>
-              <Link to={"/voucher"}>
-                {/* onClick={()=> pay()} */}
-                <div
-                  className=" text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden"
-                  onClick={() => pay()}
-                >
-                  <span className=" text-gray-300 font-semibold">Payment</span>
-                </div>
-              </Link>
+
+                        <div className='flex w-full' >
+                            <div onClick={(e)=>check(e)} className=' w-[75%] flex'>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600' >
+                                    <span className=' block text-gray-300 text-center '>1</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>2</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>3</span>
+                                </button>
+                            </div>
+                            <button className={`  flex justify-center w-[25%] items-center ${selectedAction == 'qty'? 'bg-gray-300 selected' : 'bg-gray-800'} px-12 py-3 border border-e-0 border-gray-600`} onClick={()=>onQtyClickHandler()} >
+                                <span className=' block text-gray-300 text-center font-semibold'>QTY</span>
+                            </button>
+                        </div>                        
+                        <div className='flex ' onClick={(e)=>check(e)}>
+                            <button className='flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600'>
+                                <span className=' block text-gray-300 text-center '>4</span>
+                            </button>
+                            <button className='flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                <span className=' block text-gray-300 text-center '>5</span>
+                            </button>
+                            <button className='flex justify-center w-[25%] num-data items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                <span className=' block text-gray-300 text-center '>6</span>
+                            </button>
+                            <button className='flex justify-center w-[25%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                <span className=' block text-gray-600 text-center font-semibold'>DISC</span>
+                            </button>
+                        </div>
+                        <div className='flex ' >
+                            <div onClick={(e)=>check(e)} className=' w-[75%] flex'>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600' >
+                                    <span className=' block text-gray-300 text-center '>7</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>8</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>9</span>
+                                </button>
+                            </div>
+                            <button className={` flex-1 flex justify-center w-[25%] items-center ${selectedAction == 'price'? 'bg-gray-300 selected' : 'bg-gray-800'} px-12 py-3 border border-e-0 border-gray-600`} onClick={()=>onPriceChangeHandler()} >
+                                <span className=' block text-gray-300 text-center font-semibold'>Price</span>
+                            </button>
+                        </div>
+                        <div className='flex '>
+                            <div onClick={(e)=>check(e)} className=' flex-1 flex'>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600' >
+                                    <span className=' block text-gray-300 text-center '>+/-</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.35%]  items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>0</span>
+                                </button>
+                                <button className='flex justify-center num-data w-[33.40%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600 '>
+                                    <span className=' block text-gray-300 text-center '>.</span>
+                                </button>
+                            </div>
+                            <button className={` flex justify-center w-[25%] items-center bg-gray-800 px-12 py-3 border border-e-0 border-gray-600`} onClick={()=>onDeleteHandler()} >
+                                <FiDelete className=' block text-gray-300 text-center font-semibold'/>
+                            </button>
+                        </div>
+                    </div>
+                    <Link to={'/voucher'}>
+                    {/* onClick={()=> pay()} */}
+                        <div className=' text-center py-3 bg-gray-900 border-s border-gray-600 print:hidden' onClick={()=>{ if(products.length >=1) pay()}}> 
+                            <span className=' text-gray-300 font-semibold'>Payment</span>
+                        </div>
+                    </Link>
+                </div>  
+
             </div>
           </div>
         </div>

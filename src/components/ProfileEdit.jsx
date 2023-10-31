@@ -295,8 +295,8 @@ const ProfileEdit = () => {
             <Group position="right" unstyled className=' ms-[200px] w-[200px] myBrandModal h-[60px] mt-4'>
                 <Button onClick={open}>
                     <div className=' w-full h-[100px] relative border-gray-200 rounded cursor-pointer bg-gray-700'>
-                        <div className={`text-gray-200 text-lg text-center py-8 `}>
-                            <AiOutlinePlus className=' inline'/> <span>Add Image</span>
+                        <div className={`text-gray-200 text-lg font-light text-center py-8 `}>
+                            <AiOutlinePlus className=' inline'/> <span>Edit profile image</span>
                         </div>
                         {/* <input type='file' className=' absolute w-full h-full opacity-0 top-0 left-0 uploadImgInput hidden ' /> */}
                     </div>

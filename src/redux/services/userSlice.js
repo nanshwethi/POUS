@@ -11,7 +11,8 @@ const initialState = {
     password : null,
     address : '',
     role : '',
-  }
+  },
+ 
 };
 
 export const userSlice = createSlice({
@@ -45,6 +46,7 @@ export const userSlice = createSlice({
     createRole: (state,{payload})=>{
       state.user.role = payload
     },
+   
 
   },
 });

@@ -16,6 +16,7 @@ import { addUserEmail, createPassword, createPhone, createPhoto, createRole } fr
 import { useAddUserMutation } from '../redux/api/userApi';
 import { TfiClose } from 'react-icons/tfi';
 import Personal from './Personal';
+import Tooltip from '@mui/material/Tooltip';
 
 
 const CreateUser = () => {
@@ -26,7 +27,7 @@ const CreateUser = () => {
     const [opened, { open, close }] = useDisclosure(false);
     const getPhoto = useGetPhotoQuery(token)
     const [selectfoto,setSelectfoto] = useState()
-    const [isNull,setIsNull] = useState()
+    const [isNull,setIsNull] = useState(true)
     const dispatch = useDispatch()
     const nav = useNavigate()
     const content = useSelector((state)=>state.userSlice.user)
@@ -74,18 +75,26 @@ const CreateUser = () => {
             
     }
 
-    // const submit = (e)=>{
-    //     e.target.preventDefault()
-    //     for( const property in content){
-    //         content[property] == null && setIsNull(true)
-    //         if(isNull){
-    //             Swal.fire('please fill all')
-    //         }else{
-    //             create()
-    //         }
-    //     }
+    const isValidate = (e)=>{
+        for( const property in content){
+            content[property] == null || content[property] == '' ? setIsNull(true) : setIsNull(false)
+            console.log(isNull);
+            if(isNull == true){
+                Swal.fire({
+                    title: 'Try again!!',
+                    text: "All input fileds are required",
+                    icon: 'warning',
+                    width : '400px',
+                    padding : '0px 10px 20px',
+                    color : '#ffffff',
+                    background : '#393d3d',
+                })
+            }else{
+                submit();
+            }
+        }
         
-    // }
+    }
 
     const selectPhoto = ()=>{
         dispatch(createPhoto(selectfoto.url))
@@ -121,7 +130,9 @@ const CreateUser = () => {
                     <div className=' flex py-4 text-gray-200 items-center font-medium'>
                         <div className=' w-48 font-medium text-gray-200'>Phone</div> 
                         <div className=' flex-1'>
+                         <Tooltip title="minimum 11 characters required " arrow={true} disableHoverListener={true} disableInteractive={true}>
                         <input type='number' className=' bg-[#202124] border-2 focus:border-gray-500  border-[#313337] rounded text-slate-200 outline-none w-full py-2 px-3 ' required defaultValue={content.phone_number} onChange={(e)=>dispatch(createPhone(e.target.value))} />
+                        </Tooltip>
                         </div>
                     </div>
                     <div className=' flex py-4 text-gray-200 items-center font-medium'>
@@ -134,14 +145,13 @@ const CreateUser = () => {
             )
         }else{
             console.log('three');
-
             return(
                 <form className='p-6 w-[100%] mt-[100px] flex items-center justify-center bg-[#171717] min-h-[200px] rounded border border-gray-700'>
                     {
-                        selectfoto ? <div className='  w-[200px] h-[200px] rounded-full bg-gray-700 border-2 relative border-blue-400 z-0 o border-dashed'>
+                        content.photo != null && selectfoto ? <div className='  w-[200px] h-[200px] rounded-full bg-gray-700 border-2 relative border-blue-400 z-0 o border-dashed'>
                         <div className=' w-full h-full rounded-full overflow-hidden'>
                         <TfiClose className=' absolute top-[10px] right-[7px] bg-slate-500 text-3xl p-1 font-bold text-gray-200 cursor-pointer' onClick={()=>setSelectfoto(null)}/>
-                        <img src={selectfoto.url} className=' w-full h-full top-0  left-0 object-cover z-20' alt="" />
+                        <img src={selectfoto?.url} className=' w-full h-full top-0  left-0 object-cover z-20' alt="" />
                         </div>
                         </div>  : <div className='  w-[200px] h-[200px] rounded-full bg-gray-700 overflow-hidden border-2 relative border-blue-400 z-0 o border-dashed'>
                         <Group position="center" className=' myModal-user w-full h-full absolute z-10'>
@@ -246,7 +256,9 @@ const CreateUser = () => {
                     </div>
                 </div>
                 <div className=' mt-auto mb-[-80px]'>
-                    <button className=' px-4 py-2 text-gray-200 bg-blue-900 rounded' type='submit' onClick={(e)=>submit(e)}>Create</button>
+                    {/* <button className=' px-4 py-2 text-gray-200 bg-blue-900 rounded' type='submit' onClick={(e)=>submit(e)}>Create</button> */}
+                    <button className=' px-4 py-2 text-gray-200 bg-blue-900 rounded' type='submit' onClick={(e)=>isValidate(e)}>Create</button>
+
                 </div>
             </div>
         </div>

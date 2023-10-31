@@ -20,9 +20,9 @@ const UserProfile = () => {
     const {currentData,isFetching} = useGetSingleUserQuery(d)
     console.log(currentData);
     const dispatch = useDispatch()
-
     const user = useSelector((state)=>state.profile.user)
-      console.log(user);
+    console.log(user);
+    
     useEffect(()=>{
       dispatch(addUser(currentData))
     })

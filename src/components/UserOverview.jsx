@@ -6,29 +6,19 @@ import {MdOutlineModeEditOutline} from 'react-icons/md'
 import {TfiClose} from 'react-icons/tfi'
 import {FaAngleDown, FaAngleRight} from 'react-icons/fa'
 import { Select } from "@mantine/core";
-import pro1 from '../img/pro1.jpg'
-import pro2 from '../img/pro2.jpg'
-import pro3 from '../img/pro3.jpg'
-import pro4 from '../img/pro4.jpg'
-import pro5 from '../img/pro5.jpg'
-import pro6 from '../img/pro6.jpg'
-import pro7 from '../img/pro7.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { useDeleteProductMutation, useGetProductsQuery, useGetSingleProductQuery } from '../redux/api/productApi'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Loading from './Loading'
-import { useGetUserQuery } from '../redux/api/userApi'
+import { useDeleteUserMutation, useGetUserQuery } from '../redux/api/userApi'
 
 const UserOverview = () => {
 
-    const [ui,setUi] = useState(true);
     const token = Cookies.get('token')
-    const [unit,setUnit] = useState(1)
     const {currentData,isFetching} = useGetUserQuery(token)
-    const [deleteProduct] = useDeleteProductMutation()
+    const [deleteUser] = useDeleteUserMutation()
     const oldData = useSelector((state)=>state.productSlice.oldData)
     const updatedData = useSelector((state)=>state.productSlice.data)
     const [user,setUser] = useState()
@@ -44,26 +34,12 @@ const UserOverview = () => {
         
     },[currentData])
 
-    
-    const changeGridUi =()=>{
-        const data = document.querySelector('.selected')
-        data != null && setUi(false)
-           
-    }
-
-    const changeListUi =()=>{
-        const data = document.querySelector('.selected')
-        data == null && setUi(true)
-           
-    }
-
     const MySwal = withReactContent(Swal)
    
-
     const deleteP = async(id)=>{
         console.log(id)
         const d = {token,id}
-        const data = await deleteProduct(d)
+        const data = await deleteUser(d)
         console.log(data);
         if (data.data == null) {
             MySwal.fire({
@@ -121,8 +97,7 @@ const UserOverview = () => {
                         <BsSearch className=" inline text-gray-400 me-3"/>
                         <input type="text" placeholder='search' className=' w-[250px] outline-none bg-transparent text-gray-300 text-sm font-semibold' />
                     </div>
-                    <div className=' flex items-center '>
-                        <div className=" flex items-baseline">
+                    <div className=" flex items-baseline">
                             <p className=" text-sm text-gray-400 me-2 ">Sort : </p>
                             <Select
                             defaultValue= {sort}
@@ -141,6 +116,7 @@ const UserOverview = () => {
                             size="100px"
                             />
                         </div>
+                    {/* <div className=' flex items-center '>
                         <div className=' flex items-center border border-gray-500 rounded border-collapse'>
                             <button className=' border-e border-gray-500 px-1' onClick={()=>changeListUi()}>
                             <BsListUl className={`inline  ${ui ? 'text-blue-400':' text-gray-400'}`}  />
@@ -149,7 +125,7 @@ const UserOverview = () => {
                             <BiGridAlt className={`inline ${ui ? ' text-gray-400': 'text-blue-400'}`}/>
                             </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             
@@ -180,7 +156,7 @@ const UserOverview = () => {
     
                                             <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
                                             
-                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/product/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/profile-edit/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
                                             
                                             <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
                                             
@@ -196,7 +172,7 @@ const UserOverview = () => {
     
                                             <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=> del(v.id)} ><BsTrash3 className=' text-gray-200'/></button>
                                             
-                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/product/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
+                                            <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>{nav(`/profile-edit/${v.id}`)}}><MdOutlineModeEditOutline className=' text-gray-200'/></button>
                                             
                                             <button className=' px-2 py-2 bg-slate-600 rounded-full' onClick={()=>nav(`/product-detail/${v.id}`)}><AiOutlineArrowRight className=' text-gray-200'/></button>
                                             
