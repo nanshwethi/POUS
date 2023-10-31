@@ -197,12 +197,6 @@ const Shop = () => {
       token,
       stData,
     };
-
-
-        const data = {
-            token,
-            stData
-        }
         
         const d = await voucher(data)
         console.log(d);
